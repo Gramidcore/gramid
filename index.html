@@ -430,6 +430,12 @@
         id="loginUser">
       </div>
 
+      <button
+        class="button disconnect-button"
+        onclick="signOutGramID()">
+        Sign out
+      </button>
+
     </div>
 
     <div
@@ -523,6 +529,7 @@
       const addressElement =
         document.getElementById('address');
 
+
       if (wallet) {
 
         currentWalletAddress =
@@ -539,7 +546,11 @@
         identity.style.display =
           'block';
 
+
         loadProfile();
+
+        loadGramIDSession();
+
 
       } else {
 
@@ -561,7 +572,9 @@
           .dataset
           .fullAddress;
 
+
       navigator.clipboard.writeText(address);
+
 
       setStatus(
         'TON address copied'
@@ -578,11 +591,13 @@
           .value
           .trim();
 
+
       const domain =
         document
           .getElementById('profileDomain')
           .value
           .trim();
+
 
       const telegramUsername =
         document
@@ -744,7 +759,7 @@
                   'apikey':
                     SUPABASE_KEY,
 
-                'Authorization':
+                  'Authorization':
                     'Bearer ' +
                     SUPABASE_KEY,
 
@@ -776,6 +791,7 @@
 
         showProfile(profileData);
 
+
         setStatus(
           'Profile saved online'
         );
@@ -787,6 +803,7 @@
           'Profile save error:',
           error
         );
+
 
         setStatus(
           'Error: ' +
@@ -886,7 +903,9 @@
 
         const telegramLink =
           document
-            .getElementById('telegramLink');
+            .getElementById(
+              'telegramLink'
+            );
 
 
         telegramLink.href =
@@ -908,6 +927,7 @@
           'Telegram verification error:',
           error
         );
+
 
         setStatus(
           'Error: ' +
@@ -997,54 +1017,201 @@
         }
 
 
-        const loginResult =
-          document
-            .getElementById('loginResult');
+        localStorage.setItem(
+
+          'gramid_session',
+
+          JSON.stringify({
+
+            authenticated:
+              true,
+
+            wallet:
+              currentWalletAddress,
+
+            identity:
+              data.identity
+
+          })
+
+        );
 
 
-        const loginUser =
-          document
-            .getElementById('loginUser');
+        showLoggedInIdentity(
 
+          data.identity
 
-        loginUser.innerHTML =
-
-          '<strong>' +
-          (data.identity.name || '') +
-          '</strong><br>' +
-
-          (data.identity.domain || '') +
-          '<br>' +
-
-          (data.identity.telegram_username
-            ? '@' +
-              data.identity.telegram_username
-            : '');
-
-
-        loginResult.style.display =
-          'block';
+        );
 
 
         setStatus(
+
           'GramID Login successful ✓'
+
         );
 
 
       } catch (error) {
 
         console.error(
+
           'GramID Login error:',
           error
+
         );
 
 
         setStatus(
+
           'Error: ' +
           error.message
+
         );
 
       }
+
+    }
+
+
+    function showLoggedInIdentity(identity) {
+
+      const loginResult =
+        document
+          .getElementById(
+            'loginResult'
+          );
+
+
+      const loginUser =
+        document
+          .getElementById(
+            'loginUser'
+          );
+
+
+      loginUser.innerHTML =
+
+        '<strong>Welcome back, ' +
+
+        (identity.name ||
+          'GramID User') +
+
+        '</strong><br><br>' +
+
+        (identity.domain ||
+          '') +
+
+        '<br>' +
+
+        (
+
+          identity.telegram_username
+
+            ? '@' +
+              identity.telegram_username
+
+            : ''
+
+        );
+
+
+      loginResult.style.display =
+        'block';
+
+    }
+
+
+    function loadGramIDSession() {
+
+      const savedSession =
+        localStorage.getItem(
+          'gramid_session'
+        );
+
+
+      if (!savedSession) {
+
+        return;
+
+      }
+
+
+      try {
+
+        const session =
+          JSON.parse(
+            savedSession
+          );
+
+
+        if (
+
+          session.authenticated &&
+
+          session.wallet ===
+          currentWalletAddress
+
+        ) {
+
+          showLoggedInIdentity(
+
+            session.identity
+
+          );
+
+
+          setStatus(
+
+            'Welcome back to GramID ✓'
+
+          );
+
+        }
+
+      } catch (error) {
+
+        console.error(
+
+          'Session load error:',
+          error
+
+        );
+
+
+        localStorage.removeItem(
+
+          'gramid_session'
+
+        );
+
+      }
+
+    }
+
+
+    function signOutGramID() {
+
+      localStorage.removeItem(
+
+        'gramid_session'
+
+      );
+
+
+      document
+        .getElementById(
+          'loginResult'
+        )
+        .style
+        .display =
+        'none';
+
+
+      setStatus(
+
+        'Signed out of GramID'
+
+      );
 
     }
 
@@ -1110,21 +1277,27 @@
 
 
         document
-          .getElementById('profileName')
+          .getElementById(
+            'profileName'
+          )
           .value =
           profile.name ||
           '';
 
 
         document
-          .getElementById('profileDomain')
+          .getElementById(
+            'profileDomain'
+          )
           .value =
           profile.domain ||
           '';
 
 
         document
-          .getElementById('telegramUsername')
+          .getElementById(
+            'telegramUsername'
+          )
           .value =
           profile.telegram_username ||
           '';
@@ -1140,29 +1313,40 @@
     function showProfile(profile) {
 
       document
-        .getElementById('savedName')
+        .getElementById(
+          'savedName'
+        )
         .textContent =
         profile.name ||
         '';
 
 
       document
-        .getElementById('savedDomain')
+        .getElementById(
+          'savedDomain'
+        )
         .textContent =
         profile.domain ||
         'TON domain not added';
 
 
       document
-        .getElementById('savedTelegram')
+        .getElementById(
+          'savedTelegram'
+        )
         .textContent =
+
         profile.telegram_username
+
           ? profile.telegram_username
+
           : 'Telegram username not added';
 
 
       document
-        .getElementById('profileResult')
+        .getElementById(
+          'profileResult'
+        )
         .style
         .display =
         'block';
@@ -1175,7 +1359,9 @@
       if (!currentWalletAddress) {
 
         setStatus(
+
           'Please connect your TON wallet first'
+
         );
 
         return;
@@ -1188,14 +1374,19 @@
         window.location.origin +
 
         window.location.pathname.replace(
+
           'index.html',
+
           ''
+
         ) +
 
         'profile.html?wallet=' +
 
         encodeURIComponent(
+
           currentWalletAddress
+
         );
 
 
@@ -1208,39 +1399,51 @@
     function clearProfile() {
 
       document
-        .getElementById('profileName')
+        .getElementById(
+          'profileName'
+        )
         .value =
         '';
 
 
       document
-        .getElementById('profileDomain')
+        .getElementById(
+          'profileDomain'
+        )
         .value =
         '';
 
 
       document
-        .getElementById('telegramUsername')
+        .getElementById(
+          'telegramUsername'
+        )
         .value =
         '';
 
 
       document
-        .getElementById('profileResult')
+        .getElementById(
+          'profileResult'
+        )
         .style
         .display =
         'none';
 
 
       document
-        .getElementById('telegramLink')
+        .getElementById(
+          'telegramLink'
+        )
         .style
         .display =
         'none';
 
 
       document
-        .getElementById('loginResult')
+        .getElementById(
+          'loginResult'
+        )
         .style
         .display =
         'none';
@@ -1263,4 +1466,3 @@
 
 </body>
 </html>
-```
