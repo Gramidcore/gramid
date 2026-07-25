@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>GramID — Web3 Identity for TON</title>
+
+  <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
 
   <style>
     * {
@@ -49,15 +52,10 @@
       margin-top: 0;
     }
 
-    .button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 14px 28px;
-      border-radius: 12px;
-      background: #229ed9;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
+    .wallet {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
     }
 
     .features {
@@ -91,6 +89,7 @@
     </div>
 
     <div class="card">
+
       <h2>Build your Web3 identity</h2>
 
       <p>
@@ -98,9 +97,10 @@
         and create your decentralized identity.
       </p>
 
-      <a href="#" class="button">
-        Connect Wallet
-      </a>
+      <div class="wallet">
+        <div id="ton-connect"></div>
+      </div>
+
     </div>
 
     <div class="features">
@@ -124,6 +124,13 @@
     </div>
 
   </div>
+
+  <script>
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+      manifestUrl: 'https://gramidcore.github.io/gramid/tonconnect-manifest.json',
+      buttonRootId: 'ton-connect'
+    });
+  </script>
 
 </body>
 </html>
