@@ -202,7 +202,10 @@
 
         const address = wallet.account.address;
 
-        addressElement.textContent = address;
+        addressElement.textContent =
+          address.slice(0, 6) + '...' + address.slice(-6);
+
+        addressElement.dataset.fullAddress = address;
 
         identity.style.display = 'block';
 
@@ -212,17 +215,20 @@
 
         addressElement.textContent = '';
 
+        addressElement.dataset.fullAddress = '';
+
       }
 
     });
 
     function copyAddress() {
 
-      const address = document.getElementById('address').textContent;
+      const address =
+        document.getElementById('address').dataset.fullAddress;
 
       navigator.clipboard.writeText(address);
 
-      alert('TON address copied');
+      alert('Full TON address copied');
 
     }
 
