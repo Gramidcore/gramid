@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -248,196 +249,192 @@
       }
     }
   </style>
+
 </head>
 
 <body>
 
   <div class="container">
 
-    <div class="logo">GramID</div>
+```
+<div class="logo">GramID</div>
 
-    <div class="subtitle">
-      Your identity layer for TON
+<div class="subtitle">
+  Your identity layer for TON
+</div>
+
+<div class="card">
+
+  <h2>Build Your Web3 Identity</h2>
+
+  <p>
+    Connect your TON wallet, create your identity
+    and link your TON domain.
+  </p>
+
+  <div class="wallet">
+    <div id="ton-connect"></div>
+  </div>
+
+  <div class="identity" id="identity">
+
+    <div class="identity-title">
+      CONNECTED TON WALLET
     </div>
 
-    <div class="card">
+    <div class="address" id="address"></div>
 
-      <h2>Build Your Web3 Identity</h2>
+    <button
+      class="button copy-button"
+      onclick="copyAddress()">
+      Copy Address
+    </button>
 
-      <p>
-        Connect your TON wallet, create your identity
-        and link your TON domain.
-      </p>
+    <hr style="border: 0; border-top: 1px solid #283044; margin: 22px 0;">
 
-      <div class="wallet">
-        <div id="ton-connect"></div>
-      </div>
+    <div id="editProfile">
 
-      <div class="identity" id="identity">
+      <h3>Create Your GramID Profile</h3>
 
-        <div class="identity-title">
-          CONNECTED TON WALLET
-        </div>
+      <input
+        class="profile-input"
+        id="profileName"
+        type="text"
+        placeholder="Your name or username"
+      >
 
-        <div class="address" id="address"></div>
+      <input
+        class="profile-input"
+        id="profileDomain"
+        type="text"
+        placeholder="Your TON domain, e.g. gramid.ton"
+      >
 
-        <button
-          class="button copy-button"
-          onclick="copyAddress()">
-          Copy Address
-        </button>
+      <button
+        class="button save-button"
+        onclick="saveProfile()">
+        Save Profile
+      </button>
 
-        <hr style="border: 0; border-top: 1px solid #283044; margin: 22px 0;">
+      <div
+        class="profile-result"
+        id="profileResult">
 
-        <div id="editProfile">
-
-          <h3>Create Your GramID Profile</h3>
-
-          <input
-            class="profile-input"
-            id="profileName"
-            type="text"
-            placeholder="Your name or username"
-          >
-
-          <input
-            class="profile-input"
-            id="profileDomain"
-            type="text"
-            placeholder="Your TON domain, e.g. gramid.ton"
-          >
-
-          <button
-            class="button save-button"
-            onclick="saveProfile()">
-            Save Profile
-          </button>
-
-          <div
-            class="profile-result"
-            id="profileResult">
-
-            <div class="profile-label">
-              YOUR GRAMID PROFILE
-            </div>
-
-            <div
-              class="profile-name"
-              id="savedName">
-            </div>
-
-            <div
-              class="profile-domain"
-              id="savedDomain">
-            </div>
-
-          </div>
-
-          <button
-            class="button profile-button"
-            onclick="viewPublicProfile()">
-            View Public Profile
-          </button>
-
-          <button
-            class="button clear-button"
-            onclick="clearProfile()">
-            Clear Profile
-          </button>
-
+        <div class="profile-label">
+          YOUR GRAMID PROFILE
         </div>
 
         <div
-          class="public-profile"
-          id="publicProfile">
-
-          <h2>GramID Profile</h2>
-
-          <div
-            class="public-name"
-            id="publicName">
-          </div>
-
-          <div
-            class="public-domain"
-            id="publicDomain">
-          </div>
-
-          <div class="profile-label">
-            VERIFIED WALLET
-          </div>
-
-          <div
-            class="public-wallet"
-            id="publicWallet">
-          </div>
-
-          <button
-            class="button copy-button"
-            onclick="copyProfileLink()">
-            Copy Profile Link
-          </button>
-
-          <button
-            class="button disconnect-button"
-            onclick="backToEdit()">
-            Edit Profile
-          </button>
-
+          class="profile-name"
+          id="savedName">
         </div>
 
         <div
-          class="status"
-          id="status">
+          class="profile-domain"
+          id="savedDomain">
         </div>
 
-        <button
-          class="button disconnect-button"
-          onclick="disconnectWallet()">
-          Disconnect Wallet
-        </button>
-
       </div>
+
+      <button
+        class="button profile-button"
+        onclick="viewPublicProfile()">
+        View Public Profile
+      </button>
+
+      <button
+        class="button clear-button"
+        onclick="clearProfile()">
+        Clear Profile
+      </button>
 
     </div>
 
-    <div class="features">
+    <div
+      class="public-profile"
+      id="publicProfile">
 
-      <div class="feature">
-        🔐 Secure wallet-based identity
+      <h2>GramID Profile</h2>
+
+      <div
+        class="public-name"
+        id="publicName">
       </div>
 
-      <div class="feature">
-        🌐 TON domain integration
+      <div
+        class="public-domain"
+        id="publicDomain">
       </div>
 
-      <div class="feature">
-        🚀 Built for the TON ecosystem
+      <div class="profile-label">
+        VERIFIED WALLET
       </div>
+
+      <div
+        class="public-wallet"
+        id="publicWallet">
+      </div>
+
+      <button
+        class="button copy-button"
+        onclick="copyProfileLink()">
+        Copy Profile Link
+      </button>
+
+      <button
+        class="button disconnect-button"
+        onclick="backToEdit()">
+        Edit Profile
+      </button>
 
     </div>
 
-    <div class="footer">
-      GramID — decentralized identity for the next generation of Web3
+    <div
+      class="status"
+      id="status">
     </div>
+
+    <button
+      class="button disconnect-button"
+      onclick="disconnectWallet()">
+      Disconnect Wallet
+    </button>
+
+  </div>
+
+</div>
+
+<div class="features">
+
+  <div class="feature">
+    🔐 Secure wallet-based identity
+  </div>
+
+  <div class="feature">
+    🌐 TON domain integration
+  </div>
+
+  <div class="feature">
+    🚀 Built for the TON ecosystem
+  </div>
+
+</div>
+
+<div class="footer">
+  GramID — decentralized identity for the next generation of Web3
+</div>
+```
 
   </div>
 
   <script>
 
-    /*
-      SUPABASE CONFIGURATION
-    */
-
     const SUPABASE_URL =
       'https://beuymvtrabmawogqrhni.supabase.co';
 
     const SUPABASE_KEY =
-  'sb_publishable_WHFBkb-8c_iDJ2uBG9g2TQ_CSMkumUg';
+      'ВСТАВЬ_СЮДА_СВОЙ_SB_PUBLISHABLE_КЛЮЧ';
 
-    /*
-      TON CONNECT
-    */
 
     const tonConnectUI =
       new TON_CONNECT_UI.TonConnectUI({
@@ -454,10 +451,6 @@
     let currentWalletAddress = '';
 
 
-    /*
-      STATUS
-    */
-
     function setStatus(message) {
 
       document
@@ -466,10 +459,6 @@
 
     }
 
-
-    /*
-      TON WALLET STATUS
-    */
 
     tonConnectUI.onStatusChange(wallet => {
 
@@ -515,10 +504,6 @@
     });
 
 
-    /*
-      COPY WALLET ADDRESS
-    */
-
     function copyAddress() {
 
       const address =
@@ -533,10 +518,6 @@
 
     }
 
-
-    /*
-      SAVE PROFILE TO SUPABASE
-    */
 
     async function saveProfile() {
 
@@ -570,11 +551,12 @@
 
       setStatus('Saving profile...');
 
+
       const response =
         await fetch(
 
           SUPABASE_URL +
-          '/rest/v1/profiles',
+          '/rest/v1/profiles?on_conflict=wallet_address',
 
           {
 
@@ -593,7 +575,7 @@
                 SUPABASE_KEY,
 
               'Prefer':
-                'resolution=merge-duplicates'
+                'resolution=merge-duplicates,return=minimal'
 
             },
 
@@ -646,10 +628,6 @@
     }
 
 
-    /*
-      LOAD PROFILE FROM SUPABASE
-    */
-
     async function loadProfile() {
 
       if (!currentWalletAddress) {
@@ -657,6 +635,7 @@
         return;
 
       }
+
 
       const response =
         await fetch(
@@ -729,10 +708,6 @@
     }
 
 
-    /*
-      SHOW SAVED PROFILE
-    */
-
     function showProfile(profile) {
 
       document
@@ -754,10 +729,6 @@
 
     }
 
-
-    /*
-      PUBLIC PROFILE VIEW
-    */
 
     function viewPublicProfile() {
 
@@ -819,10 +790,6 @@
     }
 
 
-    /*
-      BACK TO EDIT
-    */
-
     function backToEdit() {
 
       document
@@ -840,10 +807,6 @@
     }
 
 
-    /*
-      COPY PROFILE LINK
-    */
-
     function copyProfileLink() {
 
       navigator.clipboard.writeText(
@@ -856,10 +819,6 @@
 
     }
 
-
-    /*
-      CLEAR LOCAL FORM
-    */
 
     function clearProfile() {
 
@@ -891,10 +850,6 @@
 
     }
 
-
-    /*
-      DISCONNECT WALLET
-    */
 
     async function disconnectWallet() {
 
