@@ -199,6 +199,13 @@
       word-break: break-all;
     }
 
+    .status {
+      margin-top: 15px;
+      color: #aab2c5;
+      font-size: 14px;
+      min-height: 20px;
+    }
+
     .features {
       margin-top: 55px;
       display: grid;
@@ -219,7 +226,6 @@
     }
 
     @media (max-width: 600px) {
-
       .container {
         padding: 45px 15px;
       }
@@ -240,7 +246,6 @@
         width: 100%;
         margin: 5px 0;
       }
-
     }
   </style>
 </head>
@@ -381,6 +386,11 @@
 
         </div>
 
+        <div
+          class="status"
+          id="status">
+        </div>
+
         <button
           class="button disconnect-button"
           onclick="disconnectWallet()">
@@ -415,6 +425,20 @@
 
   <script>
 
+    /*
+      SUPABASE CONFIGURATION
+    */
+
+    const SUPABASE_URL =
+      'https://beuymvtrabmawogqrhni.supabase.co';
+
+    const SUPABASE_KEY =
+  'sb_publishable_WHFBkb-8c_iDJ2uBG9g2TQ_CSMkumUg';
+
+    /*
+      TON CONNECT
+    */
+
     const tonConnectUI =
       new TON_CONNECT_UI.TonConnectUI({
 
@@ -426,6 +450,27 @@
 
       });
 
+
+    let currentWalletAddress = '';
+
+
+    /*
+      STATUS
+    */
+
+    function setStatus(message) {
+
+      document
+        .getElementById('status')
+        .textContent = message;
+
+    }
+
+
+    /*
+      TON WALLET STATUS
+    */
+
     tonConnectUI.onStatusChange(wallet => {
 
       const identity =
@@ -436,23 +481,25 @@
 
       if (wallet) {
 
-        const address =
+        currentWalletAddress =
           wallet.account.address;
 
         addressElement.textContent =
-          address.slice(0, 6) +
+          currentWalletAddress.slice(0, 6) +
           '...' +
-          address.slice(-6);
+          currentWalletAddress.slice(-6);
 
         addressElement.dataset.fullAddress =
-          address;
+          currentWalletAddress;
 
         identity.style.display =
           'block';
 
-        loadProfile(address);
+        loadProfile();
 
       } else {
+
+        currentWalletAddress = '';
 
         identity.style.display =
           'none';
@@ -467,6 +514,11 @@
 
     });
 
+
+    /*
+      COPY WALLET ADDRESS
+    */
+
     function copyAddress() {
 
       const address =
@@ -477,11 +529,16 @@
 
       navigator.clipboard.writeText(address);
 
-      alert('Full TON address copied');
+      setStatus('TON address copied');
 
     }
 
-    function saveProfile() {
+
+    /*
+      SAVE PROFILE TO SUPABASE
+    */
+
+    async function saveProfile() {
 
       const name =
         document
@@ -495,57 +552,165 @@
           .value
           .trim();
 
-      const address =
-        document
-          .getElementById('address')
-          .dataset
-          .fullAddress;
+      if (!currentWalletAddress) {
 
-      if (!name) {
-
-        alert('Please enter your name');
+        setStatus('Please connect your TON wallet first');
 
         return;
 
       }
 
-      const profile = {
+      if (!name) {
 
-        name: name,
+        setStatus('Please enter your name');
 
-        domain: domain,
+        return;
 
-        wallet: address
+      }
 
-      };
+      setStatus('Saving profile...');
 
-      localStorage.setItem(
+      const response =
+        await fetch(
 
-        'gramid_profile_' + address,
+          SUPABASE_URL +
+          '/rest/v1/profiles',
 
-        JSON.stringify(profile)
+          {
 
-      );
+            method: 'POST',
 
-      showProfile(profile);
+            headers: {
 
-      alert('Profile saved');
+              'Content-Type':
+                'application/json',
 
-    }
+              'apikey':
+                SUPABASE_KEY,
 
-    function loadProfile(address) {
+              'Authorization':
+                'Bearer ' +
+                SUPABASE_KEY,
 
-      const savedProfile =
-        localStorage.getItem(
+              'Prefer':
+                'resolution=merge-duplicates'
 
-          'gramid_profile_' + address
+            },
+
+            body: JSON.stringify({
+
+              wallet_address:
+                currentWalletAddress,
+
+              name:
+                name,
+
+              domain:
+                domain || null
+
+            })
+
+          }
 
         );
 
-      if (savedProfile) {
+
+      if (!response.ok) {
+
+        const error =
+          await response.text();
+
+        console.error(error);
+
+        setStatus(
+          'Error saving profile'
+        );
+
+        return;
+
+      }
+
+
+      showProfile({
+
+        name: name,
+
+        domain: domain
+
+      });
+
+      setStatus(
+        'Profile saved online'
+      );
+
+    }
+
+
+    /*
+      LOAD PROFILE FROM SUPABASE
+    */
+
+    async function loadProfile() {
+
+      if (!currentWalletAddress) {
+
+        return;
+
+      }
+
+      const response =
+        await fetch(
+
+          SUPABASE_URL +
+          '/rest/v1/profiles' +
+
+          '?wallet_address=eq.' +
+
+          encodeURIComponent(
+            currentWalletAddress
+          ) +
+
+          '&select=*',
+
+          {
+
+            method: 'GET',
+
+            headers: {
+
+              'apikey':
+                SUPABASE_KEY,
+
+              'Authorization':
+                'Bearer ' +
+                SUPABASE_KEY
+
+            }
+
+          }
+
+        );
+
+
+      if (!response.ok) {
+
+        console.error(
+          await response.text()
+        );
+
+        return;
+
+      }
+
+
+      const profiles =
+        await response.json();
+
+
+      if (profiles.length > 0) {
 
         const profile =
-          JSON.parse(savedProfile);
+          profiles[0];
 
         document
           .getElementById('profileName')
@@ -562,6 +727,11 @@
       }
 
     }
+
+
+    /*
+      SHOW SAVED PROFILE
+    */
 
     function showProfile(profile) {
 
@@ -584,25 +754,114 @@
 
     }
 
-    function clearProfile() {
 
-      const address =
+    /*
+      PUBLIC PROFILE VIEW
+    */
+
+    function viewPublicProfile() {
+
+      const name =
         document
-          .getElementById('address')
-          .dataset
-          .fullAddress;
+          .getElementById('profileName')
+          .value
+          .trim();
 
-      if (!address) {
+      const domain =
+        document
+          .getElementById('profileDomain')
+          .value
+          .trim();
+
+      if (!name) {
+
+        setStatus(
+          'Please save your profile first'
+        );
 
         return;
 
       }
 
-      localStorage.removeItem(
 
-        'gramid_profile_' + address
+      document
+        .getElementById('publicName')
+        .textContent =
+        name;
 
+      document
+        .getElementById('publicDomain')
+        .textContent =
+        domain ||
+        'TON domain not added';
+
+      document
+        .getElementById('publicWallet')
+        .textContent =
+
+        currentWalletAddress.slice(0, 6) +
+        '...' +
+        currentWalletAddress.slice(-6);
+
+
+      document
+        .getElementById('editProfile')
+        .style
+        .display =
+        'none';
+
+      document
+        .getElementById('publicProfile')
+        .style
+        .display =
+        'block';
+
+    }
+
+
+    /*
+      BACK TO EDIT
+    */
+
+    function backToEdit() {
+
+      document
+        .getElementById('editProfile')
+        .style
+        .display =
+        'block';
+
+      document
+        .getElementById('publicProfile')
+        .style
+        .display =
+        'none';
+
+    }
+
+
+    /*
+      COPY PROFILE LINK
+    */
+
+    function copyProfileLink() {
+
+      navigator.clipboard.writeText(
+        window.location.href
       );
+
+      setStatus(
+        'Profile link copied'
+      );
+
+    }
+
+
+    /*
+      CLEAR LOCAL FORM
+    */
+
+    function clearProfile() {
 
       document
         .getElementById('profileName')
@@ -626,95 +885,16 @@
         .display =
         'none';
 
-      alert('Profile cleared');
-
-    }
-
-    function viewPublicProfile() {
-
-      const name =
-        document
-          .getElementById('profileName')
-          .value
-          .trim();
-
-      const domain =
-        document
-          .getElementById('profileDomain')
-          .value
-          .trim();
-
-      const address =
-        document
-          .getElementById('address')
-          .dataset
-          .fullAddress;
-
-      if (!name) {
-
-        alert('Please save your profile first');
-
-        return;
-
-      }
-
-      document
-        .getElementById('publicName')
-        .textContent =
-        name;
-
-      document
-        .getElementById('publicDomain')
-        .textContent =
-        domain ||
-        'TON domain not added';
-
-      document
-        .getElementById('publicWallet')
-        .textContent =
-        address.slice(0, 6) +
-        '...' +
-        address.slice(-6);
-
-      document
-        .getElementById('editProfile')
-        .style
-        .display =
-        'none';
-
-      document
-        .getElementById('publicProfile')
-        .style
-        .display =
-        'block';
-
-    }
-
-    function backToEdit() {
-
-      document
-        .getElementById('editProfile')
-        .style
-        .display =
-        'block';
-
-      document
-        .getElementById('publicProfile')
-        .style
-        .display =
-        'none';
-
-    }
-
-    function copyProfileLink() {
-
-      navigator.clipboard.writeText(
-        window.location.href
+      setStatus(
+        'Form cleared'
       );
 
-      alert('Profile link copied');
-
     }
+
+
+    /*
+      DISCONNECT WALLET
+    */
 
     async function disconnectWallet() {
 
