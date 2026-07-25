@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   >
 
@@ -19,27 +19,22 @@
   <style>
 
     :root {
-      --bg: #07080b;
+      --bg: #08090c;
+      --panel: rgba(18, 20, 25, 0.88);
+      --panel-2: rgba(255, 255, 255, 0.035);
+      --border: rgba(255, 255, 255, 0.10);
+      --border-soft: rgba(255, 255, 255, 0.065);
 
-      --panel: rgba(17, 19, 24, 0.82);
+      --text: #f5f7fb;
+      --muted: #929aa8;
+      --muted-2: #69717d;
 
-      --panel-soft: rgba(255, 255, 255, 0.035);
+      --blue: #78b9ff;
+      --blue-dark: #386fae;
+      --purple: #8277e8;
 
-      --border: rgba(255, 255, 255, 0.09);
-
-      --border-soft: rgba(255, 255, 255, 0.055);
-
-      --text: #f5f7fa;
-
-      --muted: #8e96a3;
-
-      --muted-2: #646b77;
-
-      --accent: #65a7ff;
-
-      --accent-2: #8b7cff;
-
-      --success: #69d89a;
+      --success: #72d7a0;
+      --danger: #d98383;
     }
 
 
@@ -62,25 +57,26 @@
       color: var(--text);
 
       font-family:
-        "Inter",
+        "Manrope",
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
 
-      letter-spacing: -0.015em;
+      letter-spacing: -0.018em;
 
       background:
+
         radial-gradient(
-          900px 500px at 50% -120px,
-          rgba(91, 120, 255, 0.16),
-          transparent 65%
+          900px 500px at 50% -180px,
+          rgba(93, 123, 255, 0.13),
+          transparent 70%
         ),
 
         radial-gradient(
-          700px 500px at 100% 40%,
-          rgba(103, 74, 255, 0.07),
-          transparent 70%
+          700px 600px at 100% 35%,
+          rgba(111, 81, 255, 0.055),
+          transparent 72%
         ),
 
         var(--bg);
@@ -97,7 +93,10 @@
 
       pointer-events: none;
 
+      opacity: 0.35;
+
       background:
+
         linear-gradient(
           rgba(255,255,255,0.012) 1px,
           transparent 1px
@@ -109,13 +108,13 @@
           transparent 1px
         );
 
-      background-size: 64px 64px;
+      background-size: 72px 72px;
 
       mask-image:
         linear-gradient(
           to bottom,
           black,
-          transparent 80%
+          transparent 75%
         );
     }
 
@@ -152,42 +151,94 @@
 
       align-items: center;
 
-      gap: 12px;
+      gap: 13px;
 
       font-size: 18px;
 
-      font-weight: 700;
+      font-weight: 800;
 
-      letter-spacing: -0.04em;
+      letter-spacing: -0.045em;
     }
 
 
     .brand-mark {
 
-      width: 30px;
+      width: 38px;
 
-      height: 30px;
+      height: 38px;
 
       display: grid;
 
       place-items: center;
 
-      border-radius: 9px;
+      overflow: visible;
 
-      color: white;
-
-      font-size: 15px;
+      border-radius: 11px;
 
       background:
-        linear-gradient(
-          135deg,
-          #6caaff,
-          #806fff
-        );
+        radial-gradient(
+          circle at 35% 25%,
+          rgba(255,255,255,0.16),
+          transparent 48%
+        ),
+
+        rgba(255,255,255,0.025);
 
       box-shadow:
-        0 0 30px
-        rgba(103, 137, 255, 0.28);
+
+        0 0 20px
+        rgba(105, 165, 255, 0.28),
+
+        0 0 55px
+        rgba(101, 91, 238, 0.13);
+    }
+
+
+    .diamond-mark svg {
+
+      width: 37px;
+
+      height: 37px;
+
+      display: block;
+
+      filter:
+
+        drop-shadow(
+          0 0 5px
+          rgba(185, 225, 255, 0.85)
+        )
+
+        drop-shadow(
+          0 0 18px
+          rgba(105, 91, 238, 0.45)
+        );
+
+      transition:
+
+        transform 0.4s ease,
+
+        filter 0.4s ease;
+    }
+
+
+    .diamond-mark:hover svg {
+
+      transform:
+        rotate(7deg)
+        scale(1.08);
+
+      filter:
+
+        drop-shadow(
+          0 0 9px
+          rgba(225, 246, 255, 1)
+        )
+
+        drop-shadow(
+          0 0 28px
+          rgba(120, 105, 255, 0.75)
+        );
     }
 
 
@@ -195,11 +246,11 @@
 
       color: var(--muted-2);
 
-      font-size: 12px;
+      font-size: 11px;
 
-      font-weight: 600;
+      font-weight: 700;
 
-      letter-spacing: 0.08em;
+      letter-spacing: 0.13em;
     }
 
 
@@ -223,26 +274,26 @@
 
       gap: 8px;
 
-      margin-bottom: 22px;
+      margin-bottom: 23px;
 
       padding:
         8px
-        13px;
+        14px;
 
       border: 1px solid var(--border);
 
       border-radius: 999px;
 
-      color: #aab5c7;
+      color: #aab4c4;
 
       background:
         rgba(255,255,255,0.025);
 
-      font-size: 12px;
+      font-size: 11px;
 
-      font-weight: 500;
+      font-weight: 600;
 
-      letter-spacing: 0.04em;
+      letter-spacing: 0.055em;
     }
 
 
@@ -258,7 +309,7 @@
 
       box-shadow:
         0 0 12px
-        rgba(105, 216, 154, 0.8);
+        rgba(114, 215, 160, 0.8);
     }
 
 
@@ -277,7 +328,7 @@
 
       font-weight: 800;
 
-      letter-spacing: -0.075em;
+      letter-spacing: -0.085em;
     }
 
 
@@ -286,11 +337,12 @@
       color: transparent;
 
       background:
+
         linear-gradient(
           135deg,
           #ffffff 0%,
-          #aebdff 45%,
-          #75aaff 100%
+          #c1caff 42%,
+          #78b7ff 100%
         );
 
       -webkit-background-clip: text;
@@ -304,16 +356,14 @@
       max-width: 590px;
 
       margin:
-        26px auto
+        27px auto
         0;
 
       color: var(--muted);
 
-      font-size: 18px;
+      font-size: 17px;
 
-      font-weight: 400;
-
-      line-height: 1.65;
+      line-height: 1.7;
     }
 
 
@@ -340,6 +390,7 @@
       border-radius: 26px;
 
       background:
+
         linear-gradient(
           145deg,
           rgba(255,255,255,0.055),
@@ -347,8 +398,9 @@
         );
 
       box-shadow:
+
         0 30px 100px
-        rgba(0,0,0,0.35);
+        rgba(0,0,0,0.38);
 
       backdrop-filter: blur(24px);
     }
@@ -380,9 +432,9 @@
 
       font-size: 21px;
 
-      font-weight: 700;
+      font-weight: 800;
 
-      letter-spacing: -0.035em;
+      letter-spacing: -0.045em;
     }
 
 
@@ -394,9 +446,9 @@
 
       color: var(--muted);
 
-      font-size: 14px;
+      font-size: 13px;
 
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
 
@@ -419,11 +471,11 @@
 
       color: var(--muted-2);
 
-      font-size: 11px;
+      font-size: 10px;
 
-      font-weight: 700;
+      font-weight: 800;
 
-      letter-spacing: 0.12em;
+      letter-spacing: 0.13em;
 
       text-transform: uppercase;
     }
@@ -474,11 +526,11 @@
 
       color: var(--muted-2);
 
-      font-size: 11px;
+      font-size: 10px;
 
-      font-weight: 600;
+      font-weight: 800;
 
-      letter-spacing: 0.08em;
+      letter-spacing: 0.10em;
 
       text-transform: uppercase;
     }
@@ -517,9 +569,21 @@
 
       font-family: inherit;
 
-      font-size: 12px;
+      font-size: 11px;
 
-      font-weight: 600;
+      font-weight: 700;
+
+      transition: 0.2s ease;
+    }
+
+
+    .copy-button:hover {
+
+      background:
+        rgba(255,255,255,0.09);
+
+      border-color:
+        rgba(255,255,255,0.22);
     }
 
 
@@ -542,11 +606,11 @@
         0
         16px;
 
-      font-size: 16px;
+      font-size: 15px;
 
-      font-weight: 700;
+      font-weight: 800;
 
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
     }
 
 
@@ -577,7 +641,7 @@
 
       font-family: inherit;
 
-      font-size: 14px;
+      font-size: 13px;
 
       transition:
         border-color 0.2s,
@@ -588,7 +652,7 @@
     .profile-input:focus {
 
       border-color:
-        rgba(101,167,255,0.7);
+        rgba(120,185,255,0.65);
 
       background:
         rgba(255,255,255,0.055);
@@ -633,16 +697,20 @@
 
       font-family: inherit;
 
-      font-size: 13px;
+      font-size: 12px;
 
-      font-weight: 600;
+      font-weight: 700;
 
       letter-spacing: -0.01em;
 
       transition:
+
         transform 0.2s ease,
+
         opacity 0.2s ease,
+
         background 0.2s ease,
+
         border-color 0.2s ease;
     }
 
@@ -651,17 +719,18 @@
 
       transform: translateY(-1px);
 
-      opacity: 0.92;
+      opacity: 0.94;
     }
 
 
     .save-button {
 
       background:
+
         linear-gradient(
           135deg,
-          #2d9e83,
-          #1c7d68
+          #2c9179,
+          #1c705e
         );
     }
 
@@ -669,10 +738,11 @@
     .verify-button {
 
       background:
+
         linear-gradient(
           135deg,
-          #2c8dca,
-          #246ca4
+          #347eae,
+          #285d8b
         );
     }
 
@@ -683,13 +753,18 @@
 
       margin-top: 10px;
 
-      color: #dbe7f7;
+      color: #dbe8f8;
 
       background:
-        rgba(101, 167, 255, 0.08);
+
+        linear-gradient(
+          135deg,
+          rgba(75,132,194,0.20),
+          rgba(83,72,161,0.16)
+        );
 
       border-color:
-        rgba(101, 167, 255, 0.28);
+        rgba(120,185,255,0.30);
     }
 
 
@@ -698,10 +773,15 @@
       color: white;
 
       background:
-        rgba(101, 167, 255, 0.15);
+
+        linear-gradient(
+          135deg,
+          rgba(75,132,194,0.30),
+          rgba(83,72,161,0.24)
+        );
 
       border-color:
-        rgba(101, 167, 255, 0.5);
+        rgba(120,185,255,0.55);
     }
 
 
@@ -711,25 +791,25 @@
 
       margin-top: 10px;
 
-      color: #c3cad5;
+      color: #c9d0da;
 
       background:
-        rgba(255, 255, 255, 0.035);
+        rgba(255,255,255,0.035);
 
       border-color:
-        rgba(255, 255, 255, 0.12);
+        rgba(255,255,255,0.13);
     }
 
 
     .clear-button:hover {
 
-      color: #e6ebf2;
+      color: #f0f3f7;
 
       background:
-        rgba(255, 255, 255, 0.07);
+        rgba(255,255,255,0.075);
 
       border-color:
-        rgba(255, 255, 255, 0.22);
+        rgba(255,255,255,0.25);
     }
 
 
@@ -739,25 +819,25 @@
 
       margin-top: 10px;
 
-      color: #aeb8c7;
+      color: #b8c1ce;
 
       background:
-        rgba(255, 255, 255, 0.018);
+        rgba(255,255,255,0.018);
 
       border-color:
-        rgba(255, 255, 255, 0.08);
+        rgba(255,255,255,0.09);
     }
 
 
     .disconnect-button:hover {
 
-      color: #d5dce7;
+      color: #f0f3f7;
 
       background:
-        rgba(255, 255, 255, 0.055);
+        rgba(255,255,255,0.065);
 
       border-color:
-        rgba(255, 255, 255, 0.18);
+        rgba(255,255,255,0.20);
     }
 
 
@@ -783,9 +863,9 @@
 
       text-decoration: none;
 
-      font-size: 13px;
+      font-size: 12px;
 
-      font-weight: 600;
+      font-weight: 700;
     }
 
 
@@ -802,6 +882,7 @@
       border-radius: 18px;
 
       background:
+
         linear-gradient(
           145deg,
           rgba(101,167,255,0.08),
@@ -814,9 +895,9 @@
 
       color: var(--muted-2);
 
-      font-size: 10px;
+      font-size: 9px;
 
-      font-weight: 700;
+      font-weight: 800;
 
       letter-spacing: 0.13em;
 
@@ -828,11 +909,11 @@
 
       margin-top: 13px;
 
-      font-size: 25px;
+      font-size: 24px;
 
-      font-weight: 750;
+      font-weight: 800;
 
-      letter-spacing: -0.04em;
+      letter-spacing: -0.05em;
     }
 
 
@@ -842,7 +923,7 @@
 
       color: #8bbcff;
 
-      font-size: 14px;
+      font-size: 13px;
     }
 
 
@@ -852,7 +933,7 @@
 
       color: #7ca9e7;
 
-      font-size: 14px;
+      font-size: 13px;
     }
 
 
@@ -864,7 +945,7 @@
 
       color: var(--muted);
 
-      font-size: 13px;
+      font-size: 12px;
 
       text-align: center;
     }
@@ -912,11 +993,11 @@
 
       color: #9ca7b8;
 
-      font-size: 11px;
+      font-size: 10px;
 
-      font-weight: 600;
+      font-weight: 700;
 
-      letter-spacing: 0.08em;
+      letter-spacing: 0.09em;
 
       text-transform: uppercase;
     }
@@ -940,9 +1021,9 @@
 
     .auth-icon {
 
-      width: 56px;
+      width: 62px;
 
-      height: 56px;
+      height: 62px;
 
       display: grid;
 
@@ -951,20 +1032,35 @@
       border: 1px solid
         rgba(255,255,255,0.12);
 
-      border-radius: 18px;
-
-      font-size: 26px;
+      border-radius: 20px;
 
       background:
+
         linear-gradient(
           135deg,
-          rgba(101,167,255,0.24),
-          rgba(139,124,255,0.24)
+          rgba(101,167,255,0.20),
+          rgba(139,124,255,0.20)
         );
 
       box-shadow:
+
         0 0 45px
-        rgba(101,167,255,0.16);
+        rgba(101,167,255,0.15);
+    }
+
+
+    .auth-icon svg {
+
+      width: 47px;
+
+      height: 47px;
+
+      filter:
+
+        drop-shadow(
+          0 0 6px
+          rgba(180,225,255,0.85)
+        );
     }
 
 
@@ -977,9 +1073,9 @@
 
       font-size: 28px;
 
-      font-weight: 700;
+      font-weight: 800;
 
-      letter-spacing: -0.05em;
+      letter-spacing: -0.065em;
     }
 
 
@@ -989,9 +1085,9 @@
 
       color: var(--muted);
 
-      font-size: 14px;
+      font-size: 13px;
 
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
 
@@ -1005,15 +1101,17 @@
         0;
 
       background:
+
         linear-gradient(
           135deg,
-          #5f8fff,
-          #806eff
+          #5e8cff,
+          #7568eb
         );
 
       box-shadow:
+
         0 12px 35px
-        rgba(93, 116, 255, 0.2);
+        rgba(93,116,255,0.20);
     }
 
 
@@ -1030,7 +1128,7 @@
       border-radius: 18px;
 
       background:
-        rgba(0,0,0,0.2);
+        rgba(0,0,0,0.20);
 
       text-align: center;
     }
@@ -1052,9 +1150,9 @@
 
       color: var(--success);
 
-      font-size: 13px;
+      font-size: 12px;
 
-      font-weight: 600;
+      font-weight: 700;
     }
 
 
@@ -1065,11 +1163,11 @@
         0
         6px;
 
-      font-size: 24px;
+      font-size: 23px;
 
-      font-weight: 700;
+      font-weight: 800;
 
-      letter-spacing: -0.04em;
+      letter-spacing: -0.05em;
     }
 
 
@@ -1079,7 +1177,7 @@
 
       color: #8bbcff;
 
-      font-size: 14px;
+      font-size: 13px;
     }
 
 
@@ -1089,9 +1187,9 @@
 
       color: var(--success);
 
-      font-size: 13px;
+      font-size: 12px;
 
-      font-weight: 600;
+      font-weight: 700;
     }
 
 
@@ -1126,9 +1224,9 @@
       background:
         rgba(255,255,255,0.025);
 
-      font-size: 13px;
+      font-size: 12px;
 
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
 
@@ -1140,9 +1238,9 @@
 
       color: #f1f4f8;
 
-      font-size: 14px;
+      font-size: 13px;
 
-      font-weight: 650;
+      font-weight: 800;
     }
 
 
@@ -1152,7 +1250,7 @@
 
       color: var(--muted-2);
 
-      font-size: 12px;
+      font-size: 11px;
 
       text-align: center;
     }
@@ -1257,8 +1355,386 @@
       <div class="brand">
 
 
-        <div class="brand-mark">
-          ◈
+        <div class="brand-mark diamond-mark">
+
+          <svg
+            viewBox="0 0 120 120"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-label="GramID Diamond"
+          >
+
+            <defs>
+
+              <linearGradient
+                id="diamond-main"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="1"
+              >
+
+                <stop
+                  offset="0%"
+                  stop-color="#ffffff"
+                />
+
+                <stop
+                  offset="25%"
+                  stop-color="#c9edff"
+                />
+
+                <stop
+                  offset="55%"
+                  stop-color="#6daeff"
+                />
+
+                <stop
+                  offset="100%"
+                  stop-color="#6257e8"
+                />
+
+              </linearGradient>
+
+
+              <linearGradient
+                id="diamond-blue"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="1"
+              >
+
+                <stop
+                  offset="0%"
+                  stop-color="#e8f9ff"
+                />
+
+                <stop
+                  offset="45%"
+                  stop-color="#7dc9ff"
+                />
+
+                <stop
+                  offset="100%"
+                  stop-color="#3e68c7"
+                />
+
+              </linearGradient>
+
+
+              <linearGradient
+                id="diamond-purple"
+                x1="1"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
+
+                <stop
+                  offset="0%"
+                  stop-color="#f0edff"
+                />
+
+                <stop
+                  offset="45%"
+                  stop-color="#a89bff"
+                />
+
+                <stop
+                  offset="100%"
+                  stop-color="#5146b8"
+                />
+
+              </linearGradient>
+
+
+              <linearGradient
+                id="diamond-dark-blue"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="1"
+              >
+
+                <stop
+                  offset="0%"
+                  stop-color="#79c7ff"
+                />
+
+                <stop
+                  offset="100%"
+                  stop-color="#263a91"
+                />
+
+              </linearGradient>
+
+
+              <linearGradient
+                id="diamond-dark-purple"
+                x1="1"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
+
+                <stop
+                  offset="0%"
+                  stop-color="#9c8fff"
+                />
+
+                <stop
+                  offset="100%"
+                  stop-color="#30256f"
+                />
+
+              </linearGradient>
+
+
+              <radialGradient
+                id="diamond-center"
+                cx="35%"
+                cy="20%"
+                r="90%"
+              >
+
+                <stop
+                  offset="0%"
+                  stop-color="#ffffff"
+                />
+
+                <stop
+                  offset="25%"
+                  stop-color="#e4f8ff"
+                />
+
+                <stop
+                  offset="55%"
+                  stop-color="#82c7ff"
+                />
+
+                <stop
+                  offset="100%"
+                  stop-color="#6659ee"
+                />
+
+              </radialGradient>
+
+
+              <filter
+                id="diamond-glow"
+                x="-100%"
+                y="-100%"
+                width="300%"
+                height="300%"
+              >
+
+                <feGaussianBlur
+                  stdDeviation="3"
+                  result="blur"
+                />
+
+                <feMerge>
+
+                  <feMergeNode
+                    in="blur"
+                  />
+
+                  <feMergeNode
+                    in="SourceGraphic"
+                  />
+
+                </feMerge>
+
+              </filter>
+
+            </defs>
+
+
+            <polygon
+              points="
+                60,4
+                86,12
+                108,38
+                96,72
+                60,112
+                24,72
+                12,38
+                34,12
+              "
+              fill="url(#diamond-main)"
+              filter="url(#diamond-glow)"
+            />
+
+
+            <polygon
+              points="60,4 34,12 45,38 60,30"
+              fill="url(#diamond-blue)"
+            />
+
+
+            <polygon
+              points="60,4 60,30 75,38 86,12"
+              fill="url(#diamond-purple)"
+            />
+
+
+            <polygon
+              points="34,12 12,38 45,38"
+              fill="#8ed5ff"
+            />
+
+
+            <polygon
+              points="86,12 108,38 75,38"
+              fill="#a69aff"
+            />
+
+
+            <polygon
+              points="45,38 60,30 75,38 60,58"
+              fill="url(#diamond-center)"
+            />
+
+
+            <polygon
+              points="12,38 45,38 60,58 24,72"
+              fill="url(#diamond-blue)"
+            />
+
+
+            <polygon
+              points="108,38 75,38 60,58 96,72"
+              fill="url(#diamond-purple)"
+            />
+
+
+            <polygon
+              points="24,72 60,58 60,112"
+              fill="url(#diamond-dark-blue)"
+            />
+
+
+            <polygon
+              points="96,72 60,58 60,112"
+              fill="url(#diamond-dark-purple)"
+            />
+
+
+            <polygon
+              points="12,38 28,46 45,38"
+              fill="rgba(255,255,255,0.22)"
+            />
+
+
+            <polygon
+              points="108,38 92,46 75,38"
+              fill="rgba(255,255,255,0.18)"
+            />
+
+
+            <polygon
+              points="28,46 42,52 60,58 45,38"
+              fill="rgba(255,255,255,0.18)"
+            />
+
+
+            <polygon
+              points="92,46 78,52 60,58 75,38"
+              fill="rgba(255,255,255,0.12)"
+            />
+
+
+            <polygon
+              points="24,72 42,52 60,58 38,82"
+              fill="rgba(53,91,190,0.55)"
+            />
+
+
+            <polygon
+              points="96,72 78,52 60,58 82,82"
+              fill="rgba(70,52,155,0.55)"
+            />
+
+
+            <polygon
+              points="38,82 60,58 60,112"
+              fill="rgba(82,145,235,0.55)"
+            />
+
+
+            <polygon
+              points="82,82 60,58 60,112"
+              fill="rgba(75,61,174,0.55)"
+            />
+
+
+            <g
+              fill="none"
+              stroke="rgba(255,255,255,0.68)"
+              stroke-width="1"
+              stroke-linejoin="round"
+            >
+
+              <path
+                d="M12 38 L34 12 L60 4 L86 12 L108 38"
+              />
+
+              <path
+                d="M12 38 L24 72 L60 112 L96 72 L108 38"
+              />
+
+              <path
+                d="M34 12 L45 38 L60 30 L75 38 L86 12"
+              />
+
+              <path
+                d="M45 38 L60 58 L75 38"
+              />
+
+              <path
+                d="M24 72 L60 58 L96 72"
+              />
+
+              <path
+                d="M60 4 L60 30 L60 58 L60 112"
+              />
+
+              <path
+                d="M12 38 L45 38"
+              />
+
+              <path
+                d="M108 38 L75 38"
+              />
+
+              <path
+                d="M24 72 L38 82 L60 58 L82 82 L96 72"
+              />
+
+            </g>
+
+
+            <path
+              d="M32 18 L45 12 L39 31 Z"
+              fill="rgba(255,255,255,0.85)"
+            />
+
+
+            <path
+              d="M78 18 L88 25 L79 31 Z"
+              fill="rgba(255,255,255,0.55)"
+            />
+
+
+            <circle
+              cx="43"
+              cy="23"
+              r="2"
+              fill="white"
+            />
+
+          </svg>
+
         </div>
 
 
@@ -1574,7 +2050,89 @@
 
 
             <div class="auth-icon">
-              ◈
+
+              <svg
+                viewBox="0 0 120 120"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+
+                <polygon
+                  points="
+                    60,4
+                    86,12
+                    108,38
+                    96,72
+                    60,112
+                    24,72
+                    12,38
+                    34,12
+                  "
+                  fill="url(#authDiamond)"
+                />
+
+                <defs>
+
+                  <linearGradient
+                    id="authDiamond"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                  >
+
+                    <stop
+                      offset="0%"
+                      stop-color="#ffffff"
+                    />
+
+                    <stop
+                      offset="45%"
+                      stop-color="#82c7ff"
+                    />
+
+                    <stop
+                      offset="100%"
+                      stop-color="#6257e8"
+                    />
+
+                  </linearGradient>
+
+                </defs>
+
+                <g
+                  fill="none"
+                  stroke="rgba(255,255,255,0.72)"
+                  stroke-width="1"
+                >
+
+                  <path
+                    d="M12 38 L34 12 L60 4 L86 12 L108 38"
+                  />
+
+                  <path
+                    d="M12 38 L24 72 L60 112 L96 72 L108 38"
+                  />
+
+                  <path
+                    d="M34 12 L45 38 L60 30 L75 38 L86 12"
+                  />
+
+                  <path
+                    d="M45 38 L60 58 L75 38"
+                  />
+
+                  <path
+                    d="M24 72 L60 58 L96 72"
+                  />
+
+                  <path
+                    d="M60 4 L60 30 L60 58 L60 112"
+                  />
+
+                </g>
+
+              </svg>
+
             </div>
 
 
