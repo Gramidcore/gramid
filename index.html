@@ -125,7 +125,7 @@
       color: white;
     }
 
-    .verify-button {
+    .telegram-button {
       background: #229ed9;
       color: white;
     }
@@ -182,17 +182,6 @@
       color: #aab2c5;
       font-size: 14px;
       min-height: 20px;
-    }
-
-    .telegram-link {
-      display: none;
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 10px;
-      background: #229ed9;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
     }
 
     .features {
@@ -308,17 +297,12 @@
         </button>
 
         <button
-          class="button verify-button"
-          onclick="verifyTelegram()">
-          Verify Telegram
+          class="button telegram-button"
+          id="connectTelegramButton"
+          onclick="connectTelegram()"
+          style="display: none;">
+          Connect Telegram
         </button>
-
-        <a
-          class="telegram-link"
-          id="telegramLink"
-          target="_blank">
-          Open Telegram and Verify
-        </a>
 
         <div
           class="profile-result"
@@ -406,9 +390,12 @@
     const SUPABASE_KEY =
       'sb_publishable_WHFBkb-8c_iDJ2uBG9g2TQ_CSMkumUg';
 
-    const VERIFY_FUNCTION_URL =
-      SUPABASE_URL +
-      '/functions/v1/verify-telegram';
+    const TELEGRAM_BOT_USERNAME =
+      'Gram_id_bot';
+
+    let currentWalletAddress = '';
+
+    let currentTelegramLinkCode = '';
 
 
     const tonConnectUI =
@@ -421,9 +408,6 @@
           'ton-connect'
 
       });
-
-
-    let currentWalletAddress = '';
 
 
     function setStatus(message) {
@@ -465,6 +449,8 @@
 
         currentWalletAddress = '';
 
+        currentTelegramLinkCode = '';
+
         identity.style.display =
           'none';
 
@@ -483,7 +469,9 @@
 
       navigator.clipboard.writeText(address);
 
-      setStatus('TON address copied');
+      setStatus(
+        'TON address copied'
+      );
 
     }
 
@@ -546,7 +534,7 @@
             encodeURIComponent(
               currentWalletAddress
             ) +
-            '&select=id',
+            '&select=id,telegram_link_code',
 
             {
 
@@ -581,6 +569,20 @@
           await checkResponse.json();
 
 
+        let telegramLinkCode =
+          existingProfiles.length > 0
+            ? existingProfiles[0].telegram_link_code
+            : null;
+
+
+        if (!telegramLinkCode) {
+
+          telegramLinkCode =
+            crypto.randomUUID();
+
+        }
+
+
         const profileData = {
 
           wallet_address:
@@ -595,7 +597,10 @@
 
           telegram_username:
             telegramUsername ||
-            null
+            null,
+
+          telegram_link_code:
+            telegramLinkCode
 
         };
 
@@ -692,7 +697,21 @@
         }
 
 
+        currentTelegramLinkCode =
+          telegramLinkCode;
+
+
+        document
+          .getElementById(
+            'connectTelegramButton'
+          )
+          .style
+          .display =
+          'inline-block';
+
+
         showProfile(profileData);
+
 
         setStatus(
           'Profile saved online'
@@ -706,6 +725,7 @@
           error
         );
 
+
         setStatus(
           'Error: ' +
           error.message
@@ -716,19 +736,12 @@
     }
 
 
-    async function verifyTelegram() {
+    function connectTelegram() {
 
-      const telegramUsername =
-        document
-          .getElementById('telegramUsername')
-          .value
-          .trim();
-
-
-      if (!currentWalletAddress) {
+      if (!currentTelegramLinkCode) {
 
         setStatus(
-          'Please connect your TON wallet first'
+          'Please save your profile first'
         );
 
         return;
@@ -736,104 +749,24 @@
       }
 
 
-      if (!telegramUsername) {
-
-        setStatus(
-          'Please enter your Telegram username'
+      const telegramUrl =
+        'https://t.me/' +
+        TELEGRAM_BOT_USERNAME +
+        '?start=' +
+        encodeURIComponent(
+          currentTelegramLinkCode
         );
 
-        return;
 
-      }
-
-
-      setStatus(
-        'Creating Telegram verification link...'
+      window.open(
+        telegramUrl,
+        '_blank'
       );
 
 
-      try {
-
-        const response =
-          await fetch(
-
-            VERIFY_FUNCTION_URL,
-
-            {
-
-              method: 'POST',
-
-              headers: {
-
-                'Content-Type':
-                  'application/json',
-
-                'apikey':
-                  SUPABASE_KEY
-
-              },
-
-              body: JSON.stringify({
-
-                wallet:
-                  currentWalletAddress,
-
-                telegram_username:
-                  telegramUsername
-
-              })
-
-            }
-
-          );
-
-
-        const data =
-          await response.json();
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            data.error ||
-            'Verification error'
-          );
-
-        }
-
-
-        const telegramLink =
-          document
-            .getElementById('telegramLink');
-
-
-        telegramLink.href =
-          data.verification_url;
-
-
-        telegramLink.style.display =
-          'block';
-
-
-        setStatus(
-          'Verification link created'
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          'Telegram verification error:',
-          error
-        );
-
-
-        setStatus(
-          'Error: ' +
-          error.message
-        );
-
-      }
+      setStatus(
+        'Telegram connection link opened'
+      );
 
     }
 
@@ -917,6 +850,26 @@
           .value =
           profile.telegram_username ||
           '';
+
+
+        currentTelegramLinkCode =
+          profile.telegram_link_code ||
+          '';
+
+
+        if (
+          currentTelegramLinkCode
+        ) {
+
+          document
+            .getElementById(
+              'connectTelegramButton'
+            )
+            .style
+            .display =
+            'inline-block';
+
+        }
 
 
         showProfile(profile);
@@ -1014,15 +967,21 @@
         '';
 
 
+      currentTelegramLinkCode =
+        '';
+
+
       document
-        .getElementById('profileResult')
+        .getElementById(
+          'connectTelegramButton'
+        )
         .style
         .display =
         'none';
 
 
       document
-        .getElementById('telegramLink')
+        .getElementById('profileResult')
         .style
         .display =
         'none';
