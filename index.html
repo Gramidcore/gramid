@@ -1,153 +1,2826 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+<!DOCTYPE html>
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
-const SUPABASE_SERVICE_ROLE_KEY =
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  <title>GramID — Web3 Identity for TON</title>
 
-const supabase = createClient(
-  SUPABASE_URL,
-  SUPABASE_SERVICE_ROLE_KEY
-);
+  <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
 
-Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", {
-      headers: corsHeaders,
+  <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+
+    :root {
+
+      --bg: #07090f;
+
+      --surface: rgba(255, 255, 255, 0.045);
+
+      --surface-strong: rgba(255, 255, 255, 0.065);
+
+      --border: rgba(255, 255, 255, 0.10);
+
+      --border-soft: rgba(255, 255, 255, 0.065);
+
+      --text: #ffffff;
+
+      --muted: #929aaa;
+
+      --blue: #38bdf8;
+
+      --blue-strong: #229ed9;
+
+      --purple: #8b5cf6;
+
+      --green: #34d399;
+
+      --red: #fb7185;
+
+      --radius-lg: 28px;
+
+      --radius-md: 18px;
+
+      --radius-sm: 12px;
+
+      --space-1: 8px;
+
+      --space-2: 16px;
+
+      --space-3: 24px;
+
+      --space-4: 32px;
+
+      --space-5: 48px;
+
+    }
+
+
+    * {
+
+      box-sizing: border-box;
+
+    }
+
+
+    body {
+
+      margin: 0;
+
+      min-height: 100vh;
+
+      color: var(--text);
+
+      font-family:
+
+        'DM Sans',
+
+        -apple-system,
+
+        BlinkMacSystemFont,
+
+        'Segoe UI',
+
+        sans-serif;
+
+      background:
+
+        radial-gradient(
+
+          circle at 50% -10%,
+
+          rgba(56, 189, 248, 0.16),
+
+          transparent 34%
+
+        ),
+
+        radial-gradient(
+
+          circle at 100% 35%,
+
+          rgba(139, 92, 246, 0.12),
+
+          transparent 28%
+
+        ),
+
+        var(--bg);
+
+    }
+
+
+    body::before {
+
+      content: "";
+
+      position: fixed;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      opacity: 0.25;
+
+      background-image:
+
+        linear-gradient(
+
+          rgba(255, 255, 255, 0.025) 1px,
+
+          transparent 1px
+
+        ),
+
+        linear-gradient(
+
+          90deg,
+
+          rgba(255, 255, 255, 0.025) 1px,
+
+          transparent 1px
+
+        );
+
+      background-size: 48px 48px;
+
+      mask-image:
+
+        linear-gradient(
+
+          to bottom,
+
+          black,
+
+          transparent 70%
+
+        );
+
+    }
+
+
+    h1,
+
+    h2,
+
+    h3,
+
+    .brand,
+
+    .identity-name,
+
+    .profile-name {
+
+      font-family:
+
+        'Space Grotesk',
+
+        -apple-system,
+
+        BlinkMacSystemFont,
+
+        sans-serif;
+
+    }
+
+
+    button,
+
+    input {
+
+      font-family: inherit;
+
+    }
+
+
+    .container {
+
+      position: relative;
+
+      z-index: 1;
+
+      width: 100%;
+
+      max-width: 1040px;
+
+      margin: 0 auto;
+
+      padding: 32px 24px 64px;
+
+    }
+
+
+    .topbar {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      height: 48px;
+
+      margin-bottom: 96px;
+
+    }
+
+
+    .brand {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+      font-size: 23px;
+
+      font-weight: 700;
+
+      letter-spacing: -0.7px;
+
+    }
+
+
+    .brand-mark {
+
+      position: relative;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      width: 40px;
+
+      height: 40px;
+
+      overflow: hidden;
+
+      border-radius: 13px;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          #39d5ff 0%,
+
+          #229ed9 35%,
+
+          #7c5cff 70%,
+
+          #b48cff 100%
+
+        );
+
+      box-shadow:
+
+        0 0 24px
+
+        rgba(56, 189, 248, 0.38),
+
+        0 0 60px
+
+        rgba(124, 92, 255, 0.18);
+
+    }
+
+
+    .brand-mark::before {
+
+      content: "";
+
+      position: absolute;
+
+      inset: -30%;
+
+      background:
+
+        linear-gradient(
+
+          120deg,
+
+          transparent 28%,
+
+          rgba(255,255,255,0.85) 48%,
+
+          transparent 60%
+
+        );
+
+      transform: translateX(-70%) rotate(15deg);
+
+      animation: crystalShine 4.5s ease-in-out infinite;
+
+    }
+
+
+    .crystal {
+
+      position: relative;
+
+      z-index: 2;
+
+      width: 22px;
+
+      height: 22px;
+
+      transform: rotate(45deg);
+
+      border-radius: 5px;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          rgba(255,255,255,0.98) 0%,
+
+          rgba(218,247,255,0.95) 28%,
+
+          rgba(121,205,255,0.82) 48%,
+
+          rgba(255,255,255,0.95) 64%,
+
+          rgba(178,145,255,0.9) 100%
+
+        );
+
+      box-shadow:
+
+        inset 3px 3px 7px
+
+        rgba(255,255,255,0.8),
+
+        inset -4px -4px 8px
+
+        rgba(87, 63, 180, 0.4),
+
+        0 0 16px
+
+        rgba(150, 225, 255, 0.85);
+
+    }
+
+
+    .crystal::before {
+
+      content: "";
+
+      position: absolute;
+
+      top: 3px;
+
+      left: 4px;
+
+      width: 7px;
+
+      height: 12px;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          rgba(255,255,255,0.9),
+
+          transparent
+
+        );
+
+      clip-path: polygon(
+
+        0 0,
+
+        100% 35%,
+
+        55% 100%
+
+      );
+
+    }
+
+
+    .crystal::after {
+
+      content: "";
+
+      position: absolute;
+
+      right: 3px;
+
+      bottom: 3px;
+
+      width: 8px;
+
+      height: 9px;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          rgba(91,67,199,0.7),
+
+          rgba(255,255,255,0.5)
+
+        );
+
+      clip-path: polygon(
+
+        0 0,
+
+        100% 0,
+
+        55% 100%
+
+      );
+
+    }
+
+
+    @keyframes crystalShine {
+
+      0%,
+
+      55% {
+
+        transform: translateX(-90%) rotate(15deg);
+
+      }
+
+      75%,
+
+      100% {
+
+        transform: translateX(90%) rotate(15deg);
+
+      }
+
+    }
+
+
+    .network {
+
+      padding: 9px 14px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 999px;
+
+      color: var(--muted);
+
+      background: rgba(255, 255, 255, 0.035);
+
+      font-size: 12px;
+
+      letter-spacing: 0.2px;
+
+    }
+
+
+    .hero {
+
+      max-width: 760px;
+
+      margin: 0 auto;
+
+      text-align: center;
+
+    }
+
+
+    .eyebrow {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      min-height: 32px;
+
+      padding: 0 14px;
+
+      border: 1px solid
+
+        rgba(56, 189, 248, 0.22);
+
+      border-radius: 999px;
+
+      color: #9edfff;
+
+      background:
+
+        rgba(56, 189, 248, 0.07);
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      letter-spacing: 1.3px;
+
+      text-transform: uppercase;
+
+    }
+
+
+    .hero h1 {
+
+      margin: 24px 0 0;
+
+      font-size:
+
+        clamp(50px, 9vw, 92px);
+
+      line-height: 0.98;
+
+      letter-spacing: -5px;
+
+      font-weight: 700;
+
+    }
+
+
+    .gradient-text {
+
+      background:
+
+        linear-gradient(
+
+          110deg,
+
+          #ffffff 0%,
+
+          #b8edff 42%,
+
+          #a996ff 100%
+
+        );
+
+      -webkit-background-clip: text;
+
+      -webkit-text-fill-color: transparent;
+
+    }
+
+
+    .hero p {
+
+      max-width: 610px;
+
+      margin: 28px auto 0;
+
+      color: var(--muted);
+
+      font-size: 18px;
+
+      line-height: 1.65;
+
+    }
+
+
+    .main-card {
+
+      max-width: 700px;
+
+      margin: 56px auto 0;
+
+      padding: 32px;
+
+      border: 1px solid var(--border);
+
+      border-radius: var(--radius-lg);
+
+      background:
+
+        linear-gradient(
+
+          145deg,
+
+          rgba(255,255,255,0.075),
+
+          rgba(255,255,255,0.035)
+
+        );
+
+      box-shadow:
+
+        0 35px 110px
+
+        rgba(0, 0, 0, 0.38);
+
+      backdrop-filter: blur(24px);
+
+    }
+
+
+    .wallet-area {
+
+      padding: 24px;
+
+      border: 1px solid var(--border-soft);
+
+      border-radius: var(--radius-md);
+
+      background: rgba(255,255,255,0.035);
+
+      text-align: center;
+
+    }
+
+
+    .wallet-label {
+
+      margin-bottom: 16px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      letter-spacing: 1.4px;
+
+    }
+
+
+    .wallet {
+
+      display: flex;
+
+      justify-content: center;
+
+    }
+
+
+    .identity {
+
+      display: none;
+
+      margin-top: 32px;
+
+    }
+
+
+    .identity-header {
+
+      display: flex;
+
+      align-items: flex-start;
+
+      justify-content: space-between;
+
+      gap: 24px;
+
+      padding-bottom: 24px;
+
+      border-bottom: 1px solid var(--border-soft);
+
+    }
+
+
+    .identity-title {
+
+      margin-bottom: 8px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      letter-spacing: 1.4px;
+
+      text-transform: uppercase;
+
+    }
+
+
+    .identity-name {
+
+      font-size: 28px;
+
+      line-height: 1.15;
+
+      font-weight: 700;
+
+      letter-spacing: -0.7px;
+
+    }
+
+
+    .address {
+
+      margin-top: 10px;
+
+      color: var(--muted);
+
+      font-family: monospace;
+
+      font-size: 13px;
+
+      word-break: break-all;
+
+    }
+
+
+    .verified-badge {
+
+      flex-shrink: 0;
+
+      padding: 9px 13px;
+
+      border: 1px solid
+
+        rgba(52, 211, 153, 0.22);
+
+      border-radius: 999px;
+
+      color: var(--green);
+
+      background:
+
+        rgba(52, 211, 153, 0.08);
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+    }
+
+
+    .status-grid {
+
+      display: grid;
+
+      grid-template-columns:
+
+        repeat(3, 1fr);
+
+      gap: 12px;
+
+      margin-top: 24px;
+
+    }
+
+
+    .status-item {
+
+      min-height: 92px;
+
+      padding: 18px;
+
+      border: 1px solid var(--border-soft);
+
+      border-radius: var(--radius-md);
+
+      background: rgba(255,255,255,0.03);
+
+    }
+
+
+    .status-item > span {
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+    }
+
+
+    .status-dot {
+
+      display: inline-block;
+
+      width: 8px;
+
+      height: 8px;
+
+      margin-right: 6px;
+
+      border-radius: 50%;
+
+      background: #606979;
+
+      vertical-align: 1px;
+
+    }
+
+
+    .status-dot.connected {
+
+      background: var(--green);
+
+      box-shadow:
+
+        0 0 12px
+
+        rgba(52, 211, 153, 0.65);
+
+    }
+
+
+    .status-item strong {
+
+      display: block;
+
+      margin-top: 12px;
+
+      font-size: 14px;
+
+      font-weight: 600;
+
+    }
+
+
+    .profile-editor {
+
+      margin-top: 24px;
+
+      padding: 24px;
+
+      border: 1px solid var(--border-soft);
+
+      border-radius: var(--radius-md);
+
+      background:
+
+        rgba(0, 0, 0, 0.14);
+
+      text-align: center;
+
+    }
+
+
+    .profile-editor h3 {
+
+      margin: 0 0 16px;
+
+      font-size: 20px;
+
+      letter-spacing: -0.3px;
+
+    }
+
+
+    .profile-input {
+
+      display: block;
+
+      width: 100%;
+
+      height: 48px;
+
+      margin: 8px 0;
+
+      padding: 0 15px;
+
+      border: 1px solid var(--border);
+
+      border-radius: var(--radius-sm);
+
+      outline: none;
+
+      color: white;
+
+      background: rgba(255,255,255,0.045);
+
+      font-size: 14px;
+
+      transition:
+
+        border-color 0.2s ease,
+
+        box-shadow 0.2s ease;
+
+    }
+
+
+    .profile-input:focus {
+
+      border-color: rgba(56, 189, 248, 0.7);
+
+      box-shadow:
+
+        0 0 0 3px
+
+        rgba(56, 189, 248, 0.1);
+
+    }
+
+
+    .profile-input::placeholder {
+
+      color: #697386;
+
+    }
+
+
+    .button {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      min-width: 190px;
+
+      height: 46px;
+
+      margin: 6px 4px;
+
+      padding: 0 20px;
+
+      border: 0;
+
+      border-radius: var(--radius-sm);
+
+      cursor: pointer;
+
+      font-size: 13px;
+
+      font-weight: 700;
+
+      transition:
+
+        transform 0.2s ease,
+
+        opacity 0.2s ease,
+
+        box-shadow 0.2s ease;
+
+    }
+
+
+    .button:hover {
+
+      transform: translateY(-1px);
+
+      opacity: 0.94;
+
+    }
+
+
+    .save-button {
+
+      color: white;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          #16a085,
+
+          #20c997
+
+        );
+
+      box-shadow:
+
+        0 10px 25px
+
+        rgba(32, 201, 151, 0.12);
+
+    }
+
+
+    .telegram-button {
+
+      color: white;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          #229ed9,
+
+          #1677b5
+
+        );
+
+    }
+
+
+    .profile-button {
+
+      color: white;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          #7c5cff,
+
+          #5b43c7
+
+        );
+
+    }
+
+
+    .copy-button,
+
+    .disconnect-button {
+
+      color: white;
+
+      background: #283044;
+
+    }
+
+
+    .clear-button {
+
+      color: #ffadb8;
+
+      background:
+
+        rgba(251, 113, 133, 0.11);
+
+    }
+
+
+    .profile-result {
+
+      display: none;
+
+      margin-top: 24px;
+
+      padding: 24px;
+
+      border: 1px solid var(--border);
+
+      border-radius: var(--radius-md);
+
+      background:
+
+        linear-gradient(
+
+          145deg,
+
+          rgba(56, 189, 248, 0.07),
+
+          rgba(139, 92, 246, 0.07)
+
+        );
+
+      text-align: center;
+
+    }
+
+
+    .profile-label {
+
+      margin-bottom: 16px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+
+      font-weight: 700;
+
+      letter-spacing: 1.5px;
+
+      text-transform: uppercase;
+
+    }
+
+
+    .profile-name {
+
+      font-size: 24px;
+
+      line-height: 1.2;
+
+      font-weight: 700;
+
+      letter-spacing: -0.4px;
+
+    }
+
+
+    .profile-domain,
+
+    .profile-telegram {
+
+      margin-top: 10px;
+
+      line-height: 1.4;
+
+      font-size: 14px;
+
+    }
+
+
+    .profile-domain {
+
+      color: #9edfff;
+
+    }
+
+
+    .profile-telegram {
+
+      color: #8fcfff;
+
+    }
+
+
+    .status {
+
+      min-height: 22px;
+
+      margin-top: 16px;
+
+      color: var(--muted);
+
+      font-size: 13px;
+
+    }
+
+
+    .features {
+
+      display: grid;
+
+      grid-template-columns:
+
+        repeat(4, 1fr);
+
+      gap: 12px;
+
+      margin-top: 72px;
+
+    }
+
+
+    .feature {
+
+      min-height: 90px;
+
+      padding: 20px;
+
+      border: 1px solid var(--border-soft);
+
+      border-radius: var(--radius-md);
+
+      background: rgba(255,255,255,0.025);
+
+      color: var(--muted);
+
+      font-size: 13px;
+
+      line-height: 1.5;
+
+    }
+
+
+    .footer {
+
+      margin-top: 72px;
+
+      color: #5e687a;
+
+      font-size: 12px;
+
+      text-align: center;
+
+    }
+
+
+    @media (max-width: 720px) {
+
+      .container {
+
+        padding: 24px 16px 48px;
+
+      }
+
+
+      .topbar {
+
+        margin-bottom: 72px;
+
+      }
+
+
+      .network {
+
+        display: none;
+
+      }
+
+
+      .hero h1 {
+
+        letter-spacing: -3.5px;
+
+      }
+
+
+      .hero p {
+
+        font-size: 16px;
+
+      }
+
+
+      .main-card {
+
+        padding: 18px;
+
+        border-radius: 22px;
+
+      }
+
+
+      .status-grid {
+
+        grid-template-columns: 1fr;
+
+      }
+
+
+      .features {
+
+        grid-template-columns:
+
+          repeat(2, 1fr);
+
+        margin-top: 48px;
+
+      }
+
+
+      .identity-header {
+
+        flex-direction: column;
+
+      }
+
+
+      .button {
+
+        width: 100%;
+
+        margin: 5px 0;
+
+      }
+
+    }
+
+
+    @media (max-width: 440px) {
+
+      .features {
+
+        grid-template-columns: 1fr;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+```
+<div class="topbar">
+
+
+  <div class="brand">
+
+
+    <div class="brand-mark">
+
+      <div class="crystal"></div>
+
+    </div>
+
+
+    GramID
+
+
+  </div>
+
+
+  <div class="network">
+
+    TON Identity Layer
+
+  </div>
+
+
+</div>
+
+
+<section class="hero">
+
+
+  <div class="eyebrow">
+
+    Web3 Identity for TON
+
+  </div>
+
+
+  <h1>
+
+    Your identity.<br>
+
+    <span class="gradient-text">
+
+      Everywhere.
+
+    </span>
+
+  </h1>
+
+
+  <p>
+
+    Connect your TON wallet, Telegram and Web3 identity
+
+    in one secure digital profile.
+
+  </p>
+
+
+</section>
+
+
+<div class="main-card">
+
+
+  <div class="wallet-area">
+
+
+    <div class="wallet-label">
+
+      CONNECT YOUR TON WALLET
+
+    </div>
+
+
+    <div class="wallet">
+
+      <div id="ton-connect"></div>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="identity" id="identity">
+
+
+    <div class="identity-header">
+
+
+      <div>
+
+
+        <div class="identity-title">
+
+          GramID Identity
+
+        </div>
+
+
+        <div
+
+          class="identity-name"
+
+          id="identityDisplayName">
+
+          Your Identity
+
+        </div>
+
+
+        <div
+
+          class="address"
+
+          id="address">
+
+        </div>
+
+
+      </div>
+
+
+      <div
+
+        class="verified-badge"
+
+        id="verifiedBadge">
+
+        Identity
+
+      </div>
+
+
+    </div>
+
+
+    <div class="status-grid">
+
+
+      <div class="status-item">
+
+
+        <span>
+
+          <span
+
+            class="status-dot connected">
+
+          </span>
+
+          Wallet
+
+        </span>
+
+
+        <strong>
+
+          Connected
+
+        </strong>
+
+
+      </div>
+
+
+      <div class="status-item">
+
+
+        <span>
+
+
+          <span
+
+            class="status-dot"
+
+            id="telegramStatusDot">
+
+          </span>
+
+
+          Telegram
+
+
+        </span>
+
+
+        <strong
+
+          id="telegramStatusText">
+
+          Not Connected
+
+        </strong>
+
+
+      </div>
+
+
+      <div class="status-item">
+
+
+        <span>
+
+
+          <span
+
+            class="status-dot"
+
+            id="domainStatusDot">
+
+          </span>
+
+
+          TON Domain
+
+
+        </span>
+
+
+        <strong
+
+          id="domainStatusText">
+
+          Not Added
+
+        </strong>
+
+
+      </div>
+
+
+    </div>
+
+
+    <div class="profile-editor">
+
+
+      <h3>
+
+        Build Your Identity
+
+      </h3>
+
+
+      <input
+
+        class="profile-input"
+
+        id="profileName"
+
+        type="text"
+
+        placeholder="Your name or username"
+
+      >
+
+
+      <input
+
+        class="profile-input"
+
+        id="profileDomain"
+
+        type="text"
+
+        placeholder="Your TON domain, e.g. gramid.ton"
+
+      >
+
+
+      <input
+
+        class="profile-input"
+
+        id="telegramUsername"
+
+        type="text"
+
+        placeholder="Telegram username, e.g. @username"
+
+      >
+
+
+      <button
+
+        class="button save-button"
+
+        onclick="saveProfile()">
+
+        Save Profile
+
+      </button>
+
+
+      <button
+
+        class="button telegram-button"
+
+        id="connectTelegramButton"
+
+        onclick="connectTelegram()"
+
+        style="display: none;">
+
+        Connect Telegram
+
+      </button>
+
+
+      <div
+
+        class="profile-result"
+
+        id="profileResult">
+
+
+        <div class="profile-label">
+
+          YOUR GRAMID PROFILE
+
+        </div>
+
+
+        <div
+
+          class="profile-name"
+
+          id="savedName">
+
+        </div>
+
+
+        <div
+
+          class="profile-domain"
+
+          id="savedDomain">
+
+        </div>
+
+
+        <div
+
+          class="profile-telegram"
+
+          id="savedTelegram">
+
+        </div>
+
+
+      </div>
+
+
+      <button
+
+        class="button profile-button"
+
+        onclick="viewPublicProfile()">
+
+        View Public Profile
+
+      </button>
+
+
+      <button
+
+        class="button clear-button"
+
+        onclick="clearProfile()">
+
+        Clear Profile
+
+      </button>
+
+
+      <div
+
+        class="status"
+
+        id="status">
+
+      </div>
+
+
+      <button
+
+        class="button disconnect-button"
+
+        onclick="disconnectWallet()">
+
+        Disconnect Wallet
+
+      </button>
+
+
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+<div class="features">
+
+
+  <div class="feature">
+
+    Secure wallet-based identity
+
+  </div>
+
+
+  <div class="feature">
+
+    TON domain integration
+
+  </div>
+
+
+  <div class="feature">
+
+    Telegram identity
+
+  </div>
+
+
+  <div class="feature">
+
+    Built for TON
+
+  </div>
+
+
+</div>
+
+
+<div class="footer">
+
+  GramID — decentralized identity for the next generation of Web3
+
+</div>
+```
+
+  </div>
+
+  <script>
+
+
+    const SUPABASE_URL =
+
+      'https://beuymvtrabmawogqrhni.supabase.co';
+
+
+    const SUPABASE_KEY =
+
+      'sb_publishable_WHFBkb-8c_iDJ2uBG9g2TQ_CSMkumUg';
+
+
+    const TELEGRAM_BOT_USERNAME =
+
+      'Gram_id_bot';
+
+
+    let currentWalletAddress = '';
+
+    let currentTelegramLinkCode = '';
+
+
+    const tonConnectUI =
+
+      new TON_CONNECT_UI.TonConnectUI({
+
+        manifestUrl:
+
+          'https://gramidcore.github.io/gramid/tonconnect-manifest.json',
+
+        buttonRootId:
+
+          'ton-connect'
+
+      });
+
+
+    function setStatus(message) {
+
+      document
+
+        .getElementById('status')
+
+        .textContent = message;
+
+    }
+
+
+    tonConnectUI.onStatusChange(wallet => {
+
+
+      const identity =
+
+        document
+
+          .getElementById('identity');
+
+
+      const addressElement =
+
+        document
+
+          .getElementById('address');
+
+
+      if (wallet) {
+
+
+        currentWalletAddress =
+
+          wallet.account.address;
+
+
+        addressElement.textContent =
+
+          currentWalletAddress.slice(0, 6) +
+
+          '...' +
+
+          currentWalletAddress.slice(-6);
+
+
+        addressElement.dataset.fullAddress =
+
+          currentWalletAddress;
+
+
+        identity.style.display =
+
+          'block';
+
+
+        loadProfile();
+
+
+      } else {
+
+
+        currentWalletAddress = '';
+
+        currentTelegramLinkCode = '';
+
+        identity.style.display = 'none';
+
+      }
+
     });
-  }
 
-  try {
-    if (req.method !== "POST") {
-      return new Response(
-        JSON.stringify({
-          error: "Method not allowed",
-        }),
-        {
-          status: 405,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
 
-    const body = await req.json();
+    async function saveProfile() {
 
-    const wallet = body.wallet;
 
-    if (!wallet) {
-      return new Response(
-        JSON.stringify({
-          error: "Wallet address is required",
-        }),
-        {
-          status: 400,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
+      const name =
 
-    const { data: profile, error } = await supabase
-      .from("profiles")
-      .select(
-        "id, wallet_address, name, domain, telegram_id, telegram_username"
-      )
-      .eq("wallet_address", wallet)
-      .maybeSingle();
+        document
 
-    if (error) {
-      console.error("Database error:", error);
+          .getElementById('profileName')
 
-      return new Response(
-        JSON.stringify({
-          error: "Database error",
-        }),
-        {
-          status: 500,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
+          .value
 
-    if (!profile) {
-      return new Response(
-        JSON.stringify({
-          authenticated: false,
-          error: "GramID profile not found",
-        }),
-        {
-          status: 404,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
+          .trim();
 
-    if (!profile.telegram_id) {
-      return new Response(
-        JSON.stringify({
-          authenticated: false,
-          error: "Telegram is not connected",
-        }),
-        {
-          status: 403,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
 
-    return new Response(
-      JSON.stringify({
-        authenticated: true,
-        identity: {
-          wallet_address: profile.wallet_address,
-          name: profile.name,
-          domain: profile.domain,
-          telegram_username: profile.telegram_username,
-          telegram_verified: true,
-        },
-      }),
-      {
-        status: 200,
-        headers: {
-          ...corsHeaders,
-          "Content-Type": "application/json",
-        },
+      const domain =
+
+        document
+
+          .getElementById('profileDomain')
+
+          .value
+
+          .trim();
+
+
+      const telegramUsername =
+
+        document
+
+          .getElementById('telegramUsername')
+
+          .value
+
+          .trim();
+
+
+      if (!currentWalletAddress) {
+
+        setStatus(
+
+          'Please connect your TON wallet first'
+
+        );
+
+        return;
+
       }
-    );
-  } catch (error) {
-    console.error("GramID Login error:", error);
 
-    return new Response(
-      JSON.stringify({
-        error: "Internal server error",
-      }),
-      {
-        status: 500,
-        headers: {
-          ...corsHeaders,
-          "Content-Type": "application/json",
-        },
+
+      if (!name) {
+
+        setStatus(
+
+          'Please enter your name'
+
+        );
+
+        return;
+
       }
-    );
-  }
-});
+
+
+      setStatus(
+
+        'Saving profile...'
+
+      );
+
+
+      try {
+
+
+        const checkResponse =
+
+          await fetch(
+
+            SUPABASE_URL +
+
+            '/rest/v1/profiles?wallet_address=eq.' +
+
+            encodeURIComponent(
+
+              currentWalletAddress
+
+            ) +
+
+            '&select=id,telegram_link_code',
+
+            {
+
+
+              headers: {
+
+
+                'apikey':
+
+                  SUPABASE_KEY,
+
+
+                'Authorization':
+
+                  'Bearer ' +
+
+                  SUPABASE_KEY
+
+              }
+
+            }
+
+          );
+
+
+        if (!checkResponse.ok) {
+
+
+          throw new Error(
+
+            await checkResponse.text()
+
+          );
+
+        }
+
+
+        const existingProfiles =
+
+          await checkResponse.json();
+
+
+        let telegramLinkCode =
+
+          existingProfiles.length > 0
+
+            ? existingProfiles[0].telegram_link_code
+
+            : null;
+
+
+        if (!telegramLinkCode) {
+
+          telegramLinkCode =
+
+            crypto.randomUUID();
+
+        }
+
+
+        const profileData = {
+
+
+          wallet_address:
+
+            currentWalletAddress,
+
+
+          name:
+
+            name,
+
+
+          domain:
+
+            domain ||
+
+            null,
+
+
+          telegram_username:
+
+            telegramUsername ||
+
+            null,
+
+
+          telegram_link_code:
+
+            telegramLinkCode
+
+        };
+
+
+        let response;
+
+
+        if (
+
+          existingProfiles.length > 0
+
+        ) {
+
+
+          response =
+
+            await fetch(
+
+              SUPABASE_URL +
+
+              '/rest/v1/profiles?id=eq.' +
+
+              existingProfiles[0].id,
+
+              {
+
+
+                method:
+
+                  'PATCH',
+
+
+                headers: {
+
+
+                  'Content-Type':
+
+                    'application/json',
+
+
+                  'apikey':
+
+                    SUPABASE_KEY,
+
+
+                  'Authorization':
+
+                    'Bearer ' +
+
+                    SUPABASE_KEY,
+
+
+                  'Prefer':
+
+                    'return=minimal'
+
+                },
+
+
+                body:
+
+                  JSON.stringify(
+
+                    profileData
+
+                  )
+
+              }
+
+            );
+
+
+        } else {
+
+
+          response =
+
+            await fetch(
+
+              SUPABASE_URL +
+
+              '/rest/v1/profiles',
+
+              {
+
+
+                method:
+
+                  'POST',
+
+
+                headers: {
+
+
+                  'Content-Type':
+
+                    'application/json',
+
+
+                  'apikey':
+
+                    SUPABASE_KEY,
+
+
+                  'Authorization':
+
+                    'Bearer ' +
+
+                    SUPABASE_KEY,
+
+
+                  'Prefer':
+
+                    'return=minimal'
+
+                },
+
+
+                body:
+
+                  JSON.stringify(
+
+                    profileData
+
+                  )
+
+              }
+
+            );
+
+        }
+
+
+        if (!response.ok) {
+
+
+          throw new Error(
+
+            await response.text()
+
+          );
+
+        }
+
+
+        currentTelegramLinkCode =
+
+          telegramLinkCode;
+
+
+        document
+
+          .getElementById(
+
+            'connectTelegramButton'
+
+          )
+
+          .style
+
+          .display =
+
+          'inline-flex';
+
+
+        showProfile(
+
+          profileData
+
+        );
+
+
+        setStatus(
+
+          'Profile saved online'
+
+        );
+
+
+      } catch (error) {
+
+
+        console.error(
+
+          'Profile save error:',
+
+          error
+
+        );
+
+
+        setStatus(
+
+          'Error: ' +
+
+          error.message
+
+        );
+
+      }
+
+    }
+
+
+    function connectTelegram() {
+
+
+      if (!currentTelegramLinkCode) {
+
+
+        setStatus(
+
+          'Please save your profile first'
+
+        );
+
+        return;
+
+      }
+
+
+      const telegramUrl =
+
+        'https://t.me/' +
+
+        TELEGRAM_BOT_USERNAME +
+
+        '?start=' +
+
+        encodeURIComponent(
+
+          currentTelegramLinkCode
+
+        );
+
+
+      window.open(
+
+        telegramUrl,
+
+        '_blank'
+
+      );
+
+
+      setStatus(
+
+        'Telegram connection link opened'
+
+      );
+
+    }
+
+
+    async function loadProfile() {
+
+
+      if (!currentWalletAddress) {
+
+        return;
+
+      }
+
+
+      const response =
+
+        await fetch(
+
+          SUPABASE_URL +
+
+          '/rest/v1/profiles' +
+
+          '?wallet_address=eq.' +
+
+          encodeURIComponent(
+
+            currentWalletAddress
+
+          ) +
+
+          '&select=*',
+
+          {
+
+
+            headers: {
+
+
+              'apikey':
+
+                SUPABASE_KEY,
+
+
+              'Authorization':
+
+                'Bearer ' +
+
+                SUPABASE_KEY
+
+            }
+
+          }
+
+        );
+
+
+      if (!response.ok) {
+
+        return;
+
+      }
+
+
+      const profiles =
+
+        await response.json();
+
+
+      if (profiles.length > 0) {
+
+
+        const profile =
+
+          profiles[0];
+
+
+        document
+
+          .getElementById(
+
+            'profileName'
+
+          )
+
+          .value =
+
+          profile.name ||
+
+          '';
+
+
+        document
+
+          .getElementById(
+
+            'profileDomain'
+
+          )
+
+          .value =
+
+          profile.domain ||
+
+          '';
+
+
+        document
+
+          .getElementById(
+
+            'telegramUsername'
+
+          )
+
+          .value =
+
+          profile.telegram_username ||
+
+          '';
+
+
+        currentTelegramLinkCode =
+
+          profile.telegram_link_code ||
+
+          '';
+
+
+        if (
+
+          currentTelegramLinkCode
+
+        ) {
+
+
+          document
+
+            .getElementById(
+
+              'connectTelegramButton'
+
+            )
+
+            .style
+
+            .display =
+
+            'inline-flex';
+
+        }
+
+
+        showProfile(
+
+          profile
+
+        );
+
+      }
+
+    }
+
+
+    function showProfile(profile) {
+
+
+      const name =
+
+        profile.name ||
+
+        'Your Identity';
+
+
+      document
+
+        .getElementById(
+
+          'identityDisplayName'
+
+        )
+
+        .textContent =
+
+        name;
+
+
+      document
+
+        .getElementById(
+
+          'savedName'
+
+        )
+
+        .textContent =
+
+        profile.name ||
+
+        '';
+
+
+      document
+
+        .getElementById(
+
+          'savedDomain'
+
+        )
+
+        .textContent =
+
+        profile.domain ||
+
+        'TON domain not added';
+
+
+      document
+
+        .getElementById(
+
+          'savedTelegram'
+
+        )
+
+        .textContent =
+
+        profile.telegram_username ||
+
+        'Telegram username not added';
+
+
+      const telegramDot =
+
+        document
+
+          .getElementById(
+
+            'telegramStatusDot'
+
+          );
+
+
+      const telegramStatus =
+
+        document
+
+          .getElementById(
+
+            'telegramStatusText'
+
+          );
+
+
+      if (
+
+        profile.telegram_id
+
+      ) {
+
+
+        telegramDot
+
+          .classList
+
+          .add(
+
+            'connected'
+
+          );
+
+
+        telegramStatus
+
+          .textContent =
+
+          'Connected';
+
+
+      } else {
+
+
+        telegramDot
+
+          .classList
+
+          .remove(
+
+            'connected'
+
+          );
+
+
+        telegramStatus
+
+          .textContent =
+
+          'Not Connected';
+
+      }
+
+
+      const domainDot =
+
+        document
+
+          .getElementById(
+
+            'domainStatusDot'
+
+          );
+
+
+      const domainStatus =
+
+        document
+
+          .getElementById(
+
+            'domainStatusText'
+
+          );
+
+
+      if (
+
+        profile.domain
+
+      ) {
+
+
+        domainDot
+
+          .classList
+
+          .add(
+
+            'connected'
+
+          );
+
+
+        domainStatus
+
+          .textContent =
+
+          'Connected';
+
+
+      } else {
+
+
+        domainDot
+
+          .classList
+
+          .remove(
+
+            'connected'
+
+          );
+
+
+        domainStatus
+
+          .textContent =
+
+          'Not Added';
+
+      }
+
+
+      document
+
+        .getElementById(
+
+          'profileResult'
+
+        )
+
+        .style
+
+        .display =
+
+        'block';
+
+    }
+
+
+    function viewPublicProfile() {
+
+
+      if (!currentWalletAddress) {
+
+
+        setStatus(
+
+          'Please connect your TON wallet first'
+
+        );
+
+        return;
+
+      }
+
+
+      const profileUrl =
+
+
+        window.location.origin +
+
+
+        window.location.pathname.replace(
+
+          'index.html',
+
+          ''
+
+        ) +
+
+
+        'profile.html?wallet=' +
+
+
+        encodeURIComponent(
+
+          currentWalletAddress
+
+        );
+
+
+      window.location.href =
+
+        profileUrl;
+
+    }
+
+
+    function clearProfile() {
+
+
+      document
+
+        .getElementById(
+
+          'profileName'
+
+        )
+
+        .value =
+
+        '';
+
+
+      document
+
+        .getElementById(
+
+          'profileDomain'
+
+        )
+
+        .value =
+
+        '';
+
+
+      document
+
+        .getElementById(
+
+          'telegramUsername'
+
+        )
+
+        .value =
+
+        '';
+
+
+      currentTelegramLinkCode = '';
+
+
+      document
+
+        .getElementById(
+
+          'connectTelegramButton'
+
+        )
+
+        .style
+
+        .display =
+
+        'none';
+
+
+      document
+
+        .getElementById(
+
+          'profileResult'
+
+        )
+
+        .style
+
+        .display =
+
+        'none';
+
+
+      setStatus(
+
+        'Form cleared'
+
+      );
+
+    }
+
+
+    async function disconnectWallet() {
+
+
+      await tonConnectUI.disconnect();
+
+    }
+
+  </script>
+
+</body>
+</html>
