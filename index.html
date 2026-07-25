@@ -125,6 +125,11 @@
       color: white;
     }
 
+    .profile-button {
+      background: #7c5cff;
+      color: white;
+    }
+
     .disconnect-button {
       background: #283044;
       color: white;
@@ -160,6 +165,38 @@
     .profile-domain {
       color: #229ed9;
       margin-top: 6px;
+    }
+
+    .public-profile {
+      display: none;
+      margin-top: 20px;
+      padding: 25px;
+      border-radius: 16px;
+      background: #121827;
+      border: 1px solid #283044;
+    }
+
+    .public-profile h2 {
+      margin-top: 0;
+    }
+
+    .public-name {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 15px 0 8px;
+    }
+
+    .public-domain {
+      color: #229ed9;
+      font-size: 18px;
+      margin-bottom: 18px;
+    }
+
+    .public-wallet {
+      font-family: monospace;
+      color: #aab2c5;
+      font-size: 14px;
+      word-break: break-all;
     }
 
     .features {
@@ -220,7 +257,7 @@
 
     <div class="card">
 
-      <h2>Build your Web3 identity</h2>
+      <h2>Build Your Web3 Identity</h2>
 
       <p>
         Connect your TON wallet, create your identity
@@ -247,49 +284,55 @@
 
         <hr style="border: 0; border-top: 1px solid #283044; margin: 22px 0;">
 
-        <h3>Create Your GramID Profile</h3>
+        <div id="editProfile">
 
-        <input
-          class="profile-input"
-          id="profileName"
-          type="text"
-          placeholder="Your name or username"
-        >
+          <h3>Create Your GramID Profile</h3>
 
-        <input
-          class="profile-input"
-          id="profileDomain"
-          type="text"
-          placeholder="Your TON domain, e.g. gramid.ton"
-        >
+          <input
+            class="profile-input"
+            id="profileName"
+            type="text"
+            placeholder="Your name or username"
+          >
 
-        <button
-          class="button save-button"
-          onclick="saveProfile()">
-          Save Profile
-        </button>
+          <input
+            class="profile-input"
+            id="profileDomain"
+            type="text"
+            placeholder="Your TON domain, e.g. gramid.ton"
+          >
 
-        <div
-          class="profile-result"
-          id="profileResult">
-
-          <div class="profile-label">
-            YOUR GRAMID PROFILE
-          </div>
+          <button
+            class="button save-button"
+            onclick="saveProfile()">
+            Save Profile
+          </button>
 
           <div
-            class="profile-name"
-            id="savedName">
+            class="profile-result"
+            id="profileResult">
+
+            <div class="profile-label">
+              YOUR GRAMID PROFILE
+            </div>
+
+            <div
+              class="profile-name"
+              id="savedName">
+            </div>
+
+            <div
+              class="profile-domain"
+              id="savedDomain">
+            </div>
+
           </div>
 
-          <div
-            class="profile-domain"
-            id="savedDomain">
-          </div>
-
-        </div>
-
-        <div style="margin-top: 15px;">
+          <button
+            class="button profile-button"
+            onclick="viewPublicProfile()">
+            View Public Profile
+          </button>
 
           <button
             class="button clear-button"
@@ -297,13 +340,52 @@
             Clear Profile
           </button>
 
+        </div>
+
+        <div
+          class="public-profile"
+          id="publicProfile">
+
+          <h2>GramID Profile</h2>
+
+          <div
+            class="public-name"
+            id="publicName">
+          </div>
+
+          <div
+            class="public-domain"
+            id="publicDomain">
+          </div>
+
+          <div class="profile-label">
+            VERIFIED WALLET
+          </div>
+
+          <div
+            class="public-wallet"
+            id="publicWallet">
+          </div>
+
+          <button
+            class="button copy-button"
+            onclick="copyProfileLink()">
+            Copy Profile Link
+          </button>
+
           <button
             class="button disconnect-button"
-            onclick="disconnectWallet()">
-            Disconnect Wallet
+            onclick="backToEdit()">
+            Edit Profile
           </button>
 
         </div>
+
+        <button
+          class="button disconnect-button"
+          onclick="disconnectWallet()">
+          Disconnect Wallet
+        </button>
 
       </div>
 
@@ -477,24 +559,6 @@
 
         showProfile(profile);
 
-      } else {
-
-        document
-          .getElementById('profileName')
-          .value =
-          '';
-
-        document
-          .getElementById('profileDomain')
-          .value =
-          '';
-
-        document
-          .getElementById('profileResult')
-          .style
-          .display =
-          'none';
-
       }
 
     }
@@ -556,7 +620,99 @@
         .display =
         'none';
 
+      document
+        .getElementById('publicProfile')
+        .style
+        .display =
+        'none';
+
       alert('Profile cleared');
+
+    }
+
+    function viewPublicProfile() {
+
+      const name =
+        document
+          .getElementById('profileName')
+          .value
+          .trim();
+
+      const domain =
+        document
+          .getElementById('profileDomain')
+          .value
+          .trim();
+
+      const address =
+        document
+          .getElementById('address')
+          .dataset
+          .fullAddress;
+
+      if (!name) {
+
+        alert('Please save your profile first');
+
+        return;
+
+      }
+
+      document
+        .getElementById('publicName')
+        .textContent =
+        name;
+
+      document
+        .getElementById('publicDomain')
+        .textContent =
+        domain ||
+        'TON domain not added';
+
+      document
+        .getElementById('publicWallet')
+        .textContent =
+        address.slice(0, 6) +
+        '...' +
+        address.slice(-6);
+
+      document
+        .getElementById('editProfile')
+        .style
+        .display =
+        'none';
+
+      document
+        .getElementById('publicProfile')
+        .style
+        .display =
+        'block';
+
+    }
+
+    function backToEdit() {
+
+      document
+        .getElementById('editProfile')
+        .style
+        .display =
+        'block';
+
+      document
+        .getElementById('publicProfile')
+        .style
+        .display =
+        'none';
+
+    }
+
+    function copyProfileLink() {
+
+      navigator.clipboard.writeText(
+        window.location.href
+      );
+
+      alert('Profile link copied');
 
     }
 
