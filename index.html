@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -249,181 +248,178 @@
       }
     }
   </style>
-
 </head>
 
 <body>
 
   <div class="container">
 
-```
-<div class="logo">GramID</div>
+    <div class="logo">GramID</div>
 
-<div class="subtitle">
-  Your identity layer for TON
-</div>
-
-<div class="card">
-
-  <h2>Build Your Web3 Identity</h2>
-
-  <p>
-    Connect your TON wallet, create your identity
-    and link your TON domain.
-  </p>
-
-  <div class="wallet">
-    <div id="ton-connect"></div>
-  </div>
-
-  <div class="identity" id="identity">
-
-    <div class="identity-title">
-      CONNECTED TON WALLET
+    <div class="subtitle">
+      Your identity layer for TON
     </div>
 
-    <div class="address" id="address"></div>
+    <div class="card">
 
-    <button
-      class="button copy-button"
-      onclick="copyAddress()">
-      Copy Address
-    </button>
+      <h2>Build Your Web3 Identity</h2>
 
-    <hr style="border: 0; border-top: 1px solid #283044; margin: 22px 0;">
+      <p>
+        Connect your TON wallet, create your identity
+        and link your TON domain.
+      </p>
 
-    <div id="editProfile">
+      <div class="wallet">
+        <div id="ton-connect"></div>
+      </div>
 
-      <h3>Create Your GramID Profile</h3>
+      <div class="identity" id="identity">
 
-      <input
-        class="profile-input"
-        id="profileName"
-        type="text"
-        placeholder="Your name or username"
-      >
+        <div class="identity-title">
+          CONNECTED TON WALLET
+        </div>
 
-      <input
-        class="profile-input"
-        id="profileDomain"
-        type="text"
-        placeholder="Your TON domain, e.g. gramid.ton"
-      >
+        <div class="address" id="address"></div>
 
-      <button
-        class="button save-button"
-        onclick="saveProfile()">
-        Save Profile
-      </button>
+        <button
+          class="button copy-button"
+          onclick="copyAddress()">
+          Copy Address
+        </button>
 
-      <div
-        class="profile-result"
-        id="profileResult">
+        <hr style="border: 0; border-top: 1px solid #283044; margin: 22px 0;">
 
-        <div class="profile-label">
-          YOUR GRAMID PROFILE
+        <div id="editProfile">
+
+          <h3>Create Your GramID Profile</h3>
+
+          <input
+            class="profile-input"
+            id="profileName"
+            type="text"
+            placeholder="Your name or username"
+          >
+
+          <input
+            class="profile-input"
+            id="profileDomain"
+            type="text"
+            placeholder="Your TON domain, e.g. gramid.ton"
+          >
+
+          <button
+            class="button save-button"
+            onclick="saveProfile()">
+            Save Profile
+          </button>
+
+          <div
+            class="profile-result"
+            id="profileResult">
+
+            <div class="profile-label">
+              YOUR GRAMID PROFILE
+            </div>
+
+            <div
+              class="profile-name"
+              id="savedName">
+            </div>
+
+            <div
+              class="profile-domain"
+              id="savedDomain">
+            </div>
+
+          </div>
+
+          <button
+            class="button profile-button"
+            onclick="viewPublicProfile()">
+            View Public Profile
+          </button>
+
+          <button
+            class="button clear-button"
+            onclick="clearProfile()">
+            Clear Profile
+          </button>
+
         </div>
 
         <div
-          class="profile-name"
-          id="savedName">
+          class="public-profile"
+          id="publicProfile">
+
+          <h2>GramID Profile</h2>
+
+          <div
+            class="public-name"
+            id="publicName">
+          </div>
+
+          <div
+            class="public-domain"
+            id="publicDomain">
+          </div>
+
+          <div class="profile-label">
+            VERIFIED WALLET
+          </div>
+
+          <div
+            class="public-wallet"
+            id="publicWallet">
+          </div>
+
+          <button
+            class="button copy-button"
+            onclick="copyProfileLink()">
+            Copy Profile Link
+          </button>
+
+          <button
+            class="button disconnect-button"
+            onclick="backToEdit()">
+            Edit Profile
+          </button>
+
         </div>
 
         <div
-          class="profile-domain"
-          id="savedDomain">
+          class="status"
+          id="status">
         </div>
 
+        <button
+          class="button disconnect-button"
+          onclick="disconnectWallet()">
+          Disconnect Wallet
+        </button>
+
       </div>
-
-      <button
-        class="button profile-button"
-        onclick="viewPublicProfile()">
-        View Public Profile
-      </button>
-
-      <button
-        class="button clear-button"
-        onclick="clearProfile()">
-        Clear Profile
-      </button>
 
     </div>
 
-    <div
-      class="public-profile"
-      id="publicProfile">
+    <div class="features">
 
-      <h2>GramID Profile</h2>
-
-      <div
-        class="public-name"
-        id="publicName">
+      <div class="feature">
+        🔐 Secure wallet-based identity
       </div>
 
-      <div
-        class="public-domain"
-        id="publicDomain">
+      <div class="feature">
+        🌐 TON domain integration
       </div>
 
-      <div class="profile-label">
-        VERIFIED WALLET
+      <div class="feature">
+        🚀 Built for the TON ecosystem
       </div>
-
-      <div
-        class="public-wallet"
-        id="publicWallet">
-      </div>
-
-      <button
-        class="button copy-button"
-        onclick="copyProfileLink()">
-        Copy Profile Link
-      </button>
-
-      <button
-        class="button disconnect-button"
-        onclick="backToEdit()">
-        Edit Profile
-      </button>
 
     </div>
 
-    <div
-      class="status"
-      id="status">
+    <div class="footer">
+      GramID — decentralized identity for the next generation of Web3
     </div>
-
-    <button
-      class="button disconnect-button"
-      onclick="disconnectWallet()">
-      Disconnect Wallet
-    </button>
-
-  </div>
-
-</div>
-
-<div class="features">
-
-  <div class="feature">
-    🔐 Secure wallet-based identity
-  </div>
-
-  <div class="feature">
-    🌐 TON domain integration
-  </div>
-
-  <div class="feature">
-    🚀 Built for the TON ecosystem
-  </div>
-
-</div>
-
-<div class="footer">
-  GramID — decentralized identity for the next generation of Web3
-</div>
-```
 
   </div>
 
@@ -551,79 +547,186 @@
 
       setStatus('Saving profile...');
 
+      try {
 
-      const response =
-        await fetch(
+        const checkResponse =
+          await fetch(
 
-          SUPABASE_URL +
-          '/rest/v1/profiles?on_conflict=wallet_address',
+            SUPABASE_URL +
+            '/rest/v1/profiles?wallet_address=eq.' +
+            encodeURIComponent(currentWalletAddress) +
+            '&select=id',
 
-          {
+            {
 
-            method: 'POST',
+              method: 'GET',
 
-            headers: {
+              headers: {
 
-              'Content-Type':
-                'application/json',
+                'apikey':
+                  SUPABASE_KEY,
 
-              'apikey':
-                SUPABASE_KEY,
+                'Authorization':
+                  'Bearer ' +
+                  SUPABASE_KEY
 
-              'Authorization':
-                'Bearer ' +
-                SUPABASE_KEY,
+              }
 
-              'Prefer':
-                'resolution=merge-duplicates,return=minimal'
+            }
 
-            },
-
-            body: JSON.stringify({
-
-              wallet_address:
-                currentWalletAddress,
-
-              name:
-                name,
-
-              domain:
-                domain || null
-
-            })
-
-          }
-
-        );
+          );
 
 
-      if (!response.ok) {
+        if (!checkResponse.ok) {
 
-        const error =
-          await response.text();
+          throw new Error(
+            await checkResponse.text()
+          );
 
-        console.error(error);
+        }
+
+
+        const existingProfiles =
+          await checkResponse.json();
+
+
+        let response;
+
+
+        if (existingProfiles.length > 0) {
+
+          response =
+            await fetch(
+
+              SUPABASE_URL +
+              '/rest/v1/profiles?id=eq.' +
+              existingProfiles[0].id,
+
+              {
+
+                method: 'PATCH',
+
+                headers: {
+
+                  'Content-Type':
+                    'application/json',
+
+                  'apikey':
+                    SUPABASE_KEY,
+
+                  'Authorization':
+                    'Bearer ' +
+                    SUPABASE_KEY,
+
+                  'Prefer':
+                    'return=minimal'
+
+                },
+
+                body: JSON.stringify({
+
+                  wallet_address:
+                    currentWalletAddress,
+
+                  name:
+                    name,
+
+                  domain:
+                    domain || null
+
+                })
+
+              }
+
+            );
+
+        } else {
+
+          response =
+            await fetch(
+
+              SUPABASE_URL +
+              '/rest/v1/profiles',
+
+              {
+
+                method: 'POST',
+
+                headers: {
+
+                  'Content-Type':
+                    'application/json',
+
+                  'apikey':
+                    SUPABASE_KEY,
+
+                  'Authorization':
+                    'Bearer ' +
+                    SUPABASE_KEY,
+
+                  'Prefer':
+                    'return=minimal'
+
+                },
+
+                body: JSON.stringify({
+
+                  wallet_address:
+                    currentWalletAddress,
+
+                  name:
+                    name,
+
+                  domain:
+                    domain || null
+
+                })
+
+              }
+
+            );
+
+        }
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            await response.text()
+          );
+
+        }
+
+
+        showProfile({
+
+          name:
+            name,
+
+          domain:
+            domain
+
+        });
+
 
         setStatus(
-          'Error saving profile'
+          'Profile saved online'
         );
 
-        return;
+
+      } catch (error) {
+
+        console.error(
+          'Profile save error:',
+          error
+        );
+
+        setStatus(
+          'Error: ' +
+          error.message
+        );
 
       }
-
-
-      showProfile({
-
-        name: name,
-
-        domain: domain
-
-      });
-
-      setStatus(
-        'Profile saved online'
-      );
 
     }
 
@@ -691,15 +794,18 @@
         const profile =
           profiles[0];
 
+
         document
           .getElementById('profileName')
           .value =
           profile.name || '';
 
+
         document
           .getElementById('profileDomain')
           .value =
           profile.domain || '';
+
 
         showProfile(profile);
 
@@ -715,11 +821,13 @@
         .textContent =
         profile.name;
 
+
       document
         .getElementById('savedDomain')
         .textContent =
         profile.domain ||
         'TON domain not added';
+
 
       document
         .getElementById('profileResult')
@@ -744,6 +852,7 @@
           .value
           .trim();
 
+
       if (!name) {
 
         setStatus(
@@ -760,11 +869,13 @@
         .textContent =
         name;
 
+
       document
         .getElementById('publicDomain')
         .textContent =
         domain ||
         'TON domain not added';
+
 
       document
         .getElementById('publicWallet')
@@ -780,6 +891,7 @@
         .style
         .display =
         'none';
+
 
       document
         .getElementById('publicProfile')
@@ -798,6 +910,7 @@
         .display =
         'block';
 
+
       document
         .getElementById('publicProfile')
         .style
@@ -813,6 +926,7 @@
         window.location.href
       );
 
+
       setStatus(
         'Profile link copied'
       );
@@ -827,10 +941,12 @@
         .value =
         '';
 
+
       document
         .getElementById('profileDomain')
         .value =
         '';
+
 
       document
         .getElementById('profileResult')
@@ -838,11 +954,13 @@
         .display =
         'none';
 
+
       document
         .getElementById('publicProfile')
         .style
         .display =
         'none';
+
 
       setStatus(
         'Form cleared'
