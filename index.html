@@ -125,6 +125,11 @@
       color: white;
     }
 
+    .verify-button {
+      background: #229ed9;
+      color: white;
+    }
+
     .profile-button {
       background: #7c5cff;
       color: white;
@@ -177,6 +182,17 @@
       color: #aab2c5;
       font-size: 14px;
       min-height: 20px;
+    }
+
+    .telegram-link {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #229ed9;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
     }
 
     .features {
@@ -291,6 +307,19 @@
           Save Profile
         </button>
 
+        <button
+          class="button verify-button"
+          onclick="verifyTelegram()">
+          Verify Telegram
+        </button>
+
+        <a
+          class="telegram-link"
+          id="telegramLink"
+          target="_blank">
+          Open Telegram and Verify
+        </a>
+
         <div
           class="profile-result"
           id="profileResult">
@@ -376,6 +405,10 @@
 
     const SUPABASE_KEY =
       'sb_publishable_WHFBkb-8c_iDJ2uBG9g2TQ_CSMkumUg';
+
+    const VERIFY_FUNCTION_URL =
+      SUPABASE_URL +
+      '/functions/v1/verify-telegram';
 
 
     const tonConnectUI =
@@ -548,9 +581,6 @@
           await checkResponse.json();
 
 
-        let response;
-
-
         const profileData = {
 
           wallet_address:
@@ -568,6 +598,9 @@
             null
 
         };
+
+
+        let response;
 
 
         if (existingProfiles.length > 0) {
@@ -659,19 +692,7 @@
         }
 
 
-        showProfile({
-
-          name:
-            name,
-
-          domain:
-            domain,
-
-          telegram_username:
-            telegramUsername
-
-        });
-
+        showProfile(profileData);
 
         setStatus(
           'Profile saved online'
@@ -684,6 +705,128 @@
           'Profile save error:',
           error
         );
+
+        setStatus(
+          'Error: ' +
+          error.message
+        );
+
+      }
+
+    }
+
+
+    async function verifyTelegram() {
+
+      const telegramUsername =
+        document
+          .getElementById('telegramUsername')
+          .value
+          .trim();
+
+
+      if (!currentWalletAddress) {
+
+        setStatus(
+          'Please connect your TON wallet first'
+        );
+
+        return;
+
+      }
+
+
+      if (!telegramUsername) {
+
+        setStatus(
+          'Please enter your Telegram username'
+        );
+
+        return;
+
+      }
+
+
+      setStatus(
+        'Creating Telegram verification link...'
+      );
+
+
+      try {
+
+        const response =
+          await fetch(
+
+            VERIFY_FUNCTION_URL,
+
+            {
+
+              method: 'POST',
+
+              headers: {
+
+                'Content-Type':
+                  'application/json',
+
+                'apikey':
+                  SUPABASE_KEY
+
+              },
+
+              body: JSON.stringify({
+
+                wallet:
+                  currentWalletAddress,
+
+                telegram_username:
+                  telegramUsername
+
+              })
+
+            }
+
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            data.error ||
+            'Verification error'
+          );
+
+        }
+
+
+        const telegramLink =
+          document
+            .getElementById('telegramLink');
+
+
+        telegramLink.href =
+          data.verification_url;
+
+
+        telegramLink.style.display =
+          'block';
+
+
+        setStatus(
+          'Verification link created'
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          'Telegram verification error:',
+          error
+        );
+
 
         setStatus(
           'Error: ' +
@@ -873,6 +1016,13 @@
 
       document
         .getElementById('profileResult')
+        .style
+        .display =
+        'none';
+
+
+      document
+        .getElementById('telegramLink')
         .style
         .display =
         'none';
