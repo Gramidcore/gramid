@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,24 +23,24 @@
     .container {
       max-width: 900px;
       margin: auto;
-      padding: 80px 20px;
+      padding: 60px 20px;
       text-align: center;
     }
 
     .logo {
       font-size: 52px;
       font-weight: bold;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .subtitle {
       font-size: 22px;
       color: #aab2c5;
-      margin-bottom: 50px;
+      margin-bottom: 45px;
     }
 
     .card {
-      max-width: 500px;
+      max-width: 520px;
       margin: auto;
       padding: 30px;
       border: 1px solid #283044;
@@ -50,6 +50,11 @@
 
     .card h2 {
       margin-top: 0;
+    }
+
+    .card p {
+      color: #aab2c5;
+      line-height: 1.6;
     }
 
     .wallet {
@@ -70,40 +75,44 @@
     .identity-title {
       color: #aab2c5;
       font-size: 14px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     .address {
       font-family: monospace;
       font-size: 15px;
-      word-break: break-all;
       margin-bottom: 15px;
+      word-break: break-all;
     }
 
     .profile-input {
       width: 100%;
-      padding: 12px;
+      padding: 13px;
       margin: 6px 0;
       border-radius: 10px;
       border: 1px solid #283044;
       background: #121827;
       color: white;
       font-size: 15px;
+      outline: none;
+    }
+
+    .profile-input:focus {
+      border-color: #229ed9;
     }
 
     .profile-input::placeholder {
       color: #697386;
     }
 
-    .copy-button,
-    .disconnect-button,
-    .save-button {
+    .button {
       border: none;
       border-radius: 10px;
-      padding: 10px 16px;
+      padding: 11px 17px;
       margin: 5px;
       cursor: pointer;
       font-weight: bold;
+      font-size: 14px;
     }
 
     .copy-button {
@@ -121,27 +130,40 @@
       color: white;
     }
 
+    .clear-button {
+      background: #49252b;
+      color: #ffb3b3;
+    }
+
     .profile-result {
       display: none;
       margin-top: 20px;
-      padding: 15px;
-      border-radius: 12px;
+      padding: 18px;
+      border-radius: 14px;
       background: #121827;
       border: 1px solid #283044;
     }
 
+    .profile-label {
+      color: #697386;
+      font-size: 12px;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
     .profile-name {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
     }
 
     .profile-domain {
       color: #229ed9;
-      margin-top: 5px;
+      margin-top: 6px;
     }
 
     .features {
-      margin-top: 60px;
+      margin-top: 55px;
       display: grid;
       gap: 15px;
     }
@@ -154,8 +176,34 @@
     }
 
     .footer {
-      margin-top: 60px;
+      margin-top: 55px;
       color: #697386;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+
+      .container {
+        padding: 45px 15px;
+      }
+
+      .logo {
+        font-size: 42px;
+      }
+
+      .subtitle {
+        font-size: 18px;
+      }
+
+      .card {
+        padding: 22px;
+      }
+
+      .button {
+        width: 100%;
+        margin: 5px 0;
+      }
+
     }
   </style>
 </head>
@@ -175,8 +223,8 @@
       <h2>Build your Web3 identity</h2>
 
       <p>
-        Connect your TON wallet, verify ownership
-        and create your decentralized identity.
+        Connect your TON wallet, create your identity
+        and link your TON domain.
       </p>
 
       <div class="wallet">
@@ -186,18 +234,20 @@
       <div class="identity" id="identity">
 
         <div class="identity-title">
-          Connected TON wallet
+          CONNECTED TON WALLET
         </div>
 
         <div class="address" id="address"></div>
 
-        <button class="copy-button" onclick="copyAddress()">
-          Copy address
+        <button
+          class="button copy-button"
+          onclick="copyAddress()">
+          Copy Address
         </button>
 
-        <hr style="border: 0; border-top: 1px solid #283044; margin: 20px 0;">
+        <hr style="border: 0; border-top: 1px solid #283044; margin: 22px 0;">
 
-        <h3>Create your GramID profile</h3>
+        <h3>Create Your GramID Profile</h3>
 
         <input
           class="profile-input"
@@ -213,21 +263,47 @@
           placeholder="Your TON domain, e.g. gramid.ton"
         >
 
-        <button class="save-button" onclick="saveProfile()">
-          Save profile
+        <button
+          class="button save-button"
+          onclick="saveProfile()">
+          Save Profile
         </button>
 
-        <div class="profile-result" id="profileResult">
+        <div
+          class="profile-result"
+          id="profileResult">
 
-          <div class="profile-name" id="savedName"></div>
+          <div class="profile-label">
+            YOUR GRAMID PROFILE
+          </div>
 
-          <div class="profile-domain" id="savedDomain"></div>
+          <div
+            class="profile-name"
+            id="savedName">
+          </div>
+
+          <div
+            class="profile-domain"
+            id="savedDomain">
+          </div>
 
         </div>
 
-        <button class="disconnect-button" onclick="disconnectWallet()">
-          Disconnect
-        </button>
+        <div style="margin-top: 15px;">
+
+          <button
+            class="button clear-button"
+            onclick="clearProfile()">
+            Clear Profile
+          </button>
+
+          <button
+            class="button disconnect-button"
+            onclick="disconnectWallet()">
+            Disconnect Wallet
+          </button>
+
+        </div>
 
       </div>
 
@@ -257,34 +333,53 @@
 
   <script>
 
-    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-      manifestUrl: 'https://gramidcore.github.io/gramid/tonconnect-manifest.json',
-      buttonRootId: 'ton-connect'
-    });
+    const tonConnectUI =
+      new TON_CONNECT_UI.TonConnectUI({
+
+        manifestUrl:
+          'https://gramidcore.github.io/gramid/tonconnect-manifest.json',
+
+        buttonRootId:
+          'ton-connect'
+
+      });
 
     tonConnectUI.onStatusChange(wallet => {
 
-      const identity = document.getElementById('identity');
-      const addressElement = document.getElementById('address');
+      const identity =
+        document.getElementById('identity');
+
+      const addressElement =
+        document.getElementById('address');
 
       if (wallet) {
 
-        const address = wallet.account.address;
+        const address =
+          wallet.account.address;
 
         addressElement.textContent =
-          address.slice(0, 6) + '...' + address.slice(-6);
+          address.slice(0, 6) +
+          '...' +
+          address.slice(-6);
 
-        addressElement.dataset.fullAddress = address;
+        addressElement.dataset.fullAddress =
+          address;
 
-        identity.style.display = 'block';
+        identity.style.display =
+          'block';
+
+        loadProfile(address);
 
       } else {
 
-        identity.style.display = 'none';
+        identity.style.display =
+          'none';
 
-        addressElement.textContent = '';
+        addressElement.textContent =
+          '';
 
-        addressElement.dataset.fullAddress = '';
+        addressElement.dataset.fullAddress =
+          '';
 
       }
 
@@ -293,7 +388,10 @@
     function copyAddress() {
 
       const address =
-        document.getElementById('address').dataset.fullAddress;
+        document
+          .getElementById('address')
+          .dataset
+          .fullAddress;
 
       navigator.clipboard.writeText(address);
 
@@ -304,10 +402,22 @@
     function saveProfile() {
 
       const name =
-        document.getElementById('profileName').value.trim();
+        document
+          .getElementById('profileName')
+          .value
+          .trim();
 
       const domain =
-        document.getElementById('profileDomain').value.trim();
+        document
+          .getElementById('profileDomain')
+          .value
+          .trim();
+
+      const address =
+        document
+          .getElementById('address')
+          .dataset
+          .fullAddress;
 
       if (!name) {
 
@@ -317,14 +427,136 @@
 
       }
 
-      document.getElementById('savedName').textContent =
-        name;
+      const profile = {
 
-      document.getElementById('savedDomain').textContent =
-        domain || 'TON domain not added';
+        name: name,
 
-      document.getElementById('profileResult').style.display =
+        domain: domain,
+
+        wallet: address
+
+      };
+
+      localStorage.setItem(
+
+        'gramid_profile_' + address,
+
+        JSON.stringify(profile)
+
+      );
+
+      showProfile(profile);
+
+      alert('Profile saved');
+
+    }
+
+    function loadProfile(address) {
+
+      const savedProfile =
+        localStorage.getItem(
+
+          'gramid_profile_' + address
+
+        );
+
+      if (savedProfile) {
+
+        const profile =
+          JSON.parse(savedProfile);
+
+        document
+          .getElementById('profileName')
+          .value =
+          profile.name || '';
+
+        document
+          .getElementById('profileDomain')
+          .value =
+          profile.domain || '';
+
+        showProfile(profile);
+
+      } else {
+
+        document
+          .getElementById('profileName')
+          .value =
+          '';
+
+        document
+          .getElementById('profileDomain')
+          .value =
+          '';
+
+        document
+          .getElementById('profileResult')
+          .style
+          .display =
+          'none';
+
+      }
+
+    }
+
+    function showProfile(profile) {
+
+      document
+        .getElementById('savedName')
+        .textContent =
+        profile.name;
+
+      document
+        .getElementById('savedDomain')
+        .textContent =
+        profile.domain ||
+        'TON domain not added';
+
+      document
+        .getElementById('profileResult')
+        .style
+        .display =
         'block';
+
+    }
+
+    function clearProfile() {
+
+      const address =
+        document
+          .getElementById('address')
+          .dataset
+          .fullAddress;
+
+      if (!address) {
+
+        return;
+
+      }
+
+      localStorage.removeItem(
+
+        'gramid_profile_' + address
+
+      );
+
+      document
+        .getElementById('profileName')
+        .value =
+        '';
+
+      document
+        .getElementById('profileDomain')
+        .value =
+        '';
+
+      document
+        .getElementById('profileResult')
+        .style
+        .display =
+        'none';
+
+      alert('Profile cleared');
 
     }
 
