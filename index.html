@@ -70,7 +70,7 @@
     .identity-title {
       color: #aab2c5;
       font-size: 14px;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
 
     .address {
@@ -80,8 +80,24 @@
       margin-bottom: 15px;
     }
 
+    .profile-input {
+      width: 100%;
+      padding: 12px;
+      margin: 6px 0;
+      border-radius: 10px;
+      border: 1px solid #283044;
+      background: #121827;
+      color: white;
+      font-size: 15px;
+    }
+
+    .profile-input::placeholder {
+      color: #697386;
+    }
+
     .copy-button,
-    .disconnect-button {
+    .disconnect-button,
+    .save-button {
       border: none;
       border-radius: 10px;
       padding: 10px 16px;
@@ -95,9 +111,33 @@
       color: white;
     }
 
+    .save-button {
+      background: #16a085;
+      color: white;
+    }
+
     .disconnect-button {
       background: #283044;
       color: white;
+    }
+
+    .profile-result {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      background: #121827;
+      border: 1px solid #283044;
+    }
+
+    .profile-name {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .profile-domain {
+      color: #229ed9;
+      margin-top: 5px;
     }
 
     .features {
@@ -149,12 +189,41 @@
           Connected TON wallet
         </div>
 
-        <div class="address" id="address">
-        </div>
+        <div class="address" id="address"></div>
 
         <button class="copy-button" onclick="copyAddress()">
           Copy address
         </button>
+
+        <hr style="border: 0; border-top: 1px solid #283044; margin: 20px 0;">
+
+        <h3>Create your GramID profile</h3>
+
+        <input
+          class="profile-input"
+          id="profileName"
+          type="text"
+          placeholder="Your name or username"
+        >
+
+        <input
+          class="profile-input"
+          id="profileDomain"
+          type="text"
+          placeholder="Your TON domain, e.g. gramid.ton"
+        >
+
+        <button class="save-button" onclick="saveProfile()">
+          Save profile
+        </button>
+
+        <div class="profile-result" id="profileResult">
+
+          <div class="profile-name" id="savedName"></div>
+
+          <div class="profile-domain" id="savedDomain"></div>
+
+        </div>
 
         <button class="disconnect-button" onclick="disconnectWallet()">
           Disconnect
@@ -229,6 +298,33 @@
       navigator.clipboard.writeText(address);
 
       alert('Full TON address copied');
+
+    }
+
+    function saveProfile() {
+
+      const name =
+        document.getElementById('profileName').value.trim();
+
+      const domain =
+        document.getElementById('profileDomain').value.trim();
+
+      if (!name) {
+
+        alert('Please enter your name');
+
+        return;
+
+      }
+
+      document.getElementById('savedName').textContent =
+        name;
+
+      document.getElementById('savedDomain').textContent =
+        domain || 'TON domain not added';
+
+      document.getElementById('profileResult').style.display =
+        'block';
 
     }
 
