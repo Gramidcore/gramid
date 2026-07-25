@@ -167,6 +167,11 @@
       margin-top: 6px;
     }
 
+    .profile-telegram {
+      color: #55acee;
+      margin-top: 6px;
+    }
+
     .status {
       margin-top: 15px;
       color: #aab2c5;
@@ -234,7 +239,7 @@
 
       <p>
         Connect your TON wallet, create your identity
-        and link your TON domain.
+        and link your TON domain and Telegram username.
       </p>
 
       <div class="wallet">
@@ -273,6 +278,13 @@
           placeholder="Your TON domain, e.g. gramid.ton"
         >
 
+        <input
+          class="profile-input"
+          id="telegramUsername"
+          type="text"
+          placeholder="Telegram username, e.g. @username"
+        >
+
         <button
           class="button save-button"
           onclick="saveProfile()">
@@ -295,6 +307,11 @@
           <div
             class="profile-domain"
             id="savedDomain">
+          </div>
+
+          <div
+            class="profile-telegram"
+            id="savedTelegram">
           </div>
 
         </div>
@@ -334,6 +351,10 @@
 
       <div class="feature">
         🌐 TON domain integration
+      </div>
+
+      <div class="feature">
+        💬 Telegram identity integration
       </div>
 
       <div class="feature">
@@ -448,6 +469,13 @@
           .value
           .trim();
 
+      const telegramUsername =
+        document
+          .getElementById('telegramUsername')
+          .value
+          .trim();
+
+
       if (!currentWalletAddress) {
 
         setStatus(
@@ -458,6 +486,7 @@
 
       }
 
+
       if (!name) {
 
         setStatus(
@@ -467,6 +496,7 @@
         return;
 
       }
+
 
       setStatus(
         'Saving profile...'
@@ -521,6 +551,25 @@
         let response;
 
 
+        const profileData = {
+
+          wallet_address:
+            currentWalletAddress,
+
+          name:
+            name,
+
+          domain:
+            domain ||
+            null,
+
+          telegram_username:
+            telegramUsername ||
+            null
+
+        };
+
+
         if (existingProfiles.length > 0) {
 
           response =
@@ -551,19 +600,10 @@
 
                 },
 
-                body: JSON.stringify({
-
-                  wallet_address:
-                    currentWalletAddress,
-
-                  name:
-                    name,
-
-                  domain:
-                    domain ||
-                    null
-
-                })
+                body:
+                  JSON.stringify(
+                    profileData
+                  )
 
               }
 
@@ -598,19 +638,10 @@
 
                 },
 
-                body: JSON.stringify({
-
-                  wallet_address:
-                    currentWalletAddress,
-
-                  name:
-                    name,
-
-                  domain:
-                    domain ||
-                    null
-
-                })
+                body:
+                  JSON.stringify(
+                    profileData
+                  )
 
               }
 
@@ -628,24 +659,18 @@
         }
 
 
-        document
-          .getElementById('savedName')
-          .textContent =
-          name;
+        showProfile({
 
+          name:
+            name,
 
-        document
-          .getElementById('savedDomain')
-          .textContent =
-          domain ||
-          'TON domain not added';
+          domain:
+            domain,
 
+          telegram_username:
+            telegramUsername
 
-        document
-          .getElementById('profileResult')
-          .style
-          .display =
-          'block';
+        });
 
 
         setStatus(
@@ -745,25 +770,48 @@
 
 
         document
-          .getElementById('savedName')
-          .textContent =
-          profile.name;
+          .getElementById('telegramUsername')
+          .value =
+          profile.telegram_username ||
+          '';
 
 
-        document
-          .getElementById('savedDomain')
-          .textContent =
-          profile.domain ||
-          'TON domain not added';
-
-
-        document
-          .getElementById('profileResult')
-          .style
-          .display =
-          'block';
+        showProfile(profile);
 
       }
+
+    }
+
+
+    function showProfile(profile) {
+
+      document
+        .getElementById('savedName')
+        .textContent =
+        profile.name ||
+        '';
+
+
+      document
+        .getElementById('savedDomain')
+        .textContent =
+        profile.domain ||
+        'TON domain not added';
+
+
+      document
+        .getElementById('savedTelegram')
+        .textContent =
+        profile.telegram_username
+          ? profile.telegram_username
+          : 'Telegram username not added';
+
+
+      document
+        .getElementById('profileResult')
+        .style
+        .display =
+        'block';
 
     }
 
@@ -813,6 +861,12 @@
 
       document
         .getElementById('profileDomain')
+        .value =
+        '';
+
+
+      document
+        .getElementById('telegramUsername')
         .value =
         '';
 
