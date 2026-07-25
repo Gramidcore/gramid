@@ -58,6 +58,48 @@
       justify-content: center;
     }
 
+    .identity {
+      display: none;
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 14px;
+      background: #0b0f19;
+      border: 1px solid #283044;
+    }
+
+    .identity-title {
+      color: #aab2c5;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .address {
+      font-family: monospace;
+      font-size: 15px;
+      word-break: break-all;
+      margin-bottom: 15px;
+    }
+
+    .copy-button,
+    .disconnect-button {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      margin: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .copy-button {
+      background: #229ed9;
+      color: white;
+    }
+
+    .disconnect-button {
+      background: #283044;
+      color: white;
+    }
+
     .features {
       margin-top: 60px;
       display: grid;
@@ -101,6 +143,25 @@
         <div id="ton-connect"></div>
       </div>
 
+      <div class="identity" id="identity">
+
+        <div class="identity-title">
+          Connected TON wallet
+        </div>
+
+        <div class="address" id="address">
+        </div>
+
+        <button class="copy-button" onclick="copyAddress()">
+          Copy address
+        </button>
+
+        <button class="disconnect-button" onclick="disconnectWallet()">
+          Disconnect
+        </button>
+
+      </div>
+
     </div>
 
     <div class="features">
@@ -126,10 +187,51 @@
   </div>
 
   <script>
+
     const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
       manifestUrl: 'https://gramidcore.github.io/gramid/tonconnect-manifest.json',
       buttonRootId: 'ton-connect'
     });
+
+    tonConnectUI.onStatusChange(wallet => {
+
+      const identity = document.getElementById('identity');
+      const addressElement = document.getElementById('address');
+
+      if (wallet) {
+
+        const address = wallet.account.address;
+
+        addressElement.textContent = address;
+
+        identity.style.display = 'block';
+
+      } else {
+
+        identity.style.display = 'none';
+
+        addressElement.textContent = '';
+
+      }
+
+    });
+
+    function copyAddress() {
+
+      const address = document.getElementById('address').textContent;
+
+      navigator.clipboard.writeText(address);
+
+      alert('TON address copied');
+
+    }
+
+    async function disconnectWallet() {
+
+      await tonConnectUI.disconnect();
+
+    }
+
   </script>
 
 </body>
