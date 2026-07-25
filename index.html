@@ -11,58 +11,104 @@
 
   <style>
 
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 
     :root {
 
-      --bg: #070a12;
-      --card: rgba(18, 24, 39, 0.72);
-      --border: rgba(255, 255, 255, 0.09);
+      --bg: #07090f;
+
+      --surface: rgba(255, 255, 255, 0.045);
+
+      --surface-strong: rgba(255, 255, 255, 0.065);
+
+      --border: rgba(255, 255, 255, 0.10);
+
+      --border-soft: rgba(255, 255, 255, 0.065);
 
       --text: #ffffff;
-      --muted: #8d96aa;
 
-      --blue: #229ed9;
-      --purple: #7c5cff;
-      --green: #28d7a2;
-      --red: #ff6b7a;
+      --muted: #929aaa;
+
+      --blue: #38bdf8;
+
+      --blue-strong: #229ed9;
+
+      --purple: #8b5cf6;
+
+      --green: #34d399;
+
+      --red: #fb7185;
+
+      --radius-lg: 28px;
+
+      --radius-md: 18px;
+
+      --radius-sm: 12px;
+
+      --space-1: 8px;
+
+      --space-2: 16px;
+
+      --space-3: 24px;
+
+      --space-4: 32px;
+
+      --space-5: 48px;
 
     }
 
 
     * {
+
       box-sizing: border-box;
+
     }
 
 
     body {
 
       margin: 0;
+
       min-height: 100vh;
 
+      color: var(--text);
+
       font-family:
+
         'DM Sans',
-        Arial,
+
+        -apple-system,
+
+        BlinkMacSystemFont,
+
+        'Segoe UI',
+
         sans-serif;
 
       background:
 
         radial-gradient(
-          circle at 15% 10%,
-          rgba(34, 158, 217, 0.14),
-          transparent 30%
+
+          circle at 50% -10%,
+
+          rgba(56, 189, 248, 0.16),
+
+          transparent 34%
+
         ),
 
         radial-gradient(
-          circle at 85% 20%,
-          rgba(124, 92, 255, 0.16),
-          transparent 30%
+
+          circle at 100% 35%,
+
+          rgba(139, 92, 246, 0.12),
+
+          transparent 28%
+
         ),
 
         var(--bg);
-
-      color: var(--text);
 
     }
 
@@ -77,42 +123,75 @@
 
       pointer-events: none;
 
+      opacity: 0.25;
+
       background-image:
 
         linear-gradient(
-          rgba(255,255,255,0.025) 1px,
+
+          rgba(255, 255, 255, 0.025) 1px,
+
           transparent 1px
+
         ),
 
         linear-gradient(
+
           90deg,
-          rgba(255,255,255,0.025) 1px,
+
+          rgba(255, 255, 255, 0.025) 1px,
+
           transparent 1px
+
         );
 
-      background-size: 40px 40px;
+      background-size: 48px 48px;
 
       mask-image:
+
         linear-gradient(
+
           to bottom,
+
           black,
-          transparent 75%
+
+          transparent 70%
+
         );
 
     }
 
 
     h1,
+
     h2,
+
     h3,
+
     .brand,
+
     .identity-name,
+
     .profile-name {
 
       font-family:
+
         'Space Grotesk',
-        'DM Sans',
+
+        -apple-system,
+
+        BlinkMacSystemFont,
+
         sans-serif;
+
+    }
+
+
+    button,
+
+    input {
+
+      font-family: inherit;
 
     }
 
@@ -123,11 +202,13 @@
 
       z-index: 1;
 
-      max-width: 980px;
+      width: 100%;
 
-      margin: auto;
+      max-width: 1040px;
 
-      padding: 54px 20px 40px;
+      margin: 0 auto;
+
+      padding: 32px 24px 64px;
 
     }
 
@@ -136,11 +217,13 @@
 
       display: flex;
 
-      justify-content: space-between;
-
       align-items: center;
 
-      margin-bottom: 90px;
+      justify-content: space-between;
+
+      height: 48px;
+
+      margin-bottom: 96px;
 
     }
 
@@ -151,24 +234,20 @@
 
       align-items: center;
 
-      gap: 12px;
+      gap: 14px;
 
-      font-size: 22px;
+      font-size: 23px;
 
-      font-weight: 800;
+      font-weight: 700;
 
-      letter-spacing: -0.5px;
+      letter-spacing: -0.7px;
 
     }
 
 
     .brand-mark {
 
-      width: 38px;
-
-      height: 38px;
-
-      border-radius: 12px;
+      position: relative;
 
       display: flex;
 
@@ -176,48 +255,223 @@
 
       justify-content: center;
 
+      width: 40px;
+
+      height: 40px;
+
+      overflow: hidden;
+
+      border-radius: 13px;
+
       background:
 
         linear-gradient(
+
           135deg,
-          var(--blue),
-          var(--purple)
+
+          #39d5ff 0%,
+
+          #229ed9 35%,
+
+          #7c5cff 70%,
+
+          #b48cff 100%
+
         );
 
       box-shadow:
 
-        0 0 30px
-        rgba(34, 158, 217, 0.25);
+        0 0 24px
+
+        rgba(56, 189, 248, 0.38),
+
+        0 0 60px
+
+        rgba(124, 92, 255, 0.18);
 
     }
 
 
-    .diamond {
+    .brand-mark::before {
 
-      width: 17px;
+      content: "";
 
-      height: 17px;
+      position: absolute;
 
-      background: white;
+      inset: -30%;
+
+      background:
+
+        linear-gradient(
+
+          120deg,
+
+          transparent 28%,
+
+          rgba(255,255,255,0.85) 48%,
+
+          transparent 60%
+
+        );
+
+      transform: translateX(-70%) rotate(15deg);
+
+      animation: crystalShine 4.5s ease-in-out infinite;
+
+    }
+
+
+    .crystal {
+
+      position: relative;
+
+      z-index: 2;
+
+      width: 22px;
+
+      height: 22px;
 
       transform: rotate(45deg);
 
-      border-radius: 3px;
+      border-radius: 5px;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          rgba(255,255,255,0.98) 0%,
+
+          rgba(218,247,255,0.95) 28%,
+
+          rgba(121,205,255,0.82) 48%,
+
+          rgba(255,255,255,0.95) 64%,
+
+          rgba(178,145,255,0.9) 100%
+
+        );
 
       box-shadow:
 
-        0 0 12px
-        rgba(255,255,255,0.7),
+        inset 3px 3px 7px
 
-        0 0 25px
-        rgba(34,158,217,0.7);
+        rgba(255,255,255,0.8),
+
+        inset -4px -4px 8px
+
+        rgba(87, 63, 180, 0.4),
+
+        0 0 16px
+
+        rgba(150, 225, 255, 0.85);
+
+    }
+
+
+    .crystal::before {
+
+      content: "";
+
+      position: absolute;
+
+      top: 3px;
+
+      left: 4px;
+
+      width: 7px;
+
+      height: 12px;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          rgba(255,255,255,0.9),
+
+          transparent
+
+        );
+
+      clip-path: polygon(
+
+        0 0,
+
+        100% 35%,
+
+        55% 100%
+
+      );
+
+    }
+
+
+    .crystal::after {
+
+      content: "";
+
+      position: absolute;
+
+      right: 3px;
+
+      bottom: 3px;
+
+      width: 8px;
+
+      height: 9px;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          rgba(91,67,199,0.7),
+
+          rgba(255,255,255,0.5)
+
+        );
+
+      clip-path: polygon(
+
+        0 0,
+
+        100% 0,
+
+        55% 100%
+
+      );
+
+    }
+
+
+    @keyframes crystalShine {
+
+      0%,
+
+      55% {
+
+        transform: translateX(-90%) rotate(15deg);
+
+      }
+
+      75%,
+
+      100% {
+
+        transform: translateX(90%) rotate(15deg);
+
+      }
 
     }
 
 
     .network {
 
-      padding: 8px 13px;
+      padding: 9px 14px;
 
       border: 1px solid var(--border);
 
@@ -225,10 +479,11 @@
 
       color: var(--muted);
 
+      background: rgba(255, 255, 255, 0.035);
+
       font-size: 12px;
 
-      background:
-        rgba(255,255,255,0.03);
+      letter-spacing: 0.2px;
 
     }
 
@@ -237,7 +492,7 @@
 
       max-width: 760px;
 
-      margin: auto;
+      margin: 0 auto;
 
       text-align: center;
 
@@ -246,43 +501,50 @@
 
     .eyebrow {
 
-      display: inline-block;
+      display: inline-flex;
 
-      padding: 8px 14px;
+      align-items: center;
+
+      min-height: 32px;
+
+      padding: 0 14px;
 
       border: 1px solid
-        rgba(34, 158, 217, 0.25);
+
+        rgba(56, 189, 248, 0.22);
 
       border-radius: 999px;
 
-      color: #8bd9ff;
+      color: #9edfff;
 
       background:
-        rgba(34, 158, 217, 0.08);
 
-      font-size: 12px;
+        rgba(56, 189, 248, 0.07);
 
-      font-weight: bold;
+      font-size: 11px;
 
-      letter-spacing: 1px;
+      font-weight: 700;
+
+      letter-spacing: 1.3px;
 
       text-transform: uppercase;
-
-      margin-bottom: 24px;
 
     }
 
 
     .hero h1 {
 
-      margin: 0;
+      margin: 24px 0 0;
 
       font-size:
-        clamp(48px, 9vw, 92px);
 
-      line-height: 0.95;
+        clamp(50px, 9vw, 92px);
+
+      line-height: 0.98;
 
       letter-spacing: -5px;
+
+      font-weight: 700;
 
     }
 
@@ -292,10 +554,15 @@
       background:
 
         linear-gradient(
+
           110deg,
-          #ffffff,
-          #9de2ff 45%,
-          #a18cff
+
+          #ffffff 0%,
+
+          #b8edff 42%,
+
+          #a996ff 100%
+
         );
 
       -webkit-background-clip: text;
@@ -307,39 +574,50 @@
 
     .hero p {
 
-      max-width: 620px;
+      max-width: 610px;
 
       margin: 28px auto 0;
 
       color: var(--muted);
 
-      font-size: 19px;
+      font-size: 18px;
 
-      line-height: 1.6;
+      line-height: 1.65;
 
     }
 
 
     .main-card {
 
-      max-width: 680px;
+      max-width: 700px;
 
-      margin: 55px auto 0;
+      margin: 56px auto 0;
 
-      padding: 30px;
+      padding: 32px;
 
       border: 1px solid var(--border);
 
-      border-radius: 28px;
+      border-radius: var(--radius-lg);
 
-      background: var(--card);
+      background:
 
-      backdrop-filter: blur(24px);
+        linear-gradient(
+
+          145deg,
+
+          rgba(255,255,255,0.075),
+
+          rgba(255,255,255,0.035)
+
+        );
 
       box-shadow:
 
-        0 30px 100px
-        rgba(0,0,0,0.35);
+        0 35px 110px
+
+        rgba(0, 0, 0, 0.38);
+
+      backdrop-filter: blur(24px);
 
     }
 
@@ -348,12 +626,11 @@
 
       padding: 24px;
 
-      border-radius: 20px;
+      border: 1px solid var(--border-soft);
 
-      background:
-        rgba(255,255,255,0.035);
+      border-radius: var(--radius-md);
 
-      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.035);
 
       text-align: center;
 
@@ -362,11 +639,15 @@
 
     .wallet-label {
 
+      margin-bottom: 16px;
+
       color: var(--muted);
 
-      font-size: 13px;
+      font-size: 11px;
 
-      margin-bottom: 15px;
+      font-weight: 700;
+
+      letter-spacing: 1.4px;
 
     }
 
@@ -384,7 +665,7 @@
 
       display: none;
 
-      margin-top: 24px;
+      margin-top: 32px;
 
     }
 
@@ -393,28 +674,32 @@
 
       display: flex;
 
-      justify-content: space-between;
-
       align-items: flex-start;
 
-      gap: 20px;
+      justify-content: space-between;
 
-      margin-bottom: 24px;
+      gap: 24px;
+
+      padding-bottom: 24px;
+
+      border-bottom: 1px solid var(--border-soft);
 
     }
 
 
     .identity-title {
 
+      margin-bottom: 8px;
+
       color: var(--muted);
 
-      font-size: 12px;
+      font-size: 11px;
+
+      font-weight: 700;
+
+      letter-spacing: 1.4px;
 
       text-transform: uppercase;
-
-      letter-spacing: 1.5px;
-
-      margin-bottom: 8px;
 
     }
 
@@ -423,37 +708,18 @@
 
       font-size: 28px;
 
-      font-weight: 800;
+      line-height: 1.15;
 
-    }
+      font-weight: 700;
 
-
-    .verified-badge {
-
-      padding: 8px 12px;
-
-      border-radius: 999px;
-
-      color: var(--green);
-
-      background:
-        rgba(40, 215, 162, 0.1);
-
-      border: 1px solid
-        rgba(40, 215, 162, 0.2);
-
-      font-size: 12px;
-
-      font-weight: bold;
-
-      white-space: nowrap;
+      letter-spacing: -0.7px;
 
     }
 
 
     .address {
 
-      margin-top: 8px;
+      margin-top: 10px;
 
       color: var(--muted);
 
@@ -466,47 +732,85 @@
     }
 
 
+    .verified-badge {
+
+      flex-shrink: 0;
+
+      padding: 9px 13px;
+
+      border: 1px solid
+
+        rgba(52, 211, 153, 0.22);
+
+      border-radius: 999px;
+
+      color: var(--green);
+
+      background:
+
+        rgba(52, 211, 153, 0.08);
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+    }
+
+
     .status-grid {
 
       display: grid;
 
       grid-template-columns:
+
         repeat(3, 1fr);
 
-      gap: 10px;
+      gap: 12px;
 
-      margin: 24px 0;
+      margin-top: 24px;
 
     }
 
 
     .status-item {
 
-      padding: 15px;
+      min-height: 92px;
 
-      border-radius: 16px;
+      padding: 18px;
 
-      background:
-        rgba(255,255,255,0.035);
+      border: 1px solid var(--border-soft);
 
-      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+
+      background: rgba(255,255,255,0.03);
+
+    }
+
+
+    .status-item > span {
+
+      color: var(--muted);
+
+      font-size: 12px;
 
     }
 
 
     .status-dot {
 
-      width: 9px;
-
-      height: 9px;
-
       display: inline-block;
 
-      border-radius: 50%;
+      width: 8px;
+
+      height: 8px;
 
       margin-right: 6px;
 
-      background: var(--muted);
+      border-radius: 50%;
+
+      background: #606979;
+
+      vertical-align: 1px;
 
     }
 
@@ -518,7 +822,8 @@
       box-shadow:
 
         0 0 12px
-        rgba(40,215,162,0.6);
+
+        rgba(52, 211, 153, 0.65);
 
     }
 
@@ -527,32 +832,28 @@
 
       display: block;
 
-      margin-top: 8px;
+      margin-top: 12px;
 
-      font-size: 13px;
+      font-size: 14px;
 
-    }
-
-
-    .status-item span {
-
-      color: var(--muted);
-
-      font-size: 11px;
+      font-weight: 600;
 
     }
 
 
     .profile-editor {
 
-      padding: 22px;
+      margin-top: 24px;
 
-      border-radius: 20px;
+      padding: 24px;
+
+      border: 1px solid var(--border-soft);
+
+      border-radius: var(--radius-md);
 
       background:
-        rgba(0,0,0,0.16);
 
-      border: 1px solid var(--border);
+        rgba(0, 0, 0, 0.14);
 
       text-align: center;
 
@@ -561,73 +862,69 @@
 
     .profile-editor h3 {
 
-      margin-top: 0;
+      margin: 0 0 16px;
+
+      font-size: 20px;
+
+      letter-spacing: -0.3px;
 
     }
 
 
     .profile-input {
 
+      display: block;
+
       width: 100%;
 
-      padding: 14px;
+      height: 48px;
 
-      margin: 6px 0;
+      margin: 8px 0;
 
-      border-radius: 12px;
+      padding: 0 15px;
 
       border: 1px solid var(--border);
 
-      background:
-        rgba(255,255,255,0.04);
+      border-radius: var(--radius-sm);
+
+      outline: none;
 
       color: white;
 
-      font-size: 15px;
+      background: rgba(255,255,255,0.045);
 
-      outline: none;
+      font-size: 14px;
+
+      transition:
+
+        border-color 0.2s ease,
+
+        box-shadow 0.2s ease;
 
     }
 
 
     .profile-input:focus {
 
-      border-color: var(--blue);
+      border-color: rgba(56, 189, 248, 0.7);
 
       box-shadow:
 
         0 0 0 3px
-        rgba(34,158,217,0.1);
+
+        rgba(56, 189, 248, 0.1);
 
     }
 
 
     .profile-input::placeholder {
 
-      color: #687287;
+      color: #697386;
 
     }
 
 
     .button {
-
-      min-height: 46px;
-
-      min-width: 190px;
-
-      border: none;
-
-      border-radius: 12px;
-
-      padding: 13px 20px;
-
-      margin: 6px 4px;
-
-      cursor: pointer;
-
-      font-weight: 700;
-
-      font-size: 14px;
 
       display: inline-flex;
 
@@ -635,93 +932,125 @@
 
       justify-content: center;
 
+      min-width: 190px;
+
+      height: 46px;
+
+      margin: 6px 4px;
+
+      padding: 0 20px;
+
+      border: 0;
+
+      border-radius: var(--radius-sm);
+
+      cursor: pointer;
+
+      font-size: 13px;
+
+      font-weight: 700;
+
       transition:
 
         transform 0.2s ease,
 
-        opacity 0.2s ease;
+        opacity 0.2s ease,
+
+        box-shadow 0.2s ease;
 
     }
 
 
     .button:hover {
 
-      transform: translateY(-2px);
+      transform: translateY(-1px);
 
-      opacity: 0.92;
-
-    }
-
-
-    .copy-button {
-
-      background: #283044;
-
-      color: white;
+      opacity: 0.94;
 
     }
 
 
     .save-button {
 
+      color: white;
+
       background:
 
         linear-gradient(
+
           135deg,
+
           #16a085,
+
           #20c997
+
         );
 
-      color: white;
+      box-shadow:
+
+        0 10px 25px
+
+        rgba(32, 201, 151, 0.12);
 
     }
 
 
     .telegram-button {
 
+      color: white;
+
       background:
 
         linear-gradient(
-          135deg,
-          #229ed9,
-          #1677b5
-        );
 
-      color: white;
+          135deg,
+
+          #229ed9,
+
+          #1677b5
+
+        );
 
     }
 
 
     .profile-button {
 
+      color: white;
+
       background:
 
         linear-gradient(
-          135deg,
-          #7c5cff,
-          #5b43c7
-        );
 
-      color: white;
+          135deg,
+
+          #7c5cff,
+
+          #5b43c7
+
+        );
 
     }
 
 
+    .copy-button,
+
     .disconnect-button {
 
-      background: #283044;
-
       color: white;
+
+      background: #283044;
 
     }
 
 
     .clear-button {
 
-      background:
-        rgba(255,107,122,0.12);
+      color: #ffadb8;
 
-      color: #ff9ca7;
+      background:
+
+        rgba(251, 113, 133, 0.11);
 
     }
 
@@ -730,21 +1059,25 @@
 
       display: none;
 
-      margin-top: 22px;
+      margin-top: 24px;
 
       padding: 24px;
 
-      border-radius: 18px;
+      border: 1px solid var(--border);
+
+      border-radius: var(--radius-md);
 
       background:
 
         linear-gradient(
-          135deg,
-          rgba(34,158,217,0.08),
-          rgba(124,92,255,0.08)
-        );
 
-      border: 1px solid var(--border);
+          145deg,
+
+          rgba(56, 189, 248, 0.07),
+
+          rgba(139, 92, 246, 0.07)
+
+        );
 
       text-align: center;
 
@@ -753,52 +1086,57 @@
 
     .profile-label {
 
+      margin-bottom: 16px;
+
       color: var(--muted);
 
-      font-size: 11px;
+      font-size: 10px;
+
+      font-weight: 700;
 
       letter-spacing: 1.5px;
 
       text-transform: uppercase;
-
-      margin-bottom: 14px;
 
     }
 
 
     .profile-name {
 
-      margin-top: 0;
-
-      font-size: 25px;
-
-      font-weight: 800;
+      font-size: 24px;
 
       line-height: 1.2;
+
+      font-weight: 700;
+
+      letter-spacing: -0.4px;
 
     }
 
 
     .profile-domain,
+
     .profile-telegram {
 
-      margin-top: 9px;
+      margin-top: 10px;
 
       line-height: 1.4;
+
+      font-size: 14px;
 
     }
 
 
     .profile-domain {
 
-      color: #8bd9ff;
+      color: #9edfff;
 
     }
 
 
     .profile-telegram {
 
-      color: #7ecbff;
+      color: #8fcfff;
 
     }
 
@@ -821,25 +1159,27 @@
       display: grid;
 
       grid-template-columns:
+
         repeat(4, 1fr);
 
       gap: 12px;
 
-      margin-top: 70px;
+      margin-top: 72px;
 
     }
 
 
     .feature {
 
+      min-height: 90px;
+
       padding: 20px;
 
-      border-radius: 18px;
+      border: 1px solid var(--border-soft);
 
-      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
 
-      background:
-        rgba(255,255,255,0.025);
+      background: rgba(255,255,255,0.025);
 
       color: var(--muted);
 
@@ -852,29 +1192,29 @@
 
     .footer {
 
-      margin-top: 70px;
+      margin-top: 72px;
+
+      color: #5e687a;
+
+      font-size: 12px;
 
       text-align: center;
-
-      color: #596276;
-
-      font-size: 13px;
 
     }
 
 
-    @media (max-width: 700px) {
+    @media (max-width: 720px) {
 
       .container {
 
-        padding: 30px 15px;
+        padding: 24px 16px 48px;
 
       }
 
 
       .topbar {
 
-        margin-bottom: 60px;
+        margin-bottom: 72px;
 
       }
 
@@ -888,7 +1228,7 @@
 
       .hero h1 {
 
-        letter-spacing: -3px;
+        letter-spacing: -3.5px;
 
       }
 
@@ -919,7 +1259,10 @@
       .features {
 
         grid-template-columns:
-          1fr 1fr;
+
+          repeat(2, 1fr);
+
+        margin-top: 48px;
 
       }
 
@@ -942,7 +1285,7 @@
     }
 
 
-    @media (max-width: 430px) {
+    @media (max-width: 440px) {
 
       .features {
 
@@ -969,7 +1312,7 @@
 
     <div class="brand-mark">
 
-      <div class="diamond"></div>
+      <div class="crystal"></div>
 
     </div>
 
@@ -1432,7 +1775,6 @@
 
     let currentWalletAddress = '';
 
-
     let currentTelegramLinkCode = '';
 
 
@@ -1514,13 +1856,9 @@
 
         currentWalletAddress = '';
 
-
         currentTelegramLinkCode = '';
 
-
-        identity.style.display =
-
-          'none';
+        identity.style.display = 'none';
 
       }
 
@@ -1632,7 +1970,6 @@
 
                   SUPABASE_KEY
 
-
               }
 
             }
@@ -1667,7 +2004,6 @@
 
 
         if (!telegramLinkCode) {
-
 
           telegramLinkCode =
 
@@ -1730,7 +2066,6 @@
 
               existingProfiles[0].id,
 
-
               {
 
 
@@ -1763,7 +2098,6 @@
 
                     'return=minimal'
 
-
                 },
 
 
@@ -1790,7 +2124,6 @@
               SUPABASE_URL +
 
               '/rest/v1/profiles',
-
 
               {
 
@@ -1823,7 +2156,6 @@
                   'Prefer':
 
                     'return=minimal'
-
 
                 },
 
@@ -1926,7 +2258,6 @@
 
         );
 
-
         return;
 
       }
@@ -2009,7 +2340,6 @@
                 'Bearer ' +
 
                 SUPABASE_KEY
-
 
             }
 
@@ -2441,9 +2771,7 @@
         '';
 
 
-      currentTelegramLinkCode =
-
-        '';
+      currentTelegramLinkCode = '';
 
 
       document
