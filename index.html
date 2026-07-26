@@ -1,61 +1,53 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>GramID — Identity for TON</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
-  />
+  >
 
   <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
 
   <style>
     :root {
       --bg: #07080b;
-      --panel: rgba(17, 19, 24, 0.86);
-      --border: rgba(255, 255, 255, 0.09);
-      --border-soft: rgba(255, 255, 255, 0.06);
+      --panel: rgba(17, 19, 24, 0.82);
+      --border: rgba(255,255,255,.09);
+      --border-soft: rgba(255,255,255,.055);
       --text: #f5f7fa;
       --muted: #8e96a3;
       --muted-2: #646b77;
+      --accent: #65a7ff;
+      --accent-2: #8b7cff;
       --success: #69d89a;
-      --blue: #65a7ff;
-      --purple: #8b7cff;
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
       color: var(--text);
-      font-family:
-        "Inter",
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: -.015em;
       background:
-        radial-gradient(
-          900px 500px at 50% -120px,
-          rgba(91, 120, 255, 0.16),
-          transparent 65%
-        ),
-        radial-gradient(
-          700px 500px at 100% 40%,
-          rgba(103, 74, 255, 0.07),
-          transparent 70%
-        ),
+        radial-gradient(900px 500px at 50% -120px, rgba(91,120,255,.16), transparent 65%),
+        radial-gradient(700px 500px at 100% 40%, rgba(103,74,255,.07), transparent 70%),
         var(--bg);
     }
 
@@ -64,25 +56,16 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-
       background:
-        linear-gradient(
-          rgba(255,255,255,0.012) 1px,
-          transparent 1px
-        ),
-        linear-gradient(
-          90deg,
-          rgba(255,255,255,0.012) 1px,
-          transparent 1px
-        );
-
+        linear-gradient(rgba(255,255,255,.012) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.012) 1px, transparent 1px);
       background-size: 64px 64px;
       mask-image: linear-gradient(to bottom, black, transparent 80%);
     }
 
     .page {
       width: 100%;
-      max-width: 900px;
+      max-width: 1180px;
       margin: 0 auto;
       padding: 34px 24px 70px;
     }
@@ -91,52 +74,40 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 100px;
+      margin-bottom: 92px;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-
       font-size: 18px;
       font-weight: 700;
-      letter-spacing: -0.04em;
+      letter-spacing: -.04em;
     }
 
     .brand-mark {
       width: 30px;
       height: 30px;
-
       display: grid;
       place-items: center;
-
       border-radius: 9px;
-
+      color: white;
       font-size: 15px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #6caaff,
-          #806fff
-        );
-
-      box-shadow:
-        0 0 30px
-        rgba(103, 137, 255, 0.28);
+      background: linear-gradient(135deg, #6caaff, #806fff);
+      box-shadow: 0 0 30px rgba(103,137,255,.28);
     }
 
     .topbar-label {
       color: var(--muted-2);
       font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: .08em;
     }
 
     .hero {
       max-width: 780px;
-      margin: 0 auto 58px;
+      margin: 0 auto 68px;
       text-align: center;
     }
 
@@ -144,55 +115,36 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-
       margin-bottom: 22px;
       padding: 8px 13px;
-
       border: 1px solid var(--border);
       border-radius: 999px;
-
       color: #aab5c7;
-      background: rgba(255,255,255,0.025);
-
+      background: rgba(255,255,255,.025);
       font-size: 12px;
       font-weight: 500;
-      letter-spacing: 0.04em;
+      letter-spacing: .04em;
     }
 
     .eyebrow-dot {
       width: 6px;
       height: 6px;
-
       border-radius: 50%;
-
       background: var(--success);
-
-      box-shadow:
-        0 0 12px
-        rgba(105, 216, 154, 0.8);
+      box-shadow: 0 0 12px rgba(105,216,154,.8);
     }
 
     h1 {
       margin: 0;
-
       font-size: clamp(48px, 8vw, 86px);
-      line-height: 0.98;
-
+      line-height: .98;
       font-weight: 800;
-      letter-spacing: -0.075em;
+      letter-spacing: -.075em;
     }
 
     .gradient-text {
       color: transparent;
-
-      background:
-        linear-gradient(
-          135deg,
-          #ffffff 0%,
-          #aebdff 45%,
-          #75aaff 100%
-        );
-
+      background: linear-gradient(135deg, #fff 0%, #aebdff 45%, #75aaff 100%);
       -webkit-background-clip: text;
       background-clip: text;
     }
@@ -200,9 +152,7 @@
     .hero-description {
       max-width: 590px;
       margin: 26px auto 0;
-
       color: var(--muted);
-
       font-size: 18px;
       line-height: 1.65;
     }
@@ -210,30 +160,21 @@
     .auth-panel {
       max-width: 620px;
       margin: 0 auto;
+    }
 
+    .panel {
       overflow: hidden;
-
       border: 1px solid var(--border);
-      border-radius: 28px;
-
+      border-radius: 26px;
       background:
-        linear-gradient(
-          145deg,
-          rgba(255,255,255,0.055),
-          rgba(255,255,255,0.018)
-        );
-
-      box-shadow:
-        0 30px 100px
-        rgba(0,0,0,0.35);
-
+        linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.018));
+      box-shadow: 0 30px 100px rgba(0,0,0,.35);
       backdrop-filter: blur(24px);
     }
 
     .auth-visual {
-      min-height: 560px;
-      padding: 38px;
-
+      min-height: 430px;
+      padding: 36px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -248,167 +189,109 @@
     .auth-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-
+      gap: 7px;
       color: #9ca7b8;
-
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: .08em;
       text-transform: uppercase;
     }
 
     .auth-badge span {
       width: 7px;
       height: 7px;
-
       border-radius: 50%;
-
       background: var(--success);
-
-      box-shadow:
-        0 0 12px
-        rgba(105,216,154,0.8);
+      box-shadow: 0 0 12px rgba(105,216,154,.8);
     }
 
     .auth-icon {
-      width: 58px;
-      height: 58px;
-
+      width: 56px;
+      height: 56px;
       display: grid;
       place-items: center;
-
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,.12);
       border-radius: 18px;
-
       font-size: 26px;
-
-      background:
-        linear-gradient(
-          135deg,
-          rgba(101,167,255,0.24),
-          rgba(139,124,255,0.24)
-        );
-
-      box-shadow:
-        0 0 45px
-        rgba(101,167,255,0.16);
-    }
-
-    .auth-content {
-      text-align: center;
+      background: linear-gradient(
+        135deg,
+        rgba(101,167,255,.24),
+        rgba(139,124,255,.24)
+      );
+      box-shadow: 0 0 45px rgba(101,167,255,.16);
     }
 
     .auth-content h2 {
-      margin: 0 0 14px;
-
-      font-size: 34px;
+      margin: 25px 0 10px;
+      font-size: 32px;
       font-weight: 700;
-      letter-spacing: -0.05em;
+      letter-spacing: -.05em;
     }
 
     .auth-content p {
-      max-width: 420px;
-      margin: 0 auto;
-
+      margin: 0;
       color: var(--muted);
-
-      font-size: 15px;
-      line-height: 1.65;
+      font-size: 14px;
+      line-height: 1.6;
     }
 
     .button {
       min-height: 48px;
       padding: 0 18px;
-
       border: 1px solid transparent;
-      border-radius: 13px;
-
+      border-radius: 12px;
       color: white;
-
       cursor: pointer;
-
       font-family: inherit;
       font-size: 13px;
       font-weight: 600;
-
-      transition:
-        transform 0.2s ease,
-        opacity 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease;
+      transition: .2s ease;
     }
 
     .button:hover {
       transform: translateY(-1px);
-      opacity: 0.92;
+      opacity: .92;
     }
 
     .gramid-login-button {
       width: 100%;
-      margin-top: 30px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #5f8fff,
-          #806eff
-        );
-
-      box-shadow:
-        0 12px 35px
-        rgba(93, 116, 255, 0.2);
+      margin-top: 28px;
+      background: linear-gradient(135deg, #5f8fff, #806eff);
+      box-shadow: 0 12px 35px rgba(93,116,255,.2);
     }
 
     .login-result {
       display: none;
-
-      margin-top: 24px;
+      margin-top: 22px;
       padding: 24px;
-
       border: 1px solid var(--border);
-      border-radius: 20px;
-
-      background:
-        rgba(0,0,0,0.22);
-
+      border-radius: 18px;
+      background: rgba(0,0,0,.2);
       text-align: center;
     }
 
     .identity-status {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-
-      margin: 9px 0;
-
+      margin: 8px 0;
       color: var(--success);
-
       font-size: 13px;
       font-weight: 600;
     }
 
     .login-result h2 {
-      margin: 24px 0 6px;
-
-      font-size: 25px;
+      margin: 22px 0 6px;
+      font-size: 24px;
       font-weight: 700;
-      letter-spacing: -0.04em;
     }
 
     .login-result p {
       margin: 0;
-
       color: #8bbcff;
       font-size: 14px;
     }
 
     .login-success {
-      margin-top: 20px;
-
+      margin-top: 18px;
       color: var(--success);
-
       font-size: 13px;
       font-weight: 600;
     }
@@ -416,56 +299,39 @@
     .sign-out-button {
       width: 100%;
       margin-top: 20px;
-
-      color: #e2e7ef;
-
-      background:
-        rgba(255,255,255,0.045);
-
-      border-color:
-        rgba(255,255,255,0.14);
+      color: #cbd3df;
+      background: rgba(255,255,255,.035);
+      border-color: rgba(255,255,255,.12);
     }
 
     .sign-out-button:hover {
-      background:
-        rgba(255,255,255,0.08);
-
-      border-color:
-        rgba(255,255,255,0.24);
+      color: white;
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22);
     }
 
     .status {
       min-height: 22px;
       margin-top: 18px;
-
       color: var(--muted);
-
       font-size: 13px;
       text-align: center;
     }
 
     .features {
       display: grid;
-
       grid-template-columns: repeat(4, 1fr);
-
       gap: 12px;
-
       margin-top: 22px;
     }
 
     .feature {
-      min-height: 110px;
+      min-height: 100px;
       padding: 18px;
-
       border: 1px solid var(--border-soft);
       border-radius: 18px;
-
       color: #c7ceda;
-
-      background:
-        rgba(255,255,255,0.025);
-
+      background: rgba(255,255,255,.025);
       font-size: 13px;
       line-height: 1.5;
     }
@@ -473,23 +339,24 @@
     .feature strong {
       display: block;
       margin-bottom: 8px;
-
       color: #f1f4f8;
-
       font-size: 14px;
-      font-weight: 650;
     }
 
     .footer {
       margin-top: 60px;
-
       color: var(--muted-2);
-
       font-size: 12px;
       text-align: center;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
       .page {
         padding: 24px 15px 50px;
       }
@@ -502,163 +369,167 @@
         display: none;
       }
 
+      .hero {
+        margin-bottom: 45px;
+      }
+
       .hero-description {
         font-size: 16px;
       }
 
       .auth-visual {
-        min-height: 520px;
         padding: 24px;
       }
 
       .features {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 500px) {
-      .features {
         grid-template-columns: 1fr;
-      }
-
-      .auth-content h2 {
-        font-size: 29px;
       }
     }
   </style>
+
 </head>
 
 <body>
 
   <main class="page">
 
-    <header class="topbar">
+```
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">◈</div>
+    <span>GramID</span>
+  </div>
 
-      <div class="brand">
-        <div class="brand-mark">◈</div>
-        <span>GramID</span>
-      </div>
+  <div class="topbar-label">
+    TON IDENTITY PROTOCOL
+  </div>
+</header>
 
-      <div class="topbar-label">
-        TON IDENTITY PROTOCOL
-      </div>
+<section class="hero">
 
-    </header>
+  <div class="eyebrow">
+    <span class="eyebrow-dot"></span>
+    Identity layer for TON
+  </div>
 
-    <section class="hero">
+  <h1>
+    Your identity,
+    <br>
+    <span class="gradient-text">
+      verified.
+    </span>
+  </h1>
 
-      <div class="eyebrow">
-        <span class="eyebrow-dot"></span>
-        Identity layer for TON
-      </div>
+  <p class="hero-description">
+    One verified identity for your TON wallet
+    and Telegram. Simple, secure and built
+    for the next generation of Web3.
+  </p>
 
-      <h1>
-        Your identity,
-        <br />
-        <span class="gradient-text">
-          verified.
-        </span>
-      </h1>
+</section>
 
-      <p class="hero-description">
-        One verified identity connecting your TON wallet
-        and Telegram across the Web3 ecosystem.
-      </p>
+<section class="auth-panel">
 
-    </section>
+  <div class="panel">
 
-    <section class="auth-panel">
+    <div class="auth-visual">
 
-      <div class="auth-visual">
+      <div class="auth-top">
 
-        <div class="auth-top">
-
-          <div class="auth-badge">
-            <span></span>
-            GramID Authentication
-          </div>
-
-          <div class="auth-icon">
-            ◈
-          </div>
-
+        <div class="auth-badge">
+          <span></span>
+          GramID Authentication
         </div>
 
-        <div class="auth-content">
-
-          <h2>
-            One identity.
-            <br />
-            Every connection.
-          </h2>
-
-          <p>
-            Sign in with your verified TON and Telegram identity.
-          </p>
-
-          <button
-            class="button gramid-login-button"
-            onclick="signInWithGramID()"
-          >
-            Sign in with GramID
-          </button>
-
-          <div
-            class="login-result"
-            id="loginResult"
-          ></div>
-
-          <div
-            class="status"
-            id="status"
-          ></div>
-
+        <div class="auth-icon">
+          ◈
         </div>
 
       </div>
 
-    </section>
+      <div class="auth-content">
 
-    <section class="features">
+        <h2>
+          One identity.
+          <br>
+          Every connection.
+        </h2>
 
-      <div class="feature">
-        <strong>Wallet-native</strong>
-        Your TON wallet is the foundation of your identity.
+        <p>
+          Sign in with your verified TON
+          and Telegram identity.
+        </p>
+
+        <button
+          class="button gramid-login-button"
+          onclick="signInWithGramID()"
+        >
+          Sign in with GramID
+        </button>
+
+        <div
+          class="login-result"
+          id="loginResult"
+        ></div>
+
+        <div
+          class="status"
+          id="status"
+        ></div>
+
       </div>
 
-      <div class="feature">
-        <strong>Telegram verified</strong>
-        Prove the connection between your Telegram and wallet.
-      </div>
+    </div>
 
-      <div class="feature">
-        <strong>One identity</strong>
-        Use one verified profile across the TON ecosystem.
-      </div>
+  </div>
 
-      <div class="feature">
-        <strong>Built for TON</strong>
-        Identity infrastructure for the next generation of Web3.
-      </div>
+</section>
 
-    </section>
+<section class="features">
 
-    <footer class="footer">
-      GramID — decentralized identity for the next generation of Web3
-    </footer>
+  <div class="feature">
+    <strong>Wallet-native</strong>
+    Your TON wallet is the foundation of your identity.
+  </div>
+
+  <div class="feature">
+    <strong>Telegram verified</strong>
+    Prove the connection between your Telegram and wallet.
+  </div>
+
+  <div class="feature">
+    <strong>One identity</strong>
+    Use one verified profile across the TON ecosystem.
+  </div>
+
+  <div class="feature">
+    <strong>Built for TON</strong>
+    Identity infrastructure for the next generation of Web3.
+  </div>
+
+</section>
+
+<footer class="footer">
+  GramID — decentralized identity for the next generation of Web3
+</footer>
+```
 
   </main>
 
   <script>
+
     const SUPABASE_URL =
       "https://beuymvtrabmawogqrhni.supabase.co";
+
 
     const SUPABASE_KEY =
       "sb_publishable_WHFBkb-8c_iDJ2uBG9g2TQ_CSMkumUg";
 
+
     const GRAMID_LOGIN_URL =
       SUPABASE_URL +
       "/functions/v1/gramid-login";
+
 
     const GRAMID_USERINFO_URL =
       SUPABASE_URL +
@@ -686,30 +557,38 @@
 
       document
         .getElementById("status")
-        .textContent =
-        message;
+        .textContent = message;
 
     }
 
 
-    async function signInWithGramID() {
+    function escapeHtml(value) {
 
-      try {
+      return String(value)
 
-        setStatus(
-          "Opening TON wallet connection..."
-        );
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+    }
 
 
-        const wallet =
-          await tonConnectUI.connectWallet();
+    tonConnectUI.onStatusChange(
 
+      async function(wallet) {
 
         if (!wallet) {
 
-          throw new Error(
-            "Wallet connection cancelled"
-          );
+          currentWalletAddress =
+            "";
+
+          return;
 
         }
 
@@ -717,6 +596,73 @@
         currentWalletAddress =
           wallet.account.address;
 
+
+        setStatus(
+          "Wallet connected. Checking GramID..."
+        );
+
+
+        await authenticateWallet();
+
+      }
+
+    );
+
+
+    async function signInWithGramID() {
+
+      setStatus(
+        "Opening TON wallet connection..."
+      );
+
+
+      try {
+
+        /*
+          ВАЖНО:
+
+          openModal() только открывает
+          TON Connect окно.
+
+          Сам кошелек появится позже
+          через onStatusChange().
+        */
+
+
+        await tonConnectUI.openModal();
+
+
+      } catch (error) {
+
+        console.error(
+          "TON Connect error:",
+          error
+        );
+
+
+        setStatus(
+          "Could not open wallet connection"
+        );
+
+      }
+
+    }
+
+
+    async function authenticateWallet() {
+
+      if (!currentWalletAddress) {
+
+        setStatus(
+          "Wallet was not connected"
+        );
+
+        return;
+
+      }
+
+
+      try {
 
         setStatus(
           "Checking GramID identity..."
@@ -821,7 +767,7 @@
       catch (error) {
 
         console.error(
-          "GramID Login error:",
+          "GramID authentication error:",
           error
         );
 
@@ -898,7 +844,7 @@
 
         ) {
 
-          signOutGramID(false);
+          clearSession();
 
           return;
 
@@ -911,11 +857,17 @@
 
 
         setStatus(
+
           "Welcome back, " +
+
           (
+
             data.identity.name ||
+
             "GramID user"
+
           )
+
         );
 
       }
@@ -974,7 +926,7 @@
 
         <button
           class="button sign-out-button"
-          onclick="signOutGramID(true)"
+          onclick="signOutGramID()"
         >
           Sign out
         </button>
@@ -992,24 +944,34 @@
     }
 
 
-    function signOutGramID(confirmExit = true) {
+    function signOutGramID() {
 
-      if (confirmExit) {
+      const confirmed =
+        window.confirm(
 
-        const confirmed =
-          window.confirm(
-            "Are you sure you want to sign out of GramID?"
-          );
+          "Are you sure you want to sign out of GramID?"
+
+        );
 
 
-        if (!confirmed) {
+      if (!confirmed) {
 
-          return;
-
-        }
+        return;
 
       }
 
+
+      clearSession();
+
+
+      setStatus(
+        "Signed out of GramID"
+      );
+
+    }
+
+
+    function clearSession() {
 
       localStorage.removeItem(
         "gramid_session_token"
@@ -1031,56 +993,26 @@
         );
 
 
-      loginResult.innerHTML =
-        "";
+      if (loginResult) {
+
+        loginResult.innerHTML =
+          "";
 
 
-      loginResult.style.display =
-        "none";
+        loginResult.style.display =
+          "none";
 
-
-      setStatus(
-        "Signed out of GramID"
-      );
-
-    }
-
-
-    function escapeHtml(value) {
-
-      return String(value)
-
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-
-        .replace(
-          /</g,
-          "&lt;"
-        )
-
-        .replace(
-          />/g,
-          "&gt;"
-        )
-
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-
-        .replace(
-          /'/g,
-          "&#039;"
-        );
+      }
 
     }
 
 
     window.addEventListener(
+
       "load",
+
       loadGramIDSession
+
     );
 
   </script>
