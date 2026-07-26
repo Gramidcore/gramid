@@ -10,9 +10,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-  rel="stylesheet"
->
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
 
 <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
 
@@ -20,14 +19,17 @@
 
 :root {
   --bg: #05070b;
-  --panel: rgba(12, 15, 22, 0.82);
-  --border: rgba(255,255,255,.11);
-  --border-soft: rgba(255,255,255,.07);
+  --panel: rgba(10, 13, 20, 0.80);
+  --border: rgba(255,255,255,0.11);
+  --border-soft: rgba(255,255,255,0.07);
+
   --text: #f5f7fb;
   --muted: #8e98a8;
   --muted-2: #657080;
+
   --blue: #5f9dff;
   --purple: #8a72ff;
+
   --success: #6fe1a3;
 }
 
@@ -40,320 +42,589 @@ html {
 }
 
 body {
+
   margin: 0;
+
   min-height: 100vh;
+
   color: var(--text);
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  letter-spacing: -.015em;
+
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  letter-spacing: -0.015em;
 
   background:
+
     linear-gradient(
-      rgba(3,5,9,.70),
-      rgba(3,5,9,.86)
+      rgba(3,5,9,0.70),
+      rgba(3,5,9,0.88)
     ),
-    url("background.png") center / cover fixed no-repeat,
+
+    url("./background.png")
+    center / cover
+    fixed
+    no-repeat,
+
     #05070b;
+
+  overflow-x: hidden;
+}
+
+body::before {
+
+  content: "";
+
+  position: fixed;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  z-index: -1;
+
+  background:
+
+    radial-gradient(
+      600px 450px at 50% 0%,
+      rgba(95,157,255,0.13),
+      transparent 70%
+    ),
+
+    radial-gradient(
+      700px 500px at 100% 100%,
+      rgba(138,114,255,0.10),
+      transparent 70%
+    );
 }
 
 body::after {
+
   content: "";
+
   position: fixed;
+
   inset: 0;
+
   pointer-events: none;
 
-  background:
-    radial-gradient(
-      700px 500px at 50% 0%,
-      rgba(95,157,255,.12),
-      transparent 70%
-    ),
-    radial-gradient(
-      600px 500px at 100% 100%,
-      rgba(138,114,255,.08),
-      transparent 70%
-    );
-
   z-index: -1;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.08),
+      rgba(0,0,0,0.38)
+    );
 }
 
 .page {
+
   width: 100%;
+
   max-width: 1180px;
+
   margin: 0 auto;
-  padding: 32px 24px 70px;
+
+  padding:
+    32px
+    24px
+    70px;
 }
 
+/* =========================
+   TOPBAR
+========================= */
+
 .topbar {
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   margin-bottom: 90px;
 }
 
 .brand {
+
   display: flex;
+
   align-items: center;
+
   gap: 13px;
 }
 
 .brand-logo {
-  width: 52px;
-  height: 52px;
+
+  width: 48px;
+
+  height: 48px;
+
   object-fit: contain;
 
+  border-radius: 50%;
+
+  mix-blend-mode: screen;
+
   filter:
+
     drop-shadow(
-      0 0 22px
-      rgba(108,157,255,.5)
+      0 0 14px
+      rgba(100,150,255,0.70)
+    )
+
+    drop-shadow(
+      0 0 35px
+      rgba(100,110,255,0.32)
     );
 }
 
 .brand-name {
+
   font-size: 20px;
+
   font-weight: 700;
-  letter-spacing: -.04em;
+
+  letter-spacing: -0.04em;
 }
 
 .topbar-label {
+
   color: var(--muted-2);
+
   font-size: 11px;
+
   font-weight: 700;
-  letter-spacing: .14em;
+
+  letter-spacing: 0.14em;
+
   text-transform: uppercase;
 }
 
+/* =========================
+   HERO
+========================= */
+
 .hero {
+
   max-width: 800px;
-  margin: 0 auto 70px;
+
+  margin:
+    0 auto
+    70px;
+
   text-align: center;
 }
 
 .eyebrow {
+
   display: inline-flex;
+
   align-items: center;
+
   gap: 8px;
 
-  padding: 9px 15px;
+  padding:
+    9px
+    15px;
 
   border: 1px solid var(--border);
+
   border-radius: 999px;
 
   color: #b4bfd0;
-  background: rgba(255,255,255,.035);
+
+  background:
+    rgba(255,255,255,0.035);
 
   font-size: 12px;
+
   font-weight: 600;
-  letter-spacing: .05em;
+
+  letter-spacing: 0.05em;
 }
 
 .eyebrow-dot {
+
   width: 7px;
+
   height: 7px;
+
   border-radius: 50%;
+
   background: var(--success);
 
   box-shadow:
     0 0 15px
-    rgba(111,225,163,.8);
+    rgba(111,225,163,0.8);
 }
 
 h1 {
-  margin: 25px 0 0;
 
-  font-size: clamp(48px, 8vw, 88px);
-  line-height: .98;
+  margin:
+    25px
+    0
+    0;
+
+  font-size:
+    clamp(
+      48px,
+      8vw,
+      88px
+    );
+
+  line-height: 0.98;
+
   font-weight: 800;
-  letter-spacing: -.08em;
+
+  letter-spacing: -0.08em;
 }
 
 .gradient-text {
+
   color: transparent;
 
   background:
+
     linear-gradient(
       135deg,
-      #fff 0%,
+      #ffffff 0%,
       #b8c8ff 42%,
       #76aaff 100%
     );
 
   -webkit-background-clip: text;
+
   background-clip: text;
 }
 
 .hero-description {
+
   max-width: 600px;
-  margin: 28px auto 0;
+
+  margin:
+    28px auto
+    0;
 
   color: var(--muted);
+
   font-size: 17px;
+
   line-height: 1.65;
 }
 
+/* =========================
+   GRID
+========================= */
+
 .main-grid {
+
   display: grid;
+
   grid-template-columns:
-    minmax(0, 1fr)
-    minmax(360px, .85fr);
+    minmax(0,1fr)
+    minmax(360px,0.85fr);
 
   gap: 24px;
+
   align-items: start;
 }
 
 .panel {
+
   overflow: hidden;
 
   border: 1px solid var(--border);
+
   border-radius: 28px;
 
   background:
+
     linear-gradient(
       145deg,
-      rgba(255,255,255,.075),
-      rgba(255,255,255,.025)
+      rgba(255,255,255,0.075),
+      rgba(255,255,255,0.025)
     ),
+
     var(--panel);
 
   box-shadow:
-    0 30px 100px rgba(0,0,0,.45),
-    inset 0 1px 0 rgba(255,255,255,.04);
+
+    0 30px 100px
+    rgba(0,0,0,0.45),
+
+    inset 0 1px 0
+    rgba(255,255,255,0.04);
 
   backdrop-filter: blur(26px);
 }
 
 .panel-inner {
+
   padding: 32px;
 }
 
 .panel-header {
+
   margin-bottom: 30px;
 }
 
 .panel-title {
+
   margin: 0;
+
   font-size: 22px;
+
   font-weight: 700;
-  letter-spacing: -.04em;
+
+  letter-spacing: -0.04em;
 }
 
 .panel-subtitle {
-  margin: 9px 0 0;
+
+  margin:
+    9px
+    0
+    0;
 
   color: var(--muted);
+
   font-size: 14px;
+
   line-height: 1.6;
 }
 
+/* =========================
+   AUTH PANEL
+========================= */
+
 .auth-panel {
+
   position: sticky;
+
   top: 24px;
 }
 
 .auth-visual {
+
   min-height: 500px;
+
   padding: 34px;
 
   display: flex;
+
   flex-direction: column;
+
   justify-content: space-between;
 }
 
 .auth-top {
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
 }
 
 .auth-badge {
+
   display: inline-flex;
+
   align-items: center;
+
   gap: 8px;
 
   color: #aab5c5;
+
   font-size: 11px;
+
   font-weight: 700;
-  letter-spacing: .1em;
+
+  letter-spacing: 0.1em;
+
   text-transform: uppercase;
 }
 
 .auth-badge span {
+
   width: 7px;
+
   height: 7px;
+
   border-radius: 50%;
 
   background: var(--success);
 
   box-shadow:
     0 0 13px
-    rgba(111,225,163,.8);
+    rgba(111,225,163,0.8);
 }
 
+/* КРУГЛАЯ ЗОНА ВОКРУГ АЛМАЗА */
+
 .auth-icon {
-  width: 90px;
-  height: 90px;
+
+  position: relative;
+
+  width: 92px;
+
+  height: 92px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+
+    radial-gradient(
+      circle,
+      rgba(100,150,255,0.22),
+      rgba(100,150,255,0.06) 45%,
+      transparent 72%
+    );
+
+  box-shadow:
+
+    0 0 30px
+    rgba(90,130,255,0.25),
+
+    inset 0 0 30px
+    rgba(120,160,255,0.10);
+}
+
+.auth-icon::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 8px;
+
+  border-radius: 50%;
+
+  border: 1px solid
+    rgba(150,180,255,0.18);
 }
 
 .auth-icon img {
-  width: 100%;
-  height: 100%;
+
+  position: relative;
+
+  z-index: 2;
+
+  width: 72px;
+
+  height: 72px;
+
   object-fit: contain;
 
+  border-radius: 50%;
+
+  mix-blend-mode: screen;
+
   filter:
+
+    drop-shadow(
+      0 0 16px
+      rgba(100,155,255,0.85)
+    )
+
     drop-shadow(
       0 0 35px
-      rgba(98,153,255,.55)
+      rgba(80,100,255,0.42)
     );
 }
 
 .auth-content h2 {
-  margin: 35px 0 12px;
+
+  margin:
+    35px
+    0
+    12px;
 
   font-size: 31px;
+
   line-height: 1.08;
+
   font-weight: 700;
-  letter-spacing: -.06em;
+
+  letter-spacing: -0.06em;
 }
 
 .auth-content p {
+
   margin: 0;
 
   color: var(--muted);
+
   font-size: 14px;
+
   line-height: 1.65;
 }
 
+/* =========================
+   BUTTONS
+========================= */
+
 .button {
+
   min-height: 46px;
-  padding: 0 16px;
+
+  padding:
+    0
+    16px;
 
   border: 1px solid transparent;
+
   border-radius: 13px;
 
   color: white;
+
   cursor: pointer;
 
   font-family: inherit;
+
   font-size: 13px;
+
   font-weight: 600;
 
   transition:
-    transform .2s ease,
-    opacity .2s ease,
-    background .2s ease,
-    border-color .2s ease;
+
+    transform 0.2s ease,
+
+    opacity 0.2s ease,
+
+    background 0.2s ease,
+
+    border-color 0.2s ease;
 }
 
 .button:hover {
+
   transform: translateY(-1px);
-  opacity: .94;
+
+  opacity: 0.94;
 }
 
 .gramid-login-button {
+
   width: 100%;
+
   min-height: 52px;
+
   margin-top: 30px;
 
   background:
+
     linear-gradient(
       135deg,
       #5e91ff,
@@ -361,12 +632,15 @@ h1 {
     );
 
   box-shadow:
+
     0 15px 45px
-    rgba(91,118,255,.28);
+    rgba(91,118,255,0.28);
 }
 
 .gramid-login-button:hover {
+
   background:
+
     linear-gradient(
       135deg,
       #72a0ff,
@@ -374,120 +648,196 @@ h1 {
     );
 }
 
+/* =========================
+   CONNECTION
+========================= */
+
 .connection-box {
+
   padding: 22px;
 
   border: 1px solid var(--border-soft);
+
   border-radius: 20px;
 
-  background: rgba(0,0,0,.18);
+  background:
+    rgba(0,0,0,0.18);
 }
 
 .connection-label {
+
   margin-bottom: 14px;
 
   color: var(--muted-2);
+
   font-size: 11px;
+
   font-weight: 700;
-  letter-spacing: .12em;
+
+  letter-spacing: 0.12em;
+
   text-transform: uppercase;
 }
 
 .identity {
+
   display: none;
+
   margin-top: 20px;
 }
 
 .wallet-address {
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   gap: 14px;
 
-  padding: 16px 18px;
+  padding:
+    16px
+    18px;
 
   border: 1px solid var(--border-soft);
+
   border-radius: 15px;
 
-  background: rgba(255,255,255,.03);
+  background:
+    rgba(255,255,255,0.03);
 }
 
 .wallet-address-label {
+
   color: var(--muted-2);
+
   font-size: 11px;
+
   font-weight: 700;
-  letter-spacing: .08em;
+
+  letter-spacing: 0.08em;
+
   text-transform: uppercase;
 }
 
 .address {
+
   margin-top: 7px;
+
   color: #dbe4f1;
+
   font-family: monospace;
+
   font-size: 13px;
 }
 
 .copy-button {
-  padding: 9px 12px;
+
+  padding:
+    9px
+    12px;
 
   border: 1px solid var(--border);
+
   border-radius: 10px;
 
   color: #dbe5f4;
-  background: rgba(255,255,255,.045);
+
+  background:
+    rgba(255,255,255,0.045);
 
   cursor: pointer;
+
   font-family: inherit;
+
   font-size: 12px;
+
   font-weight: 600;
 }
 
 .section-divider {
+
   height: 1px;
-  margin: 28px 0;
+
+  margin:
+    28px
+    0;
+
   background: var(--border-soft);
 }
 
 .form-title {
-  margin: 0 0 16px;
+
+  margin:
+    0
+    0
+    16px;
+
   font-size: 16px;
+
   font-weight: 700;
 }
 
 .profile-input {
+
   width: 100%;
+
   height: 48px;
-  margin: 6px 0;
-  padding: 0 15px;
+
+  margin:
+    6px
+    0;
+
+  padding:
+    0
+    15px;
 
   border: 1px solid var(--border-soft);
+
   border-radius: 12px;
+
   outline: none;
 
   color: var(--text);
-  background: rgba(255,255,255,.035);
+
+  background:
+    rgba(255,255,255,0.035);
 
   font-family: inherit;
+
   font-size: 14px;
 }
 
 .profile-input:focus {
-  border-color: rgba(95,157,255,.7);
-  background: rgba(255,255,255,.055);
+
+  border-color:
+    rgba(95,157,255,0.7);
+
+  background:
+    rgba(255,255,255,0.055);
 }
 
 .profile-input::placeholder {
+
   color: var(--muted-2);
 }
 
 .button-row {
+
   display: grid;
-  grid-template-columns: 1fr 1fr;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
   gap: 10px;
+
   margin-top: 12px;
 }
 
 .save-button {
+
   background:
     linear-gradient(
       135deg,
@@ -497,6 +847,7 @@ h1 {
 }
 
 .verify-button {
+
   background:
     linear-gradient(
       135deg,
@@ -506,229 +857,349 @@ h1 {
 }
 
 .profile-button {
+
   width: 100%;
+
   margin-top: 10px;
 
   color: #cbd8ec;
-  background: rgba(96,157,255,.09);
-  border-color: rgba(96,157,255,.28);
+
+  background:
+    rgba(96,157,255,0.09);
+
+  border-color:
+    rgba(96,157,255,0.28);
 }
 
-.clear-button,
-.disconnect-button {
+.clear-button {
+
   width: 100%;
+
   margin-top: 10px;
 
   color: #c3ccd9;
-  background: rgba(255,255,255,.035);
-  border-color: rgba(255,255,255,.13);
+
+  background:
+    rgba(255,255,255,0.035);
+
+  border-color:
+    rgba(255,255,255,0.13);
+}
+
+.disconnect-button {
+
+  width: 100%;
+
+  margin-top: 10px;
+
+  color: #aeb8c7;
+
+  background:
+    rgba(255,255,255,0.02);
+
+  border-color:
+    rgba(255,255,255,0.09);
 }
 
 .telegram-link {
+
   display: none;
 
   margin-top: 12px;
+
   padding: 13px;
 
-  border: 1px solid rgba(95,157,255,.28);
+  border: 1px solid
+    rgba(95,157,255,0.28);
+
   border-radius: 12px;
 
   color: #a5caff;
-  background: rgba(95,157,255,.08);
+
+  background:
+    rgba(95,157,255,0.08);
 
   text-align: center;
+
   text-decoration: none;
 
   font-size: 13px;
+
   font-weight: 600;
 }
 
 .profile-result {
+
   display: none;
 
   margin-top: 20px;
+
   padding: 22px;
 
   border: 1px solid var(--border);
+
   border-radius: 18px;
 
   background:
+
     linear-gradient(
       145deg,
-      rgba(95,157,255,.09),
-      rgba(138,114,255,.05)
+      rgba(95,157,255,0.09),
+      rgba(138,114,255,0.05)
     );
 }
 
 .profile-label {
+
   color: var(--muted-2);
+
   font-size: 10px;
+
   font-weight: 700;
-  letter-spacing: .13em;
+
+  letter-spacing: 0.13em;
+
   text-transform: uppercase;
 }
 
 .profile-name {
+
   margin-top: 13px;
+
   font-size: 25px;
+
   font-weight: 700;
-  letter-spacing: -.04em;
+
+  letter-spacing: -0.04em;
 }
 
 .profile-domain {
+
   margin-top: 8px;
+
   color: #91bfff;
+
   font-size: 14px;
 }
 
 .profile-telegram {
+
   margin-top: 7px;
+
   color: #82aceb;
+
   font-size: 14px;
 }
 
 .status {
+
   min-height: 20px;
+
   margin-top: 16px;
 
   color: var(--muted);
+
   font-size: 13px;
+
   text-align: center;
 }
 
 .login-result {
+
   display: none;
 
   margin-top: 20px;
+
   padding: 22px;
 
   border: 1px solid var(--border);
+
   border-radius: 18px;
 
-  background: rgba(0,0,0,.22);
+  background:
+    rgba(0,0,0,0.22);
+
   text-align: center;
 }
 
 .identity-status {
-  margin: 9px 0;
+
+  margin:
+    9px
+    0;
 
   color: var(--success);
+
   font-size: 13px;
+
   font-weight: 600;
 }
 
 .login-result h2 {
-  margin: 22px 0 6px;
+
+  margin:
+    22px
+    0
+    6px;
+
   font-size: 24px;
+
   font-weight: 700;
 }
 
 .login-result p {
+
   margin: 0;
+
   color: #8bbcff;
+
   font-size: 14px;
 }
 
 .login-success {
+
   margin-top: 18px;
 
   color: var(--success);
+
   font-size: 13px;
+
   font-weight: 600;
 }
 
+/* =========================
+   FEATURES
+========================= */
+
 .features {
+
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+
+  grid-template-columns:
+    repeat(4,1fr);
+
   gap: 12px;
+
   margin-top: 24px;
 }
 
 .feature {
+
   min-height: 105px;
+
   padding: 18px;
 
   border: 1px solid var(--border-soft);
+
   border-radius: 18px;
 
   color: #c7cfdb;
-  background: rgba(255,255,255,.028);
+
+  background:
+    rgba(255,255,255,0.028);
 
   font-size: 13px;
+
   line-height: 1.5;
 }
 
 .feature strong {
+
   display: block;
+
   margin-bottom: 8px;
 
   color: #f1f4f8;
+
   font-size: 14px;
+
   font-weight: 650;
 }
 
 .footer {
+
   margin-top: 60px;
 
   color: var(--muted-2);
+
   font-size: 12px;
+
   text-align: center;
 }
 
-@media (max-width: 900px) {
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width:900px) {
 
   .main-grid {
+
     grid-template-columns: 1fr;
   }
 
   .auth-panel {
+
     position: static;
   }
 
   .features {
-    grid-template-columns: repeat(2, 1fr);
-  }
 
+    grid-template-columns:
+      repeat(2,1fr);
+  }
 }
 
-@media (max-width: 600px) {
+@media (max-width:600px) {
 
   .page {
-    padding: 24px 15px 50px;
+
+    padding:
+      24px
+      15px
+      50px;
   }
 
   .topbar {
+
     margin-bottom: 65px;
   }
 
   .topbar-label {
+
     display: none;
   }
 
   .hero {
+
     margin-bottom: 45px;
   }
 
   .hero-description {
+
     font-size: 16px;
   }
 
   .panel-inner,
+
   .auth-visual {
+
     padding: 22px;
   }
 
   .button-row {
+
     grid-template-columns: 1fr;
   }
 
   .features {
+
     grid-template-columns: 1fr;
   }
-
 }
 
 </style>
+
 </head>
 
 <body>
@@ -737,54 +1208,54 @@ h1 {
 
 <header class="topbar">
 
-  <div class="brand">
+<div class="brand">
 
-    <img
-      class="brand-logo"
-      src="gram-diamond.png"
-      alt="GramID"
-    >
+<img
+class="brand-logo"
+src="./gram-diamond.png"
+alt="GramDiamond"
+>
 
-    <span class="brand-name">
-      GramID
-    </span>
+<span class="brand-name">
+GramID
+</span>
 
-  </div>
+</div>
 
-  <div class="topbar-label">
-    TON IDENTITY PROTOCOL
-  </div>
+<div class="topbar-label">
+TON IDENTITY PROTOCOL
+</div>
 
 </header>
 
 <section class="hero">
 
-  <div class="eyebrow">
+<div class="eyebrow">
 
-    <span class="eyebrow-dot"></span>
+<span class="eyebrow-dot"></span>
 
-    Identity layer for TON
+Identity layer for TON
 
-  </div>
+</div>
 
-  <h1>
+<h1>
 
-    Your identity,
+Your identity,
 
-    <br>
+<br>
 
-    <span class="gradient-text">
-      verified.
-    </span>
+<span class="gradient-text">
+verified.
+</span>
 
-  </h1>
+</h1>
 
-  <p class="hero-description">
+<p class="hero-description">
 
-    Connect your TON wallet and Telegram.
-    Create one verified identity for the next generation of Web3 applications.
+Connect your TON wallet and Telegram.
+Create one verified identity for the next generation of Web3 applications.
 
-  </p>
+</p>
 
 </section>
 
@@ -994,8 +1465,8 @@ GramID Authentication
 <div class="auth-icon">
 
 <img
-src="gram-diamond.png"
-alt="GramID"
+src="./gram-diamond.png"
+alt="GramDiamond"
 >
 
 </div>
@@ -1104,13 +1575,16 @@ const SUPABASE_KEY =
 'sb_publishable_WHFBkb-8c_iDJ2uBG9g2TQ_CSMkumUg';
 
 const VERIFY_FUNCTION_URL =
-SUPABASE_URL + '/functions/v1/verify-telegram';
+SUPABASE_URL +
+'/functions/v1/verify-telegram';
 
 const GRAMID_LOGIN_URL =
-SUPABASE_URL + '/functions/v1/gramid-login';
+SUPABASE_URL +
+'/functions/v1/gramid-login';
 
 const GRAMID_USERINFO_URL =
-SUPABASE_URL + '/functions/v1/gramid-userinfo';
+SUPABASE_URL +
+'/functions/v1/gramid-userinfo';
 
 const tonConnectUI =
 new TON_CONNECT_UI.TonConnectUI({
@@ -1121,23 +1595,27 @@ manifestUrl:
 });
 
 let currentWalletAddress = '';
+
 let gramidIdentity = null;
 
 function setStatus(message) {
 
 document
 .getElementById('status')
-.textContent = message;
+.textContent =
+message;
 
 }
 
 tonConnectUI.onStatusChange(wallet => {
 
 const identity =
-document.getElementById('identity');
+document
+.getElementById('identity');
 
 const addressElement =
-document.getElementById('address');
+document
+.getElementById('address');
 
 if (wallet) {
 
@@ -1145,7 +1623,8 @@ currentWalletAddress =
 wallet.account.address;
 
 addressElement.textContent =
-currentWalletAddress.slice(0, 6) +
+
+currentWalletAddress.slice(0,6) +
 '...' +
 currentWalletAddress.slice(-6);
 
@@ -1156,13 +1635,16 @@ identity.style.display =
 'block';
 
 loadProfile();
+
 loadGramIDSession();
 
 } else {
 
-currentWalletAddress = '';
+currentWalletAddress =
+'';
 
-identity.style.display = 'none';
+identity.style.display =
+'none';
 
 }
 
@@ -1170,7 +1652,9 @@ identity.style.display = 'none';
 
 async function signInWithGramID() {
 
-setStatus('Opening TON wallet connection...');
+setStatus(
+'Opening TON wallet connection...'
+);
 
 try {
 
@@ -1182,24 +1666,41 @@ return;
 
 }
 
-setStatus('Signing in with GramID...');
+setStatus(
+'Signing in with GramID...'
+);
 
 const response =
 await fetch(
+
 GRAMID_LOGIN_URL,
+
 {
-method: 'POST',
+
+method:
+'POST',
 
 headers: {
-'Content-Type': 'application/json',
-'apikey': SUPABASE_KEY
+
+'Content-Type':
+'application/json',
+
+'apikey':
+SUPABASE_KEY
+
 },
 
-body: JSON.stringify({
-wallet: currentWalletAddress
+body:
+
+JSON.stringify({
+
+wallet:
+currentWalletAddress
+
 })
 
 }
+
 );
 
 const data =
@@ -1208,14 +1709,19 @@ await response.json();
 if (!response.ok) {
 
 throw new Error(
-data.error || 'GramID Login failed'
+
+data.error ||
+'GramID Login failed'
+
 );
 
 }
 
 if (
+
 !data.authenticated ||
 !data.session_token
+
 ) {
 
 throw new Error(
@@ -1250,7 +1756,8 @@ error
 );
 
 setStatus(
-'Error: ' + error.message
+'Error: ' +
+error.message
 );
 
 }
@@ -1265,7 +1772,8 @@ document
 .dataset
 .fullAddress;
 
-navigator.clipboard.writeText(address);
+navigator.clipboard
+.writeText(address);
 
 setStatus(
 'TON address copied'
@@ -1313,7 +1821,9 @@ return;
 
 }
 
-setStatus('Saving profile...');
+setStatus(
+'Saving profile...'
+);
 
 try {
 
@@ -1329,10 +1839,18 @@ currentWalletAddress
 
 {
 
+method:
+'GET',
+
 headers: {
-'apikey': SUPABASE_KEY,
+
+'apikey':
+SUPABASE_KEY,
+
 'Authorization':
-'Bearer ' + SUPABASE_KEY
+'Bearer ' +
+SUPABASE_KEY
+
 }
 
 }
@@ -1359,16 +1877,20 @@ name:
 name,
 
 domain:
-domain || null,
+domain ||
+null,
 
 telegram_username:
-telegramUsername || null
+telegramUsername ||
+null
 
 };
 
 let response;
 
-if (existingProfiles.length > 0) {
+if (
+existingProfiles.length > 0
+) {
 
 response =
 await fetch(
@@ -1379,7 +1901,8 @@ existingProfiles[0].id,
 
 {
 
-method: 'PATCH',
+method:
+'PATCH',
 
 headers: {
 
@@ -1390,7 +1913,8 @@ headers: {
 SUPABASE_KEY,
 
 'Authorization':
-'Bearer ' + SUPABASE_KEY,
+'Bearer ' +
+SUPABASE_KEY,
 
 'Prefer':
 'return=minimal'
@@ -1398,7 +1922,9 @@ SUPABASE_KEY,
 },
 
 body:
-JSON.stringify(profileData)
+JSON.stringify(
+profileData
+)
 
 }
 
@@ -1414,7 +1940,8 @@ SUPABASE_URL +
 
 {
 
-method: 'POST',
+method:
+'POST',
 
 headers: {
 
@@ -1425,7 +1952,8 @@ headers: {
 SUPABASE_KEY,
 
 'Authorization':
-'Bearer ' + SUPABASE_KEY,
+'Bearer ' +
+SUPABASE_KEY,
 
 'Prefer':
 'return=minimal'
@@ -1433,7 +1961,9 @@ SUPABASE_KEY,
 },
 
 body:
-JSON.stringify(profileData)
+JSON.stringify(
+profileData
+)
 
 }
 
@@ -1463,7 +1993,8 @@ error
 );
 
 setStatus(
-'Error: ' + error.message
+'Error: ' +
+error.message
 );
 
 }
@@ -1511,7 +2042,8 @@ VERIFY_FUNCTION_URL,
 
 {
 
-method: 'POST',
+method:
+'POST',
 
 headers: {
 
@@ -1523,7 +2055,9 @@ SUPABASE_KEY
 
 },
 
-body: JSON.stringify({
+body:
+
+JSON.stringify({
 
 wallet:
 currentWalletAddress,
@@ -1543,7 +2077,10 @@ await response.json();
 if (!response.ok) {
 
 throw new Error(
-data.error || 'Verification error'
+
+data.error ||
+'Verification error'
+
 );
 
 }
@@ -1570,7 +2107,8 @@ error
 );
 
 setStatus(
-'Error: ' + error.message
+'Error: ' +
+error.message
 );
 
 }
@@ -1601,7 +2139,8 @@ headers: {
 SUPABASE_KEY,
 
 'Authorization':
-'Bearer ' + SUPABASE_KEY
+'Bearer ' +
+SUPABASE_KEY
 
 }
 
@@ -1682,12 +2221,16 @@ return;
 }
 
 const profileUrl =
+
 window.location.origin +
+
 window.location.pathname.replace(
 'index.html',
 ''
 ) +
+
 'profile.html?wallet=' +
+
 encodeURIComponent(
 currentWalletAddress
 );
@@ -1701,27 +2244,34 @@ function clearProfile() {
 
 document
 .getElementById('profileName')
-.value = '';
+.value =
+'';
 
 document
 .getElementById('profileDomain')
-.value = '';
+.value =
+'';
 
 document
 .getElementById('telegramUsername')
-.value = '';
+.value =
+'';
 
 document
 .getElementById('profileResult')
 .style
-.display = 'none';
+.display =
+'none';
 
 document
 .getElementById('telegramLink')
 .style
-.display = 'none';
+.display =
+'none';
 
-setStatus('Form cleared');
+setStatus(
+'Form cleared'
+);
 
 }
 
@@ -1764,7 +2314,8 @@ GRAMID_USERINFO_URL,
 
 {
 
-method: 'POST',
+method:
+'POST',
 
 headers: {
 
@@ -1777,6 +2328,7 @@ SUPABASE_KEY
 },
 
 body:
+
 JSON.stringify({
 
 session_token:
