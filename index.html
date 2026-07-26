@@ -9,11 +9,11 @@
   <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
 
   <style>
-
     :root {
       --text: #f5f7fb;
       --muted: #9aa3b2;
       --muted-soft: #687281;
+      --border: rgba(255, 255, 255, 0.12);
 
       --blue: #6d9dff;
       --purple: #8d76ff;
@@ -21,11 +21,9 @@
       --success: #72dfa5;
     }
 
-
     * {
       box-sizing: border-box;
     }
-
 
     html,
     body {
@@ -33,9 +31,7 @@
       min-height: 100%;
     }
 
-
     body {
-
       min-height: 100vh;
 
       color: var(--text);
@@ -48,7 +44,6 @@
         sans-serif;
 
       background:
-
         linear-gradient(
           rgba(4, 6, 10, 0.70),
           rgba(4, 6, 10, 0.88)
@@ -60,12 +55,9 @@
         no-repeat;
 
       overflow-x: hidden;
-
     }
 
-
     body::after {
-
       content: "";
 
       position: fixed;
@@ -75,29 +67,22 @@
       pointer-events: none;
 
       background:
-
         radial-gradient(
           700px 500px at 50% 0%,
           rgba(95, 157, 255, 0.13),
           transparent 70%
         );
-
     }
 
-
     .page {
-
       min-height: 100vh;
 
       display: flex;
 
       flex-direction: column;
-
     }
 
-
     .header {
-
       width: 100%;
 
       max-width: 1200px;
@@ -112,13 +97,10 @@
 
       align-items: center;
 
-      justify-content: flex-start;
-
+      justify-content: space-between;
     }
 
-
     .brand {
-
       color: #ffffff;
 
       font-size: 21px;
@@ -126,44 +108,94 @@
       font-weight: 700;
 
       letter-spacing: -0.055em;
-
     }
 
+    .header-label {
+      color: var(--muted-soft);
+
+      font-size: 10px;
+
+      font-weight: 700;
+
+      letter-spacing: 0.16em;
+
+      text-transform: uppercase;
+    }
 
     .main {
-
       flex: 1;
 
       display: flex;
 
-      justify-content: center;
-
       align-items: center;
+
+      justify-content: center;
 
       padding:
         70px
         24px
         110px;
-
     }
 
-
     .content {
-
       width: 100%;
 
       max-width: 760px;
 
       text-align: center;
-
     }
 
+    .eyebrow {
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      margin-bottom: 30px;
+
+      padding:
+        9px
+        15px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius: 999px;
+
+      color: #b7c0cf;
+
+      background:
+        rgba(255, 255, 255, 0.035);
+
+      font-size: 11px;
+
+      font-weight: 600;
+
+      letter-spacing: 0.04em;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: var(--success);
+
+      box-shadow:
+        0 0 15px
+        rgba(114, 223, 165, 0.85);
+    }
 
     h1 {
-
       max-width: 780px;
 
-      margin: 0 auto;
+      margin:
+        0
+        auto;
 
       font-size:
         clamp(
@@ -177,16 +209,12 @@
       font-weight: 700;
 
       letter-spacing: -0.085em;
-
     }
 
-
     .gradient {
-
       color: transparent;
 
       background:
-
         linear-gradient(
           135deg,
           #ffffff 0%,
@@ -197,12 +225,9 @@
       -webkit-background-clip: text;
 
       background-clip: text;
-
     }
 
-
     .description {
-
       max-width: 580px;
 
       margin:
@@ -215,42 +240,35 @@
       font-size: 17px;
 
       line-height: 1.7;
-
     }
 
+    /* РАЗМЕР КНОПКИ ИЗ ТВОЕГО РАБОЧЕГО КОДА */
 
     .login-area {
-
       width: 100%;
 
-      max-width: 520px;
+      max-width: 360px;
 
       margin:
         38px
         auto
         0;
-
     }
 
-
     #ton-connect-button {
-
       width: 100%;
 
-      min-height: 58px;
+      min-height: 52px;
 
       display: flex;
 
       justify-content: center;
-
     }
 
-
     #ton-connect-button button {
-
       width: 100% !important;
 
-      min-height: 58px !important;
+      min-height: 52px !important;
 
       display: flex !important;
 
@@ -260,18 +278,17 @@
 
       padding: 0 !important;
 
-      border-radius: 15px !important;
+      border-radius: 14px !important;
 
       font-family: inherit !important;
 
-      font-size: 15px !important;
+      font-size: 14px !important;
 
       font-weight: 600 !important;
 
       text-align: center !important;
 
       background:
-
         linear-gradient(
           135deg,
           var(--blue),
@@ -279,22 +296,19 @@
         ) !important;
 
       box-shadow:
-
         0 18px 50px
         rgba(92, 119, 255, 0.28) !important;
 
+      transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
     }
-
 
     #ton-connect-button button:hover {
-
       transform: translateY(-1px);
-
     }
 
-
     .connected {
-
       display: none;
 
       margin-top: 18px;
@@ -302,34 +316,26 @@
       padding: 20px;
 
       border:
-
         1px solid
         rgba(114, 223, 165, 0.25);
 
       border-radius: 16px;
 
       background:
-
         rgba(114, 223, 165, 0.06);
 
       text-align: left;
-
     }
 
-
     .connected-title {
-
       color: var(--success);
 
       font-size: 13px;
 
       font-weight: 700;
-
     }
 
-
     .wallet-address {
-
       margin-top: 10px;
 
       color: #cbd5e3;
@@ -341,12 +347,9 @@
       line-height: 1.5;
 
       word-break: break-all;
-
     }
 
-
     .continue-button {
-
       width: 100%;
 
       min-height: 46px;
@@ -354,7 +357,6 @@
       margin-top: 16px;
 
       border:
-
         1px solid
         rgba(255, 255, 255, 0.13);
 
@@ -363,7 +365,6 @@
       color: white;
 
       background:
-
         rgba(255, 255, 255, 0.07);
 
       cursor: pointer;
@@ -373,21 +374,14 @@
       font-size: 13px;
 
       font-weight: 600;
-
     }
-
 
     .continue-button:hover {
-
       background:
-
         rgba(255, 255, 255, 0.12);
-
     }
 
-
     .trust {
-
       display: flex;
 
       justify-content: center;
@@ -399,12 +393,9 @@
       color: var(--muted-soft);
 
       font-size: 11px;
-
     }
 
-
     .footer {
-
       padding: 24px;
 
       color: var(--muted-soft);
@@ -412,90 +403,77 @@
       font-size: 11px;
 
       text-align: center;
-
     }
-
 
     @media (max-width: 600px) {
 
       .header {
-
         padding:
           24px
           20px;
-
       }
 
+      .header-label {
+        display: none;
+      }
 
       .main {
-
         padding:
           50px
           18px
           80px;
-
       }
-
 
       h1 {
-
         font-size: 48px;
-
       }
-
 
       .description {
-
         font-size: 16px;
-
       }
-
 
       .login-area {
-
-        max-width: 100%;
-
+        max-width: 360px;
       }
 
-
       .trust {
-
         flex-direction: column;
 
         gap: 8px;
-
       }
 
     }
-
   </style>
-
 </head>
-
 
 <body>
 
-
   <div class="page">
-
 
     <header class="header">
 
-
       <div class="brand">
-
         Gram ID
-
       </div>
 
+      <div class="header-label">
+        Web3 Identity
+      </div>
 
     </header>
 
 
     <main class="main">
 
-
       <section class="content">
+
+        <div class="eyebrow">
+
+          <span class="eyebrow-dot"></span>
+
+          Identity for the TON ecosystem
+
+        </div>
 
 
         <h1>
@@ -525,7 +503,6 @@
 
         <div class="login-area">
 
-
           <div id="ton-connect-button"></div>
 
 
@@ -533,7 +510,6 @@
             class="connected"
             id="connected"
           >
-
 
             <div class="connected-title">
 
@@ -557,42 +533,28 @@
 
             </button>
 
-
           </div>
-
 
         </div>
 
 
         <div class="trust">
 
-
           <span>
-
             Без хранения средств
-
           </span>
 
-
           <span>
-
             Non-custodial
-
           </span>
-
 
           <span>
-
             TON-native
-
           </span>
-
 
         </div>
 
-
       </section>
-
 
     </main>
 
@@ -603,15 +565,12 @@
 
     </footer>
 
-
   </div>
 
 
   <script>
 
-
     const tonConnectUI =
-
       new TON_CONNECT_UI.TonConnectUI({
 
         manifestUrl:
@@ -624,98 +583,65 @@
 
 
     const connectedBox =
-
       document.getElementById(
-
         "connected"
-
       );
 
 
     const walletAddress =
-
       document.getElementById(
-
         "wallet-address"
-
       );
 
 
     tonConnectUI.onStatusChange(
-
       function(wallet) {
-
 
         if (wallet) {
 
-
           walletAddress.textContent =
-
             wallet.account.address;
 
-
           connectedBox.style.display =
-
             "block";
 
-
-        }
-
-
-        else {
-
+        } else {
 
           connectedBox.style.display =
-
             "none";
 
-
           walletAddress.textContent =
-
             "";
 
         }
 
       }
-
     );
 
 
     function continueToNextStep() {
 
-
       const wallet =
-
         tonConnectUI.wallet;
 
-
       if (!wallet) {
-
         return;
-
       }
 
-
       localStorage.setItem(
-
         "gramid_wallet_address",
 
         wallet.account.address
 
       );
 
-
       alert(
-
         "TON-кошелёк подключён. Следующий этап — создание Gram ID."
-
       );
 
     }
 
   </script>
 
-
 </body>
-
 </html>
