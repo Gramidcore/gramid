@@ -9,22 +9,18 @@
   <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
 
   <style>
-
     :root {
       --text: #f5f7fb;
       --muted: #9aa3b2;
       --muted-soft: #687281;
-      --border: rgba(255, 255, 255, 0.12);
       --blue: #6d9dff;
       --purple: #8d76ff;
       --success: #72dfa5;
     }
 
-
     * {
       box-sizing: border-box;
     }
-
 
     html,
     body {
@@ -32,9 +28,7 @@
       min-height: 100%;
     }
 
-
     body {
-
       min-height: 100vh;
 
       color: var(--text);
@@ -47,12 +41,10 @@
         sans-serif;
 
       background:
-
         linear-gradient(
           rgba(4, 6, 10, 0.70),
           rgba(4, 6, 10, 0.88)
         ),
-
         url("./background.png")
         center / cover
         fixed
@@ -61,19 +53,15 @@
       overflow-x: hidden;
     }
 
-
     body::after {
-
       content: "";
 
       position: fixed;
-
       inset: 0;
 
       pointer-events: none;
 
       background:
-
         radial-gradient(
           700px 500px at 50% 0%,
           rgba(95, 157, 255, 0.13),
@@ -83,102 +71,67 @@
       z-index: -1;
     }
 
-
     .page {
-
       min-height: 100vh;
 
       display: flex;
-
       flex-direction: column;
     }
 
-
     .header {
-
       width: 100%;
-
       max-width: 1200px;
 
       margin: 0 auto;
-
-      padding:
-        32px
-        36px;
+      padding: 32px 36px;
 
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
     }
 
-
     .brand {
-
       color: #ffffff;
 
       font-size: 21px;
-
       font-weight: 700;
 
       letter-spacing: -0.055em;
     }
 
-
     .header-label {
-
       color: var(--muted-soft);
 
       font-size: 10px;
-
       font-weight: 700;
 
       letter-spacing: 0.16em;
-
       text-transform: uppercase;
     }
 
-
     .main {
-
       flex: 1;
 
       display: flex;
-
       align-items: center;
-
       justify-content: center;
 
-      padding:
-        70px
-        24px
-        110px;
+      padding: 70px 24px 110px;
     }
 
-
     .content {
-
       width: 100%;
-
       max-width: 760px;
 
       text-align: center;
     }
 
-
     h1 {
-
       max-width: 780px;
 
       margin: 0 auto;
 
-      font-size:
-        clamp(
-          46px,
-          8vw,
-          82px
-        );
+      font-size: clamp(46px, 8vw, 82px);
 
       line-height: 0.98;
 
@@ -187,13 +140,10 @@
       letter-spacing: -0.085em;
     }
 
-
     .gradient {
-
       color: transparent;
 
       background:
-
         linear-gradient(
           135deg,
           #ffffff 0%,
@@ -202,19 +152,13 @@
         );
 
       -webkit-background-clip: text;
-
       background-clip: text;
     }
 
-
     .description {
-
       max-width: 580px;
 
-      margin:
-        30px
-        auto
-        0;
+      margin: 30px auto 0;
 
       color: var(--muted);
 
@@ -223,30 +167,19 @@
       line-height: 1.7;
     }
 
-
     .login-area {
-
       width: 100%;
-
       max-width: 360px;
 
-      margin:
-        38px
-        auto
-        0;
+      margin: 38px auto 0;
     }
 
-
     #ton-connect-button {
-
       width: 100%;
-
       min-height: 52px;
     }
 
-
     #ton-connect-button button {
-
       width: 100% !important;
 
       min-height: 52px !important;
@@ -270,7 +203,6 @@
       font-weight: 600 !important;
 
       background:
-
         linear-gradient(
           135deg,
           var(--blue),
@@ -278,32 +210,18 @@
         ) !important;
 
       box-shadow:
-
         0 18px 50px
         rgba(92, 119, 255, 0.28) !important;
-
-      transition:
-
-        transform 0.2s ease,
-
-        filter 0.2s ease;
     }
-
 
     #ton-connect-button button:hover {
-
       transform: translateY(-1px);
-
-      filter: brightness(1.08);
     }
 
-
     .connected {
-
       display: none;
 
       margin-top: 18px;
-
       padding: 20px;
 
       border:
@@ -318,25 +236,19 @@
       text-align: left;
     }
 
-
     .connected-title {
-
       color: var(--success);
 
       font-size: 13px;
-
       font-weight: 700;
     }
 
-
     .wallet-address {
-
       margin-top: 10px;
 
       color: #cbd5e3;
 
       font-family: monospace;
-
       font-size: 12px;
 
       line-height: 1.5;
@@ -344,9 +256,7 @@
       word-break: break-all;
     }
 
-
     .continue-button {
-
       width: 100%;
 
       min-height: 46px;
@@ -367,26 +277,19 @@
       cursor: pointer;
 
       font-family: inherit;
-
       font-size: 13px;
-
       font-weight: 600;
     }
 
-
     .continue-button:hover {
-
       background:
         rgba(255, 255, 255, 0.12);
     }
 
-
     .trust {
-
       display: flex;
 
       justify-content: center;
-
       gap: 22px;
 
       margin-top: 28px;
@@ -396,9 +299,7 @@
       font-size: 11px;
     }
 
-
     .footer {
-
       padding: 24px;
 
       color: var(--muted-soft);
@@ -408,103 +309,63 @@
       text-align: center;
     }
 
-
     @media (max-width: 600px) {
-
-
       .header {
-
-        padding:
-          24px
-          20px;
+        padding: 24px 20px;
       }
 
-
       .header-label {
-
         display: none;
       }
 
-
       .main {
-
-        padding:
-          50px
-          18px
-          80px;
+        padding: 50px 18px 80px;
       }
 
-
       h1 {
-
         font-size: 48px;
       }
 
-
       .description {
-
         font-size: 16px;
       }
 
-
       .trust {
-
         flex-direction: column;
-
         gap: 8px;
       }
-
     }
-
   </style>
-
 </head>
-
 
 <body>
 
-
   <div class="page">
-
 
     <header class="header">
 
-
       <div class="brand">
-
         Gram ID
-
       </div>
-
 
       <div class="header-label">
-
         Web3 Identity
-
       </div>
-
 
     </header>
 
 
     <main class="main">
 
-
       <section class="content">
 
-
         <h1>
-
           Один аккаунт
-
           <br>
 
           <span class="gradient">
-
             для всего Web3.
-
           </span>
-
         </h1>
 
 
@@ -520,7 +381,6 @@
 
         <div class="login-area">
 
-
           <div id="ton-connect-button"></div>
 
 
@@ -529,11 +389,8 @@
             id="connected"
           >
 
-
             <div class="connected-title">
-
               ✓ TON-кошелёк подключён
-
             </div>
 
 
@@ -547,47 +404,31 @@
               class="continue-button"
               onclick="continueToNextStep()"
             >
-
               Продолжить
-
             </button>
 
-
           </div>
-
 
         </div>
 
 
         <div class="trust">
 
-
           <span>
-
             Без хранения средств
-
           </span>
 
-
           <span>
-
             Non-custodial
-
           </span>
-
 
           <span>
-
             TON-native
-
           </span>
-
 
         </div>
 
-
       </section>
-
 
     </main>
 
@@ -598,100 +439,67 @@
 
     </footer>
 
-
   </div>
 
 
   <script>
 
-
     const tonConnectUI =
-
       new TON_CONNECT_UI.TonConnectUI({
 
         manifestUrl:
-
-          "./tonconnect-manifest.json",
+          "https://directorgrrr.github.io/gram-id/tonconnect-manifest.json",
 
         buttonRootId:
-
           "ton-connect-button"
 
       });
 
 
     const connectedBox =
-
-      document.getElementById(
-
-        "connected"
-
-      );
+      document.getElementById("connected");
 
 
     const walletAddress =
-
-      document.getElementById(
-
-        "wallet-address"
-
-      );
+      document.getElementById("wallet-address");
 
 
     tonConnectUI.onStatusChange(
-
       function(wallet) {
-
 
         if (wallet) {
 
-
           walletAddress.textContent =
-
             wallet.account.address;
 
-
           connectedBox.style.display =
-
             "block";
-
 
         } else {
 
-
           connectedBox.style.display =
-
             "none";
 
-
           walletAddress.textContent =
-
             "";
 
         }
 
       }
-
     );
 
 
     function continueToNextStep() {
 
-
       const wallet =
-
         tonConnectUI.wallet;
 
 
       if (!wallet) {
 
-
         alert(
-
           "Сначала подключите TON-кошелёк"
-
         );
-
 
         return;
 
@@ -699,23 +507,17 @@
 
 
       localStorage.setItem(
-
         "gramid_wallet_address",
-
         wallet.account.address
-
       );
 
 
       window.location.href =
-
         "create.html";
 
     }
 
   </script>
 
-
 </body>
-
 </html>
