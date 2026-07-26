@@ -6,8 +6,6 @@
 
   <title>Gram ID — Profile</title>
 
-  <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
-
   <style>
     :root {
       --text: #f5f7fb;
@@ -185,6 +183,7 @@
 
     .status {
       display: inline-flex;
+
       align-items: center;
       gap: 8px;
 
@@ -280,6 +279,7 @@
 
     .wallet-line {
       display: flex;
+
       align-items: center;
       gap: 12px;
     }
@@ -328,12 +328,48 @@
         rgba(255, 255, 255, 0.11);
     }
 
+    .create-gram-button {
+      width: 100%;
+
+      min-height: 50px;
+
+      margin-top: 20px;
+
+      border: 0;
+
+      border-radius: 13px;
+
+      color: white;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--purple)
+        );
+
+      cursor: pointer;
+
+      font-family: inherit;
+
+      font-size: 13px;
+      font-weight: 600;
+
+      box-shadow:
+        0 18px 50px
+        rgba(92, 119, 255, 0.22);
+    }
+
+    .create-gram-button:hover {
+      transform: translateY(-1px);
+    }
+
     .disconnect-button {
       width: 100%;
 
       min-height: 48px;
 
-      margin-top: 18px;
+      margin-top: 12px;
 
       border:
         1px solid
@@ -434,9 +470,9 @@
 
           <span
             class="gradient"
-            id="gram-id"
+            id="profile-title"
           >
-            @gramid
+            Gram ID
           </span>
 
         </h1>
@@ -446,28 +482,12 @@
 
           <span class="status-dot"></span>
 
-          Active Identity
+          Verified Identity
 
         </div>
 
 
         <div class="profile-card">
-
-          <div class="info-row">
-
-            <div class="info-label">
-              Gram ID
-            </div>
-
-            <div
-              class="info-value"
-              id="gram-id-card"
-            >
-              @gramid
-            </div>
-
-          </div>
-
 
           <div class="info-row">
 
@@ -501,15 +521,24 @@
           <div class="info-row">
 
             <div class="info-label">
-              Created
+              Gram ID
             </div>
+
 
             <div
               class="info-value"
-              id="created-date"
+              id="gram-id-card"
             >
-              —
+              Gram ID ещё не создан
             </div>
+
+
+            <button
+              class="create-gram-button"
+              id="create-gram-button"
+            >
+              Создать Gram ID
+            </button>
 
           </div>
 
@@ -552,7 +581,6 @@
 
 
     if (
-      !gramId ||
       !walletAddress
     ) {
 
@@ -562,132 +590,71 @@
     }
 
 
-    document.getElementById(
-      "gram-id"
-    ).textContent =
-      gramId;
+    const walletAddressElement =
+      document.getElementById(
+        "wallet-address"
+      );
 
 
-    document.getElementById(
-      "gram-id-card"
-    ).textContent =
-      gramId;
-
-
-    document.getElementById(
-      "wallet-address"
-    ).textContent =
+    walletAddressElement.textContent =
       walletAddress;
 
 
-    const username =
+    const gramIdCard =
+      document.getElementById(
+        "gram-id-card"
+      );
+
+
+    const profileTitle =
+      document.getElementById(
+        "profile-title"
+      );
+
+
+    const avatar =
+      document.getElementById(
+        "avatar"
+      );
+
+
+    if (
       gramId
-        .replace(
+    ) {
+
+      gramIdCard.textContent =
+        gramId;
+
+
+      profileTitle.textContent =
+        gramId;
+
+
+      const username =
+        gramId.replace(
           "@",
           ""
         );
 
 
-    document.getElementById(
-      "avatar"
-    ).textContent =
-      username
-        .charAt(0)
-        .toUpperCase();
-
-
-    /*
-      Получаем дату создания
-      из локального демо-реестра
-    */
-
-    let createdDate =
-      null;
-
-
-    const registeredIds =
-      localStorage.getItem(
-        "gramid_registered_ids"
-      );
-
-
-    if (
-      registeredIds
-    ) {
-
-      try {
-
-        const registered =
-          JSON.parse(
-            registeredIds
-          );
-
-
-        const record =
-          registered[
-            username
-          ];
-
-
-        if (
-          record &&
-          record.createdAt
-        ) {
-
-          createdDate =
-            new Date(
-              record.createdAt
-            );
-
-        }
-
-      }
-
-      catch (
-        error
-      ) {
-
-        console.error(
-          "Registry read error:",
-          error
-        );
-
-      }
-
-    }
-
-
-    if (
-      createdDate
-    ) {
-
-      document.getElementById(
-        "created-date"
-      ).textContent =
-        createdDate.toLocaleDateString(
-          "ru-RU",
-          {
-            day: "2-digit",
-            month: "long",
-            year: "numeric"
-          }
-        );
+      avatar.textContent =
+        username
+          .charAt(0)
+          .toUpperCase();
 
     }
 
     else {
 
-      document.getElementById(
-        "created-date"
-      ).textContent =
-        "Недоступно";
+      profileTitle.textContent =
+        "Gram ID";
+
+
+      avatar.textContent =
+        "G";
 
     }
 
-
-    /*
-      Копирование адреса
-    */
 
     const copyButton =
       document.getElementById(
@@ -741,22 +708,25 @@
     );
 
 
-    /*
-      TON Connect
-    */
-
-    const tonConnectUI =
-      new TON_CONNECT_UI.TonConnectUI({
-
-        manifestUrl:
-          "https://gramidcore.github.io/gramid/tonconnect-manifest.json"
-
-      });
+    const createGramButton =
+      document.getElementById(
+        "create-gram-button"
+      );
 
 
-    /*
-      Выход из кошелька
-    */
+    createGramButton.addEventListener(
+
+      "click",
+
+      function() {
+
+        window.location.href =
+          "./create.html";
+
+      }
+
+    );
+
 
     const disconnectButton =
       document.getElementById(
@@ -768,25 +738,7 @@
 
       "click",
 
-      async function() {
-
-        try {
-
-          await tonConnectUI.disconnect();
-
-        }
-
-        catch (
-          error
-        ) {
-
-          console.error(
-            "Disconnect error:",
-            error
-          );
-
-        }
-
+      function() {
 
         localStorage.removeItem(
           "gramid_username"
@@ -795,6 +747,11 @@
 
         localStorage.removeItem(
           "gramid_wallet_address"
+        );
+
+
+        localStorage.removeItem(
+          "gramid_registered_ids"
         );
 
 
