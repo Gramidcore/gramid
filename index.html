@@ -16,7 +16,6 @@
       --muted-soft: #687281;
       --blue: #6d9dff;
       --purple: #8d76ff;
-      --success: #72dfa5;
     }
 
     * {
@@ -170,10 +169,6 @@
       text-align: center;
     }
 
-    /*
-      Изначальный размер блока подключения
-    */
-
     .login-area {
       width: 100%;
 
@@ -227,92 +222,6 @@
 
     #ton-connect-button button:hover {
       transform: translateY(-1px);
-    }
-
-    /*
-      Окно подключённого кошелька
-      также возвращено к исходному размеру
-    */
-
-    .connected {
-      display: none;
-
-      width: 100%;
-
-      margin: 18px auto 0;
-
-      padding: 20px;
-
-      border:
-        1px solid
-        rgba(114, 223, 165, 0.25);
-
-      border-radius: 16px;
-
-      background:
-        rgba(114, 223, 165, 0.06);
-
-      text-align: left;
-    }
-
-    .connected-title {
-      color: var(--success);
-
-      font-size: 13px;
-
-      font-weight: 700;
-
-      text-align: left;
-    }
-
-    .wallet-address {
-      width: 100%;
-
-      margin-top: 10px;
-
-      color: #cbd5e3;
-
-      font-family: monospace;
-
-      font-size: 12px;
-
-      line-height: 1.5;
-
-      word-break: break-all;
-
-      text-align: left;
-    }
-
-    .continue-button {
-      width: 100%;
-
-      min-height: 46px;
-
-      margin-top: 16px;
-
-      border:
-        1px solid
-        rgba(255, 255, 255, 0.13);
-
-      border-radius: 12px;
-
-      color: white;
-
-      background:
-        rgba(255, 255, 255, 0.07);
-
-      cursor: pointer;
-
-      font-family: inherit;
-
-      font-size: 13px;
-
-      font-weight: 600;
-    }
-
-    .continue-button:hover {
-      background:
-        rgba(255, 255, 255, 0.12);
     }
 
     .trust {
@@ -423,36 +332,6 @@
 
       <div id="ton-connect-button"></div>
 
-
-      <div
-        class="connected"
-        id="connected"
-      >
-
-        <div class="connected-title">
-
-          ✓ TON-кошелёк подключён
-
-        </div>
-
-
-        <div
-          class="wallet-address"
-          id="wallet-address"
-        ></div>
-
-
-        <button
-          class="continue-button"
-          onclick="continueToNextStep()"
-        >
-
-          Продолжить
-
-        </button>
-
-      </div>
-
     </div>
 
 
@@ -500,66 +379,29 @@
       });
 
 
-    const connectedBox =
-      document.getElementById(
-        "connected"
-      );
-
-
-    const walletAddress =
-      document.getElementById(
-        "wallet-address"
-      );
+    let isRedirecting = false;
 
 
     tonConnectUI.onStatusChange(
 
       function(wallet) {
 
-        if (wallet) {
+        if (
+          wallet &&
+          !isRedirecting
+        ) {
 
-          walletAddress.textContent =
-            wallet.account.address;
+          isRedirecting = true;
 
-          connectedBox.style.display =
-            "block";
 
-        } else {
-
-          connectedBox.style.display =
-            "none";
-
-          walletAddress.textContent =
-            "";
+          window.location.href =
+            "create.html";
 
         }
 
       }
 
     );
-
-
-    function continueToNextStep() {
-
-      const wallet =
-        tonConnectUI.wallet;
-
-
-      if (!wallet) {
-
-        alert(
-          "Сначала подключите TON-кошелёк"
-        );
-
-        return;
-
-      }
-
-
-      window.location.href =
-        "create.html";
-
-    }
 
   </script>
 
