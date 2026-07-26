@@ -268,12 +268,15 @@
       color: var(--muted-soft);
 
       font-size: 11px;
+
       line-height: 1.5;
     }
 
     .wallet-status {
       display: flex;
+
       align-items: center;
+
       gap: 8px;
 
       margin-top: 22px;
@@ -516,8 +519,8 @@
 
         <span class="wallet-dot"></span>
 
-        <span>
-          TON-кошелёк подключён
+        <span id="wallet-status-text">
+          Проверка TON-кошелька...
         </span>
 
         <span
@@ -594,19 +597,40 @@
       );
 
 
+    const walletStatusText =
+      document.getElementById(
+        "wallet-status-text"
+      );
+
+
+    let currentWallet = null;
+
+
     tonConnectUI.onStatusChange(
 
       function(wallet) {
 
         if (!wallet) {
 
-          window.location.href =
-            "index.html";
+          currentWallet = null;
+
+          walletStatusText.textContent =
+            "Ожидание подключения TON-кошелька...";
+
+          walletAddress.textContent =
+            "";
 
           return;
 
         }
 
+
+        currentWallet =
+          wallet;
+
+
+        walletStatusText.textContent =
+          "TON-кошелёк подключён";
 
         walletAddress.textContent =
           wallet.account.address;
@@ -649,14 +673,10 @@
         }
 
 
-        const wallet =
-          tonConnectUI.wallet;
-
-
-        if (!wallet) {
+        if (!currentWallet) {
 
           message.textContent =
-            "Кошелёк не подключён.";
+            "TON-кошелёк ещё не подключён.";
 
           message.className =
             "message error";
@@ -678,7 +698,7 @@
 
         localStorage.setItem(
           "gramid_wallet_address",
-          wallet.account.address
+          currentWallet.account.address
         );
 
 
