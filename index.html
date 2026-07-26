@@ -167,9 +167,16 @@
       line-height: 1.7;
     }
 
+    /*
+      Главный блок подключения.
+      Ширина 900px — и кнопка,
+      и блок подключённого кошелька
+      имеют одинаковую ширину.
+    */
+
     .login-area {
       width: 100%;
-      max-width: 360px;
+      max-width: 900px;
 
       margin: 38px auto 0;
     }
@@ -215,10 +222,18 @@
       transform: translateY(-1px);
     }
 
+    /*
+      Блок после подключения кошелька.
+      Он такой же ширины, как Connect Wallet.
+    */
+
     .connected {
       display: none;
 
-      margin-top: 18px;
+      width: 100%;
+
+      margin: 18px auto 0;
+
       padding: 20px;
 
       border:
@@ -230,7 +245,7 @@
       background:
         rgba(114, 223, 165, 0.06);
 
-      text-align: left;
+      text-align: center;
     }
 
     .connected-title {
@@ -238,6 +253,8 @@
 
       font-size: 13px;
       font-weight: 700;
+
+      text-align: center;
     }
 
     .wallet-address {
@@ -246,11 +263,14 @@
       color: #cbd5e3;
 
       font-family: monospace;
+
       font-size: 12px;
 
       line-height: 1.5;
 
       word-break: break-all;
+
+      text-align: center;
     }
 
     .continue-button {
@@ -276,6 +296,7 @@
       font-family: inherit;
 
       font-size: 13px;
+
       font-weight: 600;
     }
 
@@ -288,6 +309,7 @@
       display: flex;
 
       justify-content: center;
+
       gap: 22px;
 
       margin-top: 28px;
@@ -308,6 +330,7 @@
     }
 
     @media (max-width: 600px) {
+
       .header {
         padding: 24px 20px;
       }
@@ -330,8 +353,10 @@
 
       .trust {
         flex-direction: column;
+
         gap: 8px;
       }
+
     }
   </style>
 </head>
@@ -358,12 +383,15 @@
       <section class="content">
 
         <h1>
+
           Один аккаунт
+
           <br>
 
           <span class="gradient">
             для всего Web3.
           </span>
+
         </h1>
 
 
@@ -388,7 +416,9 @@
           >
 
             <div class="connected-title">
+
               ✓ TON-кошелёк подключён
+
             </div>
 
 
@@ -402,7 +432,9 @@
               class="continue-button"
               onclick="continueToNextStep()"
             >
+
               Продолжить
+
             </button>
 
           </div>
