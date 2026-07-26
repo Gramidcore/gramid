@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -6,37 +7,31 @@
 
   <title>Create Gram ID</title>
 
-  <style>
+  <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
 
+  <style>
     :root {
       --text: #f5f7fb;
       --muted: #9aa3b2;
       --muted-soft: #687281;
-
       --border: rgba(255, 255, 255, 0.12);
-
       --blue: #6d9dff;
       --purple: #8d76ff;
-
       --success: #72dfa5;
+      --danger: #ff7f8a;
     }
-
 
     * {
       box-sizing: border-box;
     }
 
-
     html,
     body {
       margin: 0;
-
       min-height: 100%;
     }
 
-
     body {
-
       min-height: 100vh;
 
       color: var(--text);
@@ -49,12 +44,10 @@
         sans-serif;
 
       background:
-
         linear-gradient(
           rgba(4, 6, 10, 0.70),
           rgba(4, 6, 10, 0.88)
         ),
-
         url("./background.png")
         center / cover
         fixed
@@ -63,19 +56,15 @@
       overflow-x: hidden;
     }
 
-
     body::after {
-
       content: "";
 
       position: fixed;
-
       inset: 0;
 
       pointer-events: none;
 
       background:
-
         radial-gradient(
           700px 500px at 50% 0%,
           rgba(95, 157, 255, 0.13),
@@ -85,151 +74,89 @@
       z-index: -1;
     }
 
-
     .page {
-
       min-height: 100vh;
 
       display: flex;
-
       flex-direction: column;
     }
 
-
     .header {
-
       width: 100%;
-
       max-width: 1200px;
 
       margin: 0 auto;
-
-      padding:
-        32px
-        36px;
+      padding: 32px 36px;
 
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
     }
 
-
     .brand {
-
       color: #ffffff;
 
       font-size: 21px;
-
       font-weight: 700;
 
       letter-spacing: -0.055em;
     }
 
-
     .header-label {
-
       color: var(--muted-soft);
 
       font-size: 10px;
-
       font-weight: 700;
 
       letter-spacing: 0.16em;
-
       text-transform: uppercase;
     }
 
-
     .main {
-
       flex: 1;
 
       display: flex;
-
       align-items: center;
-
       justify-content: center;
 
-      padding:
-        60px
-        20px
-        100px;
+      padding: 60px 24px 100px;
     }
 
-
-    .card {
-
+    .content {
       width: 100%;
-
       max-width: 560px;
 
-      padding: 38px;
-
-      border:
-        1px solid
-        var(--border);
-
-      border-radius: 26px;
-
-      background:
-
-        linear-gradient(
-          145deg,
-          rgba(255,255,255,0.075),
-          rgba(255,255,255,0.025)
-        ),
-
-        rgba(12, 15, 22, 0.82);
-
-      box-shadow:
-
-        0 30px 100px
-        rgba(0,0,0,0.45),
-
-        inset 0 1px 0
-        rgba(255,255,255,0.04);
-
-      backdrop-filter: blur(26px);
+      text-align: center;
     }
 
-
     .step {
+      margin-bottom: 24px;
 
       color: var(--muted-soft);
 
       font-size: 11px;
-
       font-weight: 700;
 
       letter-spacing: 0.14em;
-
       text-transform: uppercase;
     }
 
-
     h1 {
+      margin: 0;
 
-      margin:
-        16px
-        0
-        12px;
-
-      font-size: 42px;
+      font-size: clamp(42px, 7vw, 68px);
 
       line-height: 1;
 
-      letter-spacing: -0.07em;
+      font-weight: 700;
+
+      letter-spacing: -0.08em;
     }
 
-
     .gradient {
-
       color: transparent;
 
       background:
-
         linear-gradient(
           135deg,
           #ffffff 0%,
@@ -238,173 +165,187 @@
         );
 
       -webkit-background-clip: text;
-
       background-clip: text;
     }
 
-
     .description {
+      max-width: 480px;
 
-      margin: 0;
+      margin: 26px auto 0;
 
       color: var(--muted);
 
-      font-size: 15px;
+      font-size: 17px;
 
-      line-height: 1.65;
+      line-height: 1.7;
     }
 
+    .create-card {
+      width: 100%;
 
-    .wallet-box {
+      margin-top: 38px;
 
-      margin-top: 28px;
+      padding: 24px;
 
-      padding: 16px 18px;
+      border:
+        1px solid
+        var(--border);
+
+      border-radius: 18px;
+
+      background:
+        rgba(255, 255, 255, 0.035);
+
+      text-align: left;
+
+      backdrop-filter: blur(18px);
+    }
+
+    .label {
+      display: block;
+
+      margin-bottom: 10px;
+
+      color: #b7c0cf;
+
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .username-wrapper {
+      display: flex;
+      align-items: center;
+
+      width: 100%;
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.14);
+
+      border-radius: 13px;
+
+      background:
+        rgba(0, 0, 0, 0.18);
+
+      overflow: hidden;
+    }
+
+    .username-prefix {
+      padding-left: 16px;
+
+      color: var(--muted);
+
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    #username {
+      width: 100%;
+
+      min-height: 52px;
+
+      padding: 0 14px;
+
+      border: 0;
+      outline: 0;
+
+      color: white;
+
+      background: transparent;
+
+      font-family: inherit;
+
+      font-size: 16px;
+    }
+
+    #username::placeholder {
+      color: var(--muted-soft);
+    }
+
+    .hint {
+      margin-top: 10px;
+
+      color: var(--muted-soft);
+
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .wallet-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      margin-top: 22px;
+
+      padding: 12px 14px;
 
       border:
         1px solid
         rgba(114, 223, 165, 0.22);
 
-      border-radius: 14px;
-
-      background:
-        rgba(114, 223, 165, 0.06);
-    }
-
-
-    .wallet-title {
+      border-radius: 12px;
 
       color: var(--success);
 
-      font-size: 12px;
+      background:
+        rgba(114, 223, 165, 0.06);
 
-      font-weight: 700;
+      font-size: 12px;
     }
 
+    .wallet-dot {
+      width: 7px;
+      height: 7px;
+
+      flex-shrink: 0;
+
+      border-radius: 50%;
+
+      background: var(--success);
+
+      box-shadow:
+        0 0 12px
+        rgba(114, 223, 165, 0.8);
+    }
 
     .wallet-address {
+      margin-left: auto;
 
-      margin-top: 8px;
+      max-width: 210px;
 
       color: #cbd5e3;
 
       font-family: monospace;
 
-      font-size: 12px;
+      font-size: 10px;
 
-      line-height: 1.5;
+      white-space: nowrap;
 
-      word-break: break-all;
+      overflow: hidden;
+
+      text-overflow: ellipsis;
     }
-
-
-    .divider {
-
-      height: 1px;
-
-      margin:
-        28px
-        0;
-
-      background:
-        rgba(255,255,255,0.08);
-    }
-
-
-    .label {
-
-      display: block;
-
-      margin-bottom: 8px;
-
-      color: #c8d0dc;
-
-      font-size: 13px;
-
-      font-weight: 600;
-    }
-
-
-    .input {
-
-      width: 100%;
-
-      height: 52px;
-
-      padding:
-        0
-        16px;
-
-      border:
-        1px solid
-        rgba(255,255,255,0.10);
-
-      border-radius: 13px;
-
-      outline: none;
-
-      color: white;
-
-      background:
-        rgba(255,255,255,0.045);
-
-      font-family: inherit;
-
-      font-size: 15px;
-
-      transition:
-        border-color 0.2s ease,
-        background 0.2s ease;
-    }
-
-
-    .input:focus {
-
-      border-color:
-        rgba(109,157,255,0.75);
-
-      background:
-        rgba(255,255,255,0.065);
-    }
-
-
-    .input::placeholder {
-
-      color: var(--muted-soft);
-    }
-
-
-    .field {
-
-      margin-top: 18px;
-    }
-
-
-    .hint {
-
-      margin-top: 8px;
-
-      color: var(--muted-soft);
-
-      font-size: 11px;
-
-      line-height: 1.5;
-    }
-
 
     .create-button {
-
       width: 100%;
 
       min-height: 52px;
 
-      margin-top: 28px;
+      margin-top: 18px;
 
-      border: none;
+      border: 0;
 
       border-radius: 14px;
 
       color: white;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--purple)
+        );
 
       cursor: pointer;
 
@@ -414,154 +355,34 @@
 
       font-weight: 600;
 
-      background:
-
-        linear-gradient(
-          135deg,
-          var(--blue),
-          var(--purple)
-        );
-
       box-shadow:
-
         0 18px 50px
-        rgba(92, 119, 255, 0.28);
-
-      transition:
-        transform 0.2s ease,
-        opacity 0.2s ease;
+        rgba(92, 119, 255, 0.25);
     }
-
 
     .create-button:hover {
-
       transform: translateY(-1px);
-
-      opacity: 0.94;
     }
 
+    .message {
+      min-height: 20px;
 
-    .create-button:disabled {
+      margin-top: 14px;
 
-      opacity: 0.55;
-
-      cursor: not-allowed;
-
-      transform: none;
-    }
-
-
-    .status {
-
-      min-height: 22px;
-
-      margin-top: 18px;
-
-      color: var(--muted);
-
-      font-size: 13px;
+      font-size: 12px;
 
       text-align: center;
     }
 
-
-    .result {
-
-      display: none;
-
-      margin-top: 24px;
-
-      padding: 24px;
-
-      border:
-        1px solid
-        rgba(114, 223, 165, 0.25);
-
-      border-radius: 18px;
-
-      background:
-        rgba(114, 223, 165, 0.06);
-
-      text-align: center;
+    .message.error {
+      color: var(--danger);
     }
 
-
-    .result-label {
-
+    .message.success {
       color: var(--success);
-
-      font-size: 11px;
-
-      font-weight: 700;
-
-      letter-spacing: 0.12em;
-
-      text-transform: uppercase;
     }
-
-
-    .gram-id {
-
-      margin-top: 12px;
-
-      color: white;
-
-      font-size: 28px;
-
-      font-weight: 700;
-
-      letter-spacing: 0.03em;
-    }
-
-
-    .result-subtitle {
-
-      margin-top: 10px;
-
-      color: var(--muted);
-
-      font-size: 13px;
-    }
-
-
-    .profile-button {
-
-      width: 100%;
-
-      min-height: 46px;
-
-      margin-top: 20px;
-
-      border:
-        1px solid
-        rgba(255,255,255,0.13);
-
-      border-radius: 12px;
-
-      color: white;
-
-      background:
-        rgba(255,255,255,0.07);
-
-      cursor: pointer;
-
-      font-family: inherit;
-
-      font-size: 13px;
-
-      font-weight: 600;
-    }
-
-
-    .profile-button:hover {
-
-      background:
-        rgba(255,255,255,0.12);
-    }
-
 
     .footer {
-
       padding: 24px;
 
       color: var(--muted-soft);
@@ -571,591 +392,321 @@
       text-align: center;
     }
 
-
     @media (max-width: 600px) {
 
       .header {
-
-        padding:
-          24px
-          20px;
+        padding: 24px 20px;
       }
 
-
       .header-label {
-
         display: none;
       }
 
-
       .main {
-
-        padding:
-          40px
-          16px
-          70px;
+        padding: 45px 18px 70px;
       }
 
-
-      .card {
-
-        padding: 24px;
-
-        border-radius: 22px;
+      .description {
+        font-size: 16px;
       }
 
-
-      h1 {
-
-        font-size: 36px;
+      .create-card {
+        padding: 20px;
       }
 
-
-      .gram-id {
-
-        font-size: 23px;
+      .wallet-address {
+        max-width: 130px;
       }
 
     }
-
   </style>
-</head>
 
+</head>
 
 <body>
 
-
   <div class="page">
 
+```
+<header class="header">
 
-    <header class="header">
+  <div class="brand">
+    Gram ID
+  </div>
+
+  <div class="header-label">
+    Web3 Identity
+  </div>
+
+</header>
 
 
-      <div class="brand">
+<main class="main">
 
-        Gram ID
+  <section class="content">
+
+    <div class="step">
+      Step 01 · Identity
+    </div>
+
+
+    <h1>
+
+      Создайте
+
+      <br>
+
+      <span class="gradient">
+        Gram ID.
+      </span>
+
+    </h1>
+
+
+    <p class="description">
+
+      Выберите уникальное имя для своей
+      цифровой идентичности в экосистеме TON.
+
+    </p>
+
+
+    <div class="create-card">
+
+      <label
+        class="label"
+        for="username"
+      >
+
+        Ваш Gram ID
+
+      </label>
+
+
+      <div class="username-wrapper">
+
+        <span class="username-prefix">
+          @
+        </span>
+
+
+        <input
+          id="username"
+          type="text"
+          maxlength="24"
+          placeholder="username"
+          autocomplete="off"
+        >
 
       </div>
 
 
-      <div class="header-label">
+      <div class="hint">
 
-        Web3 Identity
+        Используйте от 3 до 24 символов.
+        Только латинские буквы, цифры и символ "_".
 
       </div>
 
 
-    </header>
+      <div
+        class="wallet-status"
+        id="wallet-status"
+      >
 
+        <span class="wallet-dot"></span>
 
-    <main class="main">
+        <span>
+          TON-кошелёк подключён
+        </span>
 
+        <span
+          class="wallet-address"
+          id="wallet-address"
+        ></span>
 
-      <section class="card">
+      </div>
 
 
-        <div class="step">
+      <button
+        class="create-button"
+        id="create-button"
+      >
 
-          STEP 02 · CREATE IDENTITY
+        Создать Gram ID
 
-        </div>
+      </button>
 
 
-        <h1>
+      <div
+        class="message"
+        id="message"
+      ></div>
 
-          Создайте
+    </div>
 
-          <br>
+  </section>
 
-          <span class="gradient">
+</main>
 
-            Gram ID.
 
-          </span>
+<footer class="footer">
 
-        </h1>
+  Gram ID · Digital identity for Web3
 
-
-        <p class="description">
-
-          Выберите имя для своей цифровой идентичности
-          в экосистеме TON.
-
-        </p>
-
-
-        <div class="wallet-box">
-
-
-          <div class="wallet-title">
-
-            ✓ TON-кошелёк подключён
-
-          </div>
-
-
-          <div
-            class="wallet-address"
-            id="walletAddress"
-          ></div>
-
-
-        </div>
-
-
-        <div class="divider"></div>
-
-
-        <div class="field">
-
-
-          <label
-            class="label"
-            for="name"
-          >
-
-            Ваше имя
-
-          </label>
-
-
-          <input
-
-            class="input"
-
-            id="name"
-
-            type="text"
-
-            maxlength="30"
-
-            placeholder="Например, Alex"
-
-          >
-
-
-        </div>
-
-
-        <div class="field">
-
-
-          <label
-            class="label"
-            for="telegram"
-          >
-
-            Telegram username
-
-          </label>
-
-
-          <input
-
-            class="input"
-
-            id="telegram"
-
-            type="text"
-
-            maxlength="32"
-
-            placeholder="@username"
-
-          >
-
-
-          <div class="hint">
-
-            Telegram можно будет подтвердить на следующем этапе.
-
-          </div>
-
-
-        </div>
-
-
-        <button
-
-          class="create-button"
-
-          id="createButton"
-
-          onclick="createGramID()"
-
-        >
-
-          Создать Gram ID
-
-        </button>
-
-
-        <div
-          class="status"
-          id="status"
-        ></div>
-
-
-        <div
-          class="result"
-          id="result"
-        >
-
-
-          <div class="result-label">
-
-            Identity created
-
-          </div>
-
-
-          <div
-            class="gram-id"
-            id="gramId"
-          ></div>
-
-
-          <div class="result-subtitle">
-
-            Ваша цифровая идентичность создана.
-
-          </div>
-
-
-          <button
-
-            class="profile-button"
-
-            onclick="openProfile()"
-
-          >
-
-            Открыть профиль
-
-          </button>
-
-
-        </div>
-
-
-      </section>
-
-
-    </main>
-
-
-    <footer class="footer">
-
-      Gram ID · Digital identity for Web3
-
-    </footer>
-
+</footer>
+```
 
   </div>
 
-
   <script>
 
+    const tonConnectUI =
+      new TON_CONNECT_UI.TonConnectUI({
 
-    const walletAddress =
+        manifestUrl:
+          "https://gramidcore.github.io/gramid/tonconnect-manifest.json"
 
-      localStorage.getItem(
-
-        "gramid_wallet_address"
-
-      );
+      });
 
 
-    const walletAddressElement =
-
+    const usernameInput =
       document.getElementById(
-
-        "walletAddress"
-
-      );
-
-
-    const statusElement =
-
-      document.getElementById(
-
-        "status"
-
-      );
-
-
-    const resultElement =
-
-      document.getElementById(
-
-        "result"
-
-      );
-
-
-    const gramIdElement =
-
-      document.getElementById(
-
-        "gramId"
-
-      );
-
-
-    const nameInput =
-
-      document.getElementById(
-
-        "name"
-
-      );
-
-
-    const telegramInput =
-
-      document.getElementById(
-
-        "telegram"
-
+        "username"
       );
 
 
     const createButton =
-
       document.getElementById(
-
-        "createButton"
-
+        "create-button"
       );
 
 
-    let createdGramId = "";
-
-
-    if (!walletAddress) {
-
-
-      window.location.href =
-
-        "index.html";
-
-
-    }
-
-
-    if (walletAddress) {
-
-
-      walletAddressElement.textContent =
-
-        walletAddress;
-
-
-    }
-
-
-    function setStatus(message) {
-
-
-      statusElement.textContent =
-
-        message;
-
-    }
-
-
-    function generateGramID() {
-
-
-      const characters =
-
-        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
-
-      let result = "GID-";
-
-
-      for (let i = 0; i < 4; i++) {
-
-
-        result +=
-
-          characters.charAt(
-
-            Math.floor(
-
-              Math.random() *
-
-              characters.length
-
-            )
-
-          );
-
-      }
-
-
-      result += "-";
-
-
-      for (let i = 0; i < 4; i++) {
-
-
-        result +=
-
-          characters.charAt(
-
-            Math.floor(
-
-              Math.random() *
-
-              characters.length
-
-            )
-
-          );
-
-      }
-
-
-      return result;
-
-    }
-
-
-    function createGramID() {
-
-
-      const name =
-
-        nameInput.value.trim();
-
-
-      const telegram =
-
-        telegramInput.value.trim();
-
-
-      if (!name) {
-
-
-        setStatus(
-
-          "Введите имя для создания Gram ID."
-
-        );
-
-
-        nameInput.focus();
-
-
-        return;
-
-      }
-
-
-      createButton.disabled = true;
-
-
-      setStatus(
-
-        "Создание Gram ID..."
-
+    const message =
+      document.getElementById(
+        "message"
       );
 
 
-      setTimeout(function() {
+    const walletAddress =
+      document.getElementById(
+        "wallet-address"
+      );
 
 
-        createdGramId =
+    tonConnectUI.onStatusChange(
 
-          generateGramID();
+      function(wallet) {
 
+        if (!wallet) {
 
-        const profileData = {
+          window.location.href =
+            "index.html";
 
+          return;
 
-          gram_id:
-            createdGramId,
-
-
-          wallet_address:
-            walletAddress,
+        }
 
 
-          name:
-            name,
+        walletAddress.textContent =
+          wallet.account.address;
+
+      }
+
+    );
 
 
-          telegram_username:
-            telegram || ""
+    createButton.addEventListener(
+
+      "click",
+
+      function() {
+
+        const username =
+          usernameInput.value
+            .trim()
+            .toLowerCase();
 
 
-        };
+        const validUsername =
+          /^[a-z0-9_]{3,24}$/;
 
 
-        localStorage.setItem(
-
-          "gramid_profile",
-
-          JSON.stringify(
-
-            profileData
-
+        if (
+          !validUsername.test(
+            username
           )
+        ) {
 
+          message.textContent =
+            "Введите корректный Gram ID.";
+
+          message.className =
+            "message error";
+
+          return;
+
+        }
+
+
+        const wallet =
+          tonConnectUI.wallet;
+
+
+        if (!wallet) {
+
+          message.textContent =
+            "Кошелёк не подключён.";
+
+          message.className =
+            "message error";
+
+          return;
+
+        }
+
+
+        const gramId =
+          "@" + username;
+
+
+        localStorage.setItem(
+          "gramid_username",
+          gramId
         );
 
 
         localStorage.setItem(
-
-          "gramid_id",
-
-          createdGramId
-
+          "gramid_wallet_address",
+          wallet.account.address
         );
 
 
-        gramIdElement.textContent =
+        message.textContent =
+          "Gram ID создан. Переходим в профиль...";
 
-          createdGramId;
-
-
-        resultElement.style.display =
-
-          "block";
+        message.className =
+          "message success";
 
 
-        setStatus(
+        setTimeout(
 
-          "Gram ID успешно создан ✓"
+          function() {
+
+            window.location.href =
+              "profile.html";
+
+          },
+
+          700
 
         );
 
+      }
 
-        createButton.style.display =
-
-          "none";
-
-
-      }, 700);
-
-    }
-
-
-    function openProfile() {
-
-
-      window.location.href =
-
-        "profile.html";
-
-    }
-
+    );
 
   </script>
 
-
 </body>
-
 </html>
