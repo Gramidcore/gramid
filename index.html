@@ -30,7 +30,6 @@
 
     body {
       min-height: 100vh;
-
       color: var(--text);
 
       font-family:
@@ -183,13 +182,11 @@
       width: 100% !important;
 
       min-height: 52px !important;
-
       height: 52px !important;
 
       display: flex !important;
 
       align-items: center !important;
-
       justify-content: center !important;
 
       text-align: center !important;
@@ -199,7 +196,6 @@
       font-family: inherit !important;
 
       font-size: 14px !important;
-
       font-weight: 600 !important;
 
       background:
@@ -277,6 +273,7 @@
       cursor: pointer;
 
       font-family: inherit;
+
       font-size: 13px;
       font-weight: 600;
     }
@@ -448,7 +445,7 @@
       new TON_CONNECT_UI.TonConnectUI({
 
         manifestUrl:
-          "https://directorgrrr.github.io/gram-id/tonconnect-manifest.json",
+          "./tonconnect-manifest.json",
 
         buttonRootId:
           "ton-connect-button"
@@ -457,14 +454,19 @@
 
 
     const connectedBox =
-      document.getElementById("connected");
+      document.getElementById(
+        "connected"
+      );
 
 
     const walletAddress =
-      document.getElementById("wallet-address");
+      document.getElementById(
+        "wallet-address"
+      );
 
 
     tonConnectUI.onStatusChange(
+
       function(wallet) {
 
         if (wallet) {
@@ -486,6 +488,7 @@
         }
 
       }
+
     );
 
 
@@ -507,8 +510,11 @@
 
 
       localStorage.setItem(
+
         "gramid_wallet_address",
+
         wallet.account.address
+
       );
 
 
