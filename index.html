@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -156,7 +155,8 @@
       background: var(--success);
 
       box-shadow:
-        0 0 15px rgba(114, 223, 165, 0.85);
+        0 0 15px
+        rgba(114, 223, 165, 0.85);
     }
 
     h1 {
@@ -216,28 +216,34 @@
     }
 
     /*
-      Размер кнопки не меняем.
-      Только центрируем содержимое.
+      TON Connect может менять внутреннюю структуру кнопки.
+      Поэтому фиксируем размер самого контейнера
+      и растягиваем кнопку на всю ширину.
     */
+
+    #ton-connect-button > div {
+      width: 100% !important;
+    }
 
     #ton-connect-button button {
       width: 100% !important;
+      min-width: 100% !important;
       min-height: 52px !important;
 
       display: flex !important;
+
       align-items: center !important;
       justify-content: center !important;
 
-      padding-left: 0 !important;
-      padding-right: 0 !important;
+      padding: 0 20px !important;
 
       border-radius: 14px !important;
-
-      text-align: center !important;
 
       font-family: inherit !important;
       font-size: 14px !important;
       font-weight: 600 !important;
+
+      text-align: center !important;
 
       background:
         linear-gradient(
@@ -255,18 +261,17 @@
       width: 100% !important;
 
       display: flex !important;
+
       align-items: center !important;
       justify-content: center !important;
 
-      margin: 0 auto !important;
+      margin: 0 !important;
 
       text-align: center !important;
     }
 
     #ton-connect-button button span {
-      display: inline-block !important;
-
-      margin: 0 auto !important;
+      margin: 0 !important;
 
       text-align: center !important;
     }
@@ -331,99 +336,97 @@
 
     }
   </style>
-
 </head>
 
 <body>
 
   <div class="page">
 
-```
-<header class="header">
+    <header class="header">
 
-  <div class="brand">
-    Gram ID
-  </div>
+      <div class="brand">
+        Gram ID
+      </div>
 
-  <div class="header-label">
-    Web3 Identity
-  </div>
+      <div class="header-label">
+        Web3 Identity
+      </div>
 
-</header>
-
-
-<main class="main">
-
-  <section class="content">
-
-    <div class="eyebrow">
-
-      <span class="eyebrow-dot"></span>
-
-      Web3 Identity
-
-    </div>
+    </header>
 
 
-    <h1>
+    <main class="main">
 
-      Один аккаунт
+      <section class="content">
 
-      <br>
+        <div class="eyebrow">
 
-      <span class="gradient">
-        для всего Web3.
-      </span>
+          <span class="eyebrow-dot"></span>
 
-    </h1>
+          Web3 Identity
 
-
-    <p class="description">
-
-      С одним Gram ID вы сможете получить доступ
-      к приложениям экосистемы TON.
-      Подключите TON-кошелёк, чтобы создать
-      и управлять своей цифровой идентичностью.
-
-    </p>
+        </div>
 
 
-    <div class="login-area">
+        <h1>
 
-      <div id="ton-connect-button"></div>
+          Один аккаунт
 
-    </div>
+          <br>
 
+          <span class="gradient">
+            для всего Web3.
+          </span>
 
-    <div class="trust">
-
-      <span>
-        Без хранения средств
-      </span>
-
-      <span>
-        Non-custodial
-      </span>
-
-      <span>
-        TON-native
-      </span>
-
-    </div>
-
-  </section>
-
-</main>
+        </h1>
 
 
-<footer class="footer">
+        <p class="description">
 
-  Gram ID · Digital identity for Web3
+          С одним Gram ID вы сможете получить доступ
+          к приложениям экосистемы TON.
+          Подключите TON-кошелёк, чтобы создать
+          и управлять своей цифровой идентичностью.
 
-</footer>
-```
+        </p>
+
+
+        <div class="login-area">
+
+          <div id="ton-connect-button"></div>
+
+        </div>
+
+
+        <div class="trust">
+
+          <span>
+            Без хранения средств
+          </span>
+
+          <span>
+            Non-custodial
+          </span>
+
+          <span>
+            TON-native
+          </span>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <footer class="footer">
+
+      Gram ID · Digital identity for Web3
+
+    </footer>
 
   </div>
+
 
   <script>
 
@@ -439,37 +442,44 @@
       });
 
 
-    let redirected = false;
+    let redirected =
+      false;
 
 
     tonConnectUI.onStatusChange(
 
       function(wallet) {
 
-        if (!wallet) {
+        if (
+          !wallet
+        ) {
+
           return;
+
         }
 
 
-        if (redirected) {
+        if (
+          redirected
+        ) {
+
           return;
+
         }
 
 
-        redirected = true;
+        redirected =
+          true;
 
 
         localStorage.setItem(
+
           "gramid_wallet_address",
+
           wallet.account.address
+
         );
 
-
-        /*
-          Используем href,
-          чтобы кнопка «Назад»
-          возвращала на index.html.
-        */
 
         window.location.href =
           "./create.html";
