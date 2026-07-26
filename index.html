@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -165,17 +166,26 @@
       font-size: 17px;
 
       line-height: 1.7;
+
+      text-align: center;
     }
+
+    /*
+      Connect Wallet возвращён к прежнему размеру
+    */
 
     .login-area {
       width: 100%;
-      max-width: 900px;
+      max-width: 360px;
 
       margin: 38px auto 0;
+
+      text-align: center;
     }
 
     #ton-connect-button {
       width: 100%;
+
       min-height: 52px;
     }
 
@@ -215,6 +225,10 @@
       transform: translateY(-1px);
     }
 
+    /*
+      Блок подключённого кошелька
+    */
+
     .connected {
       display: none;
 
@@ -240,13 +254,16 @@
       color: var(--success);
 
       font-size: 13px;
+
       font-weight: 700;
 
       text-align: center;
     }
 
     .wallet-address {
-      margin-top: 10px;
+      width: 100%;
+
+      margin: 10px auto 0;
 
       color: #cbd5e3;
 
@@ -305,6 +322,8 @@
       color: var(--muted-soft);
 
       font-size: 11px;
+
+      text-align: center;
     }
 
     .footer {
@@ -347,118 +366,120 @@
 
     }
   </style>
+
 </head>
 
 <body>
 
   <div class="page">
 
-    <header class="header">
+```
+<header class="header">
 
-      <div class="brand">
-        Gram ID
-      </div>
-
-      <div class="header-label">
-        Web3 Identity
-      </div>
-
-    </header>
-
-
-    <main class="main">
-
-      <section class="content">
-
-        <h1>
-
-          Один аккаунт
-
-          <br>
-
-          <span class="gradient">
-            для всего Web3.
-          </span>
-
-        </h1>
-
-
-        <p class="description">
-
-          С одним Gram ID вы сможете получить доступ
-          к приложениям экосистемы TON.
-          Подключите TON-кошелёк, чтобы создать
-          и управлять своей цифровой идентичностью.
-
-        </p>
-
-
-        <div class="login-area">
-
-          <div id="ton-connect-button"></div>
-
-
-          <div
-            class="connected"
-            id="connected"
-          >
-
-            <div class="connected-title">
-
-              ✓ TON-кошелёк подключён
-
-            </div>
-
-
-            <div
-              class="wallet-address"
-              id="wallet-address"
-            ></div>
-
-
-            <button
-              class="continue-button"
-              onclick="continueToNextStep()"
-            >
-
-              Продолжить
-
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <div class="trust">
-
-          <span>
-            Без хранения средств
-          </span>
-
-          <span>
-            Non-custodial
-          </span>
-
-          <span>
-            TON-native
-          </span>
-
-        </div>
-
-      </section>
-
-    </main>
-
-
-    <footer class="footer">
-
-      Gram ID · Digital identity for Web3
-
-    </footer>
-
+  <div class="brand">
+    Gram ID
   </div>
 
+  <div class="header-label">
+    Web3 Identity
+  </div>
+
+</header>
+
+
+<main class="main">
+
+  <section class="content">
+
+    <h1>
+
+      Один аккаунт
+
+      <br>
+
+      <span class="gradient">
+        для всего Web3.
+      </span>
+
+    </h1>
+
+
+    <p class="description">
+
+      С одним Gram ID вы сможете получить доступ
+      к приложениям экосистемы TON.
+      Подключите TON-кошелёк, чтобы создать
+      и управлять своей цифровой идентичностью.
+
+    </p>
+
+
+    <div class="login-area">
+
+      <div id="ton-connect-button"></div>
+
+
+      <div
+        class="connected"
+        id="connected"
+      >
+
+        <div class="connected-title">
+
+          ✓ TON-кошелёк подключён
+
+        </div>
+
+
+        <div
+          class="wallet-address"
+          id="wallet-address"
+        ></div>
+
+
+        <button
+          class="continue-button"
+          onclick="continueToNextStep()"
+        >
+
+          Продолжить
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="trust">
+
+      <span>
+        Без хранения средств
+      </span>
+
+      <span>
+        Non-custodial
+      </span>
+
+      <span>
+        TON-native
+      </span>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer class="footer">
+
+  Gram ID · Digital identity for Web3
+
+</footer>
+```
+
+  </div>
 
   <script>
 
