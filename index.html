@@ -30,6 +30,7 @@
 
     body {
       min-height: 100vh;
+
       color: var(--text);
 
       font-family:
@@ -445,10 +446,13 @@
       new TON_CONNECT_UI.TonConnectUI({
 
         manifestUrl:
-          "./tonconnect-manifest.json",
+          "https://gramidcore.github.io/gramid/tonconnect-manifest.json",
 
         buttonRootId:
-          "ton-connect-button"
+          "ton-connect-button",
+
+        restoreConnection:
+          false
 
       });
 
@@ -507,15 +511,6 @@
         return;
 
       }
-
-
-      localStorage.setItem(
-
-        "gramid_wallet_address",
-
-        wallet.account.address
-
-      );
 
 
       window.location.href =
