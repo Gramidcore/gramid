@@ -18,7 +18,6 @@
       --blue: #6d9dff;
       --purple: #8d76ff;
       --success: #72dfa5;
-      --danger: #ff7f8a;
     }
 
     * {
@@ -129,16 +128,73 @@
       text-align: center;
     }
 
+    .avatar {
+      width: 86px;
+      height: 86px;
+
+      margin: 0 auto 24px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      color: white;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--purple)
+        );
+
+      font-size: 34px;
+      font-weight: 700;
+
+      box-shadow:
+        0 20px 60px
+        rgba(92, 119, 255, 0.28);
+    }
+
+    h1 {
+      margin: 0;
+
+      font-size: clamp(36px, 7vw, 58px);
+
+      line-height: 1;
+
+      font-weight: 700;
+
+      letter-spacing: -0.08em;
+    }
+
+    .gradient {
+      color: transparent;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ffffff 0%,
+          #b8c8ff 45%,
+          #79aaff 100%
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
     .status {
       display: inline-flex;
       align-items: center;
       gap: 8px;
 
-      margin-bottom: 24px;
-      padding: 9px 14px;
+      margin-top: 18px;
+      padding: 8px 13px;
 
-      border: 1px solid
-        rgba(114, 223, 165, 0.25);
+      border:
+        1px solid
+        rgba(114, 223, 165, 0.22);
 
       border-radius: 999px;
 
@@ -160,53 +216,14 @@
       background: var(--success);
 
       box-shadow:
-        0 0 14px
+        0 0 12px
         rgba(114, 223, 165, 0.8);
-    }
-
-    h1 {
-      margin: 0;
-
-      font-size: clamp(48px, 8vw, 76px);
-
-      line-height: 0.98;
-
-      font-weight: 700;
-
-      letter-spacing: -0.085em;
-    }
-
-    .gradient {
-      color: transparent;
-
-      background:
-        linear-gradient(
-          135deg,
-          #ffffff 0%,
-          #b8c8ff 45%,
-          #79aaff 100%
-        );
-
-      -webkit-background-clip: text;
-      background-clip: text;
-    }
-
-    .description {
-      max-width: 470px;
-
-      margin: 26px auto 0;
-
-      color: var(--muted);
-
-      font-size: 17px;
-
-      line-height: 1.7;
     }
 
     .profile-card {
       width: 100%;
 
-      margin-top: 38px;
+      margin-top: 36px;
 
       padding: 24px;
 
@@ -224,13 +241,7 @@
       backdrop-filter: blur(18px);
     }
 
-    .profile-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      gap: 20px;
-
+    .info-row {
       padding: 16px 0;
 
       border-bottom:
@@ -238,40 +249,87 @@
         rgba(255, 255, 255, 0.08);
     }
 
-    .profile-row:last-child {
+    .info-row:first-child {
+      padding-top: 0;
+    }
+
+    .info-row:last-child {
+      padding-bottom: 0;
+
       border-bottom: 0;
     }
 
-    .profile-label {
+    .info-label {
+      margin-bottom: 7px;
+
       color: var(--muted-soft);
 
-      font-size: 12px;
-    }
-
-    .profile-value {
-      max-width: 280px;
-
-      color: #ffffff;
-
-      font-size: 14px;
+      font-size: 11px;
       font-weight: 600;
 
-      text-align: right;
+      text-transform: uppercase;
 
-      word-break: break-word;
+      letter-spacing: 0.08em;
     }
 
-    .wallet-value {
+    .info-value {
+      color: #ffffff;
+
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .wallet-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .wallet-address {
+      flex: 1;
+
+      min-width: 0;
+
       color: #cbd5e3;
 
       font-family: monospace;
+      font-size: 12px;
 
-      font-size: 11px;
+      white-space: nowrap;
 
-      font-weight: 400;
+      overflow: hidden;
+
+      text-overflow: ellipsis;
     }
 
-    .logout-button {
+    .copy-button {
+      flex-shrink: 0;
+
+      padding: 8px 12px;
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+      border-radius: 9px;
+
+      color: #cbd5e3;
+
+      background:
+        rgba(255, 255, 255, 0.06);
+
+      cursor: pointer;
+
+      font-family: inherit;
+      font-size: 11px;
+    }
+
+    .copy-button:hover {
+      background:
+        rgba(255, 255, 255, 0.11);
+    }
+
+    .disconnect-button {
       width: 100%;
 
       min-height: 48px;
@@ -280,26 +338,27 @@
 
       border:
         1px solid
-        rgba(255, 127, 138, 0.25);
+        rgba(255, 255, 255, 0.12);
 
-      border-radius: 13px;
+      border-radius: 12px;
 
-      color: var(--danger);
+      color: #cbd5e3;
 
       background:
-        rgba(255, 127, 138, 0.06);
+        rgba(255, 255, 255, 0.05);
 
       cursor: pointer;
 
       font-family: inherit;
-
       font-size: 13px;
       font-weight: 600;
     }
 
-    .logout-button:hover {
+    .disconnect-button:hover {
+      color: white;
+
       background:
-        rgba(255, 127, 138, 0.11);
+        rgba(255, 255, 255, 0.10);
     }
 
     .footer {
@@ -330,16 +389,13 @@
         padding: 20px;
       }
 
-      .profile-row {
+      .wallet-line {
         align-items: flex-start;
-        flex-direction: column;
-        gap: 7px;
       }
 
-      .profile-value {
-        max-width: 100%;
-
-        text-align: left;
+      .wallet-address {
+        white-space: normal;
+        word-break: break-all;
       }
 
     }
@@ -369,81 +425,76 @@
 
   <section class="content">
 
-    <div class="status">
-
-      <span class="status-dot"></span>
-
-      Gram ID создан
-
+    <div
+      class="avatar"
+      id="avatar"
+    >
+      G
     </div>
 
 
     <h1>
 
-      <span id="username">
-        @username
-      </span>
-
-      <br>
-
-      <span class="gradient">
-        готов.
+      <span
+        class="gradient"
+        id="gram-id"
+      >
+        @gramid
       </span>
 
     </h1>
 
 
-    <p class="description">
+    <div class="status">
 
-      Ваша цифровая идентичность создана
-      и связана с TON-кошельком.
+      <span class="status-dot"></span>
 
-    </p>
+      Verified Identity
+
+    </div>
 
 
     <div class="profile-card">
 
-      <div class="profile-row">
+      <div class="info-row">
 
-        <div class="profile-label">
+        <div class="info-label">
           Gram ID
         </div>
 
         <div
-          class="profile-value"
-          id="profile-username"
+          class="info-value"
+          id="gram-id-card"
         >
-          @username
+          @gramid
         </div>
 
       </div>
 
 
-      <div class="profile-row">
+      <div class="info-row">
 
-        <div class="profile-label">
-          TON-кошелёк
+        <div class="info-label">
+          TON Wallet
         </div>
 
-        <div
-          class="profile-value wallet-value"
-          id="wallet-address"
-        >
-          Загрузка...
-        </div>
 
-      </div>
+        <div class="wallet-line">
+
+          <div
+            class="wallet-address"
+            id="wallet-address"
+          >
+            —
+          </div>
 
 
-      <div class="profile-row">
-
-        <div class="profile-label">
-          Статус
-        </div>
-
-        <div class="profile-value">
-
-          ✓ Подтверждён
+          <button
+            class="copy-button"
+            id="copy-button"
+          >
+            Копировать
+          </button>
 
         </div>
 
@@ -451,12 +502,10 @@
 
 
       <button
-        class="logout-button"
-        id="logout-button"
+        class="disconnect-button"
+        id="disconnect-button"
       >
-
         Выйти из кошелька
-
       </button>
 
     </div>
@@ -477,6 +526,105 @@
 
   <script>
 
+    const gramId =
+      localStorage.getItem(
+        "gramid_username"
+      );
+
+
+    const walletAddress =
+      localStorage.getItem(
+        "gramid_wallet_address"
+      );
+
+
+    if (!gramId || !walletAddress) {
+
+      window.location.href =
+        "./index.html";
+
+    }
+
+
+    document.getElementById(
+      "gram-id"
+    ).textContent =
+      gramId;
+
+
+    document.getElementById(
+      "gram-id-card"
+    ).textContent =
+      gramId;
+
+
+    document.getElementById(
+      "wallet-address"
+    ).textContent =
+      walletAddress;
+
+
+    const username =
+      gramId.replace(
+        "@",
+        ""
+      );
+
+
+    document.getElementById(
+      "avatar"
+    ).textContent =
+      username
+        .charAt(0)
+        .toUpperCase();
+
+
+    const copyButton =
+      document.getElementById(
+        "copy-button"
+      );
+
+
+    copyButton.addEventListener(
+
+      "click",
+
+      async function() {
+
+        try {
+
+          await navigator.clipboard.writeText(
+            walletAddress
+          );
+
+          copyButton.textContent =
+            "Скопировано";
+
+          setTimeout(
+
+            function() {
+
+              copyButton.textContent =
+                "Копировать";
+
+            },
+
+            1500
+
+          );
+
+        } catch (error) {
+
+          copyButton.textContent =
+            "Ошибка";
+
+        }
+
+      }
+
+    );
+
+
     const tonConnectUI =
       new TON_CONNECT_UI.TonConnectUI({
 
@@ -486,81 +634,30 @@
       });
 
 
-    const username =
-      localStorage.getItem(
-        "gramid_username"
-      );
-
-
-    const usernameTitle =
+    const disconnectButton =
       document.getElementById(
-        "username"
+        "disconnect-button"
       );
 
 
-    const profileUsername =
-      document.getElementById(
-        "profile-username"
-      );
-
-
-    const walletAddress =
-      document.getElementById(
-        "wallet-address"
-      );
-
-
-    const logoutButton =
-      document.getElementById(
-        "logout-button"
-      );
-
-
-    if (!username) {
-
-      window.location.href =
-        "create.html";
-
-    } else {
-
-      usernameTitle.textContent =
-        username;
-
-      profileUsername.textContent =
-        username;
-
-    }
-
-
-    tonConnectUI.onStatusChange(
-
-      function(wallet) {
-
-        if (!wallet) {
-
-          window.location.href =
-            "index.html";
-
-          return;
-
-        }
-
-
-        walletAddress.textContent =
-          wallet.account.address;
-
-      }
-
-    );
-
-
-    logoutButton.addEventListener(
+    disconnectButton.addEventListener(
 
       "click",
 
       async function() {
 
-        await tonConnectUI.disconnect();
+        try {
+
+          await tonConnectUI.disconnect();
+
+        } catch (error) {
+
+          console.error(
+            "Disconnect error:",
+            error
+          );
+
+        }
 
 
         localStorage.removeItem(
@@ -574,7 +671,7 @@
 
 
         window.location.href =
-          "index.html";
+          "./index.html";
 
       }
 
