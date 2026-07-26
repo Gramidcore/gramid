@@ -1,25 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Gram ID — Connect TON Wallet</title>
+  <title>Gram ID — Digital Identity for Web3</title>
 
   <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
 
   <style>
     :root {
       --text: #f5f7fb;
-      --muted: #98a2b3;
-      --muted-2: #687384;
-
+      --muted: #9aa3b2;
+      --muted-soft: #687281;
       --border: rgba(255, 255, 255, 0.12);
-      --panel: rgba(8, 11, 17, 0.72);
-
       --blue: #6d9dff;
-      --purple: #8b73ff;
-      --success: #70e0a3;
+      --purple: #8d76ff;
+      --success: #72dfa5;
     }
 
     * {
@@ -38,16 +35,16 @@
       color: var(--text);
 
       font-family:
-        Inter,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
+        Inter,
         sans-serif;
 
       background:
         linear-gradient(
-          rgba(4, 6, 10, 0.72),
-          rgba(4, 6, 10, 0.86)
+          rgba(4, 6, 10, 0.70),
+          rgba(4, 6, 10, 0.88)
         ),
         url("./background.png")
         center / cover
@@ -57,7 +54,7 @@
       overflow-x: hidden;
     }
 
-    body::before {
+    body::after {
       content: "";
 
       position: fixed;
@@ -67,14 +64,8 @@
 
       background:
         radial-gradient(
-          600px 500px at 50% 0%,
-          rgba(92, 143, 255, 0.14),
-          transparent 70%
-        ),
-
-        radial-gradient(
-          500px 500px at 100% 100%,
-          rgba(139, 115, 255, 0.1),
+          700px 500px at 50% 0%,
+          rgba(95, 157, 255, 0.13),
           transparent 70%
         );
     }
@@ -86,12 +77,12 @@
       flex-direction: column;
     }
 
-    .topbar {
+    .header {
       width: 100%;
-      max-width: 1180px;
+      max-width: 1200px;
 
       margin: 0 auto;
-      padding: 30px 28px;
+      padding: 32px 36px;
 
       display: flex;
       align-items: center;
@@ -104,11 +95,11 @@
       font-size: 21px;
       font-weight: 700;
 
-      letter-spacing: -0.06em;
+      letter-spacing: -0.055em;
     }
 
-    .network {
-      color: var(--muted-2);
+    .header-label {
+      color: var(--muted-soft);
 
       font-size: 10px;
       font-weight: 700;
@@ -124,55 +115,38 @@
       align-items: center;
       justify-content: center;
 
-      padding: 50px 20px 90px;
+      padding: 70px 24px 110px;
     }
 
-    .card {
+    .content {
       width: 100%;
-      max-width: 520px;
+      max-width: 760px;
 
-      padding: 46px 42px;
-
-      border: 1px solid var(--border);
-      border-radius: 30px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255, 255, 255, 0.08),
-          rgba(255, 255, 255, 0.025)
-        ),
-        var(--panel);
-
-      box-shadow:
-        0 40px 120px rgba(0, 0, 0, 0.52),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-
-      backdrop-filter: blur(28px);
+      text-align: center;
     }
 
-    .status-pill {
-      width: fit-content;
-
-      display: flex;
+    .eyebrow {
+      display: inline-flex;
       align-items: center;
       gap: 8px;
 
       margin-bottom: 30px;
-      padding: 8px 13px;
+      padding: 9px 15px;
 
       border: 1px solid var(--border);
       border-radius: 999px;
 
-      color: #b4bdcc;
+      color: #b7c0cf;
 
       background: rgba(255, 255, 255, 0.035);
 
       font-size: 11px;
       font-weight: 600;
+
+      letter-spacing: 0.04em;
     }
 
-    .status-dot {
+    .eyebrow-dot {
       width: 7px;
       height: 7px;
 
@@ -181,16 +155,21 @@
       background: var(--success);
 
       box-shadow:
-        0 0 15px rgba(112, 224, 163, 0.8);
+        0 0 15px rgba(114, 223, 165, 0.85);
     }
 
     h1 {
-      margin: 0;
+      max-width: 780px;
 
-      font-size: clamp(42px, 7vw, 66px);
+      margin: 0 auto;
+
+      font-size: clamp(46px, 8vw, 82px);
+
       line-height: 0.98;
 
-      letter-spacing: -0.08em;
+      font-weight: 700;
+
+      letter-spacing: -0.085em;
     }
 
     .gradient {
@@ -199,9 +178,9 @@
       background:
         linear-gradient(
           135deg,
-          #ffffff,
-          #b7c8ff 48%,
-          #78aaff
+          #ffffff 0%,
+          #b8c8ff 45%,
+          #79aaff 100%
         );
 
       -webkit-background-clip: text;
@@ -209,42 +188,28 @@
     }
 
     .description {
-      max-width: 430px;
+      max-width: 580px;
 
-      margin: 25px 0 0;
+      margin: 30px auto 0;
 
       color: var(--muted);
 
-      font-size: 16px;
+      font-size: 17px;
+
       line-height: 1.7;
     }
 
-    .wallet-section {
-      margin-top: 38px;
-      padding-top: 28px;
+    .login-area {
+      width: 100%;
+      max-width: 360px;
 
-      border-top: 1px solid var(--border);
-    }
-
-    .wallet-label {
-      margin-bottom: 14px;
-
-      color: var(--muted-2);
-
-      font-size: 10px;
-      font-weight: 700;
-
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      margin: 38px auto 0;
     }
 
     #ton-connect-button {
+      width: 100%;
       min-height: 52px;
     }
-
-    /*
-      Настраиваем стандартную кнопку TON Connect
-    */
 
     #ton-connect-button button {
       width: 100% !important;
@@ -264,30 +229,30 @@
         ) !important;
 
       box-shadow:
-        0 16px 45px rgba(91, 118, 255, 0.28) !important;
+        0 18px 50px
+        rgba(92, 119, 255, 0.28) !important;
     }
 
     #ton-connect-button button:hover {
       transform: translateY(-1px);
-
-      background:
-        linear-gradient(
-          135deg,
-          #7aa8ff,
-          #9984ff
-        ) !important;
     }
 
     .connected {
       display: none;
 
       margin-top: 18px;
-      padding: 18px;
+      padding: 20px;
 
-      border: 1px solid rgba(112, 224, 163, 0.25);
+      border:
+        1px solid
+        rgba(114, 223, 165, 0.25);
+
       border-radius: 16px;
 
-      background: rgba(112, 224, 163, 0.06);
+      background:
+        rgba(114, 223, 165, 0.06);
+
+      text-align: left;
     }
 
     .connected-title {
@@ -297,13 +262,15 @@
       font-weight: 700;
     }
 
-    .connected-address {
-      margin-top: 9px;
+    .wallet-address {
+      margin-top: 10px;
 
-      color: #cbd6e5;
+      color: #cbd5e3;
 
       font-family: monospace;
       font-size: 12px;
+
+      line-height: 1.5;
 
       word-break: break-all;
     }
@@ -311,42 +278,42 @@
     .continue-button {
       width: 100%;
 
-      min-height: 48px;
+      min-height: 46px;
 
       margin-top: 16px;
 
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 13px;
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.13);
+
+      border-radius: 12px;
 
       color: white;
 
-      background: rgba(255, 255, 255, 0.06);
+      background:
+        rgba(255, 255, 255, 0.07);
 
       cursor: pointer;
 
       font-family: inherit;
       font-size: 13px;
       font-weight: 600;
-
-      transition:
-        background 0.2s ease,
-        transform 0.2s ease;
     }
 
     .continue-button:hover {
-      transform: translateY(-1px);
-
-      background: rgba(255, 255, 255, 0.11);
+      background:
+        rgba(255, 255, 255, 0.12);
     }
 
-    .security {
+    .trust {
       display: flex;
+
       justify-content: center;
-      gap: 18px;
+      gap: 22px;
 
       margin-top: 28px;
 
-      color: var(--muted-2);
+      color: var(--muted-soft);
 
       font-size: 11px;
     }
@@ -354,7 +321,7 @@
     .footer {
       padding: 24px;
 
-      color: var(--muted-2);
+      color: var(--muted-soft);
 
       font-size: 11px;
 
@@ -362,32 +329,28 @@
     }
 
     @media (max-width: 600px) {
-      .topbar {
-        padding: 24px 18px;
+      .header {
+        padding: 24px 20px;
       }
 
-      .network {
+      .header-label {
         display: none;
       }
 
       .main {
-        padding:
-          25px
-          15px
-          60px;
+        padding: 50px 18px 80px;
       }
 
-      .card {
-        padding: 32px 24px;
-
-        border-radius: 24px;
+      h1 {
+        font-size: 48px;
       }
 
-      .security {
+      .description {
+        font-size: 16px;
+      }
+
+      .trust {
         flex-direction: column;
-
-        align-items: center;
-
         gap: 8px;
       }
     }
@@ -398,14 +361,14 @@
 
   <div class="page">
 
-    <header class="topbar">
+    <header class="header">
 
       <div class="brand">
         Gram ID
       </div>
 
-      <div class="network">
-        TON IDENTITY
+      <div class="header-label">
+        Web3 Identity
       </div>
 
     </header>
@@ -413,25 +376,25 @@
 
     <main class="main">
 
-      <section class="card">
+      <section class="content">
 
-        <div class="status-pill">
+        <div class="eyebrow">
 
-          <span class="status-dot"></span>
+          <span class="eyebrow-dot"></span>
 
-          TON Network
+          Identity for the TON ecosystem
 
         </div>
 
 
         <h1>
 
-          Connect your
+          Один аккаунт
 
-          <br />
+          <br>
 
           <span class="gradient">
-            TON wallet.
+            для всего Web3.
           </span>
 
         </h1>
@@ -439,18 +402,15 @@
 
         <p class="description">
 
-          Your wallet is the foundation of your digital identity.
-          Connect it to continue with Gram ID.
+          С одним Gram ID вы сможете получить доступ
+          к приложениям экосистемы TON.
+          Подключите TON-кошелёк, чтобы создать
+          и управлять своей цифровой идентичностью.
 
         </p>
 
 
-        <div class="wallet-section">
-
-          <div class="wallet-label">
-            Wallet connection
-          </div>
-
+        <div class="login-area">
 
           <div id="ton-connect-button"></div>
 
@@ -461,12 +421,14 @@
           >
 
             <div class="connected-title">
-              ✓ TON wallet connected
+
+              ✓ TON-кошелёк подключён
+
             </div>
 
 
             <div
-              class="connected-address"
+              class="wallet-address"
               id="wallet-address"
             ></div>
 
@@ -476,7 +438,7 @@
               onclick="continueToNextStep()"
             >
 
-              Continue
+              Продолжить
 
             </button>
 
@@ -485,10 +447,10 @@
         </div>
 
 
-        <div class="security">
+        <div class="trust">
 
           <span>
-            Secure
+            Без хранения средств
           </span>
 
           <span>
@@ -508,7 +470,7 @@
 
     <footer class="footer">
 
-      Gram ID · Identity infrastructure for TON
+      Gram ID · Digital identity for Web3
 
     </footer>
 
@@ -546,20 +508,13 @@
 
         if (wallet) {
 
-          const address =
-            wallet.account.address;
-
-
           walletAddress.textContent =
-            address;
-
+            wallet.account.address;
 
           connectedBox.style.display =
             "block";
 
-        }
-
-        else {
+        } else {
 
           connectedBox.style.display =
             "none";
@@ -570,42 +525,25 @@
         }
 
       }
-
     );
 
 
-    async function continueToNextStep() {
+    function continueToNextStep() {
 
       const wallet =
         tonConnectUI.wallet;
 
-
       if (!wallet) {
-
         return;
-
       }
 
-
-      /*
-        Следующим этапом сюда добавим
-        переход к Telegram-подтверждению.
-
-        Пока просто сохраняем адрес
-        для следующего шага.
-      */
-
       localStorage.setItem(
-
         "gramid_wallet_address",
-
         wallet.account.address
-
       );
 
-
       alert(
-        "TON wallet connected successfully"
+        "TON-кошелёк подключён. Следующий этап — создание Gram ID."
       );
 
     }
