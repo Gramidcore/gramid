@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -400,129 +399,143 @@
 
     }
   </style>
-
 </head>
 
 <body>
 
   <div class="page">
 
-```
-<header class="header">
+    <header class="header">
 
-  <div class="brand">
-    Gram ID
-  </div>
-
-  <div class="header-label">
-    Web3 Identity
-  </div>
-
-</header>
-
-
-<main class="main">
-
-  <section class="content">
-
-    <div
-      class="avatar"
-      id="avatar"
-    >
-      G
-    </div>
-
-
-    <h1>
-
-      <span
-        class="gradient"
-        id="gram-id"
-      >
-        @gramid
-      </span>
-
-    </h1>
-
-
-    <div class="status">
-
-      <span class="status-dot"></span>
-
-      Verified Identity
-
-    </div>
-
-
-    <div class="profile-card">
-
-      <div class="info-row">
-
-        <div class="info-label">
-          Gram ID
-        </div>
-
-        <div
-          class="info-value"
-          id="gram-id-card"
-        >
-          @gramid
-        </div>
-
+      <div class="brand">
+        Gram ID
       </div>
 
+      <div class="header-label">
+        Web3 Identity
+      </div>
 
-      <div class="info-row">
+    </header>
 
-        <div class="info-label">
-          TON Wallet
+
+    <main class="main">
+
+      <section class="content">
+
+        <div
+          class="avatar"
+          id="avatar"
+        >
+          G
         </div>
 
 
-        <div class="wallet-line">
+        <h1>
 
-          <div
-            class="wallet-address"
-            id="wallet-address"
+          <span
+            class="gradient"
+            id="gram-id"
           >
-            —
+            @gramid
+          </span>
+
+        </h1>
+
+
+        <div class="status">
+
+          <span class="status-dot"></span>
+
+          Active Identity
+
+        </div>
+
+
+        <div class="profile-card">
+
+          <div class="info-row">
+
+            <div class="info-label">
+              Gram ID
+            </div>
+
+            <div
+              class="info-value"
+              id="gram-id-card"
+            >
+              @gramid
+            </div>
+
+          </div>
+
+
+          <div class="info-row">
+
+            <div class="info-label">
+              TON Wallet
+            </div>
+
+
+            <div class="wallet-line">
+
+              <div
+                class="wallet-address"
+                id="wallet-address"
+              >
+                —
+              </div>
+
+
+              <button
+                class="copy-button"
+                id="copy-button"
+              >
+                Копировать
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-row">
+
+            <div class="info-label">
+              Created
+            </div>
+
+            <div
+              class="info-value"
+              id="created-date"
+            >
+              —
+            </div>
+
           </div>
 
 
           <button
-            class="copy-button"
-            id="copy-button"
+            class="disconnect-button"
+            id="disconnect-button"
           >
-            Копировать
+            Выйти из кошелька
           </button>
 
         </div>
 
-      </div>
+      </section>
+
+    </main>
 
 
-      <button
-        class="disconnect-button"
-        id="disconnect-button"
-      >
-        Выйти из кошелька
-      </button>
+    <footer class="footer">
 
-    </div>
+      Gram ID · Digital identity for Web3
 
-  </section>
-
-</main>
-
-
-<footer class="footer">
-
-  Gram ID · Digital identity for Web3
-
-</footer>
-```
+    </footer>
 
   </div>
+
 
   <script>
 
@@ -538,7 +551,10 @@
       );
 
 
-    if (!gramId || !walletAddress) {
+    if (
+      !gramId ||
+      !walletAddress
+    ) {
 
       window.location.href =
         "./index.html";
@@ -565,10 +581,11 @@
 
 
     const username =
-      gramId.replace(
-        "@",
-        ""
-      );
+      gramId
+        .replace(
+          "@",
+          ""
+        );
 
 
     document.getElementById(
@@ -578,6 +595,99 @@
         .charAt(0)
         .toUpperCase();
 
+
+    /*
+      Получаем дату создания
+      из локального демо-реестра
+    */
+
+    let createdDate =
+      null;
+
+
+    const registeredIds =
+      localStorage.getItem(
+        "gramid_registered_ids"
+      );
+
+
+    if (
+      registeredIds
+    ) {
+
+      try {
+
+        const registered =
+          JSON.parse(
+            registeredIds
+          );
+
+
+        const record =
+          registered[
+            username
+          ];
+
+
+        if (
+          record &&
+          record.createdAt
+        ) {
+
+          createdDate =
+            new Date(
+              record.createdAt
+            );
+
+        }
+
+      }
+
+      catch (
+        error
+      ) {
+
+        console.error(
+          "Registry read error:",
+          error
+        );
+
+      }
+
+    }
+
+
+    if (
+      createdDate
+    ) {
+
+      document.getElementById(
+        "created-date"
+      ).textContent =
+        createdDate.toLocaleDateString(
+          "ru-RU",
+          {
+            day: "2-digit",
+            month: "long",
+            year: "numeric"
+          }
+        );
+
+    }
+
+    else {
+
+      document.getElementById(
+        "created-date"
+      ).textContent =
+        "Недоступно";
+
+    }
+
+
+    /*
+      Копирование адреса
+    */
 
     const copyButton =
       document.getElementById(
@@ -597,8 +707,10 @@
             walletAddress
           );
 
+
           copyButton.textContent =
             "Скопировано";
+
 
           setTimeout(
 
@@ -613,7 +725,11 @@
 
           );
 
-        } catch (error) {
+        }
+
+        catch (
+          error
+        ) {
 
           copyButton.textContent =
             "Ошибка";
@@ -625,6 +741,10 @@
     );
 
 
+    /*
+      TON Connect
+    */
+
     const tonConnectUI =
       new TON_CONNECT_UI.TonConnectUI({
 
@@ -633,6 +753,10 @@
 
       });
 
+
+    /*
+      Выход из кошелька
+    */
 
     const disconnectButton =
       document.getElementById(
@@ -650,7 +774,11 @@
 
           await tonConnectUI.disconnect();
 
-        } catch (error) {
+        }
+
+        catch (
+          error
+        ) {
 
           console.error(
             "Disconnect error:",
