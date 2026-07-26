@@ -1,2065 +1,571 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Gram ID — Identity for TON</title>
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
+  <title>Gram ID — Connect TON Wallet</title>
 
   <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
 
   <style>
-
     :root {
-
-      --bg: #05070b;
-
-      --panel: rgba(12, 15, 22, 0.82);
-
-      --border: rgba(255, 255, 255, 0.11);
-
-      --border-soft: rgba(255, 255, 255, 0.07);
-
       --text: #f5f7fb;
+      --muted: #98a2b3;
+      --muted-2: #687384;
 
-      --muted: #8e98a8;
+      --border: rgba(255, 255, 255, 0.12);
+      --panel: rgba(8, 11, 17, 0.72);
 
-      --muted-2: #657080;
-
-      --success: #6fe1a3;
-
+      --blue: #6d9dff;
+      --purple: #8b73ff;
+      --success: #70e0a3;
     }
-
 
     * {
-
       box-sizing: border-box;
-
     }
 
-
-    html {
-
-      scroll-behavior: smooth;
-
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
     }
-
 
     body {
-
-      margin: 0;
-
       min-height: 100vh;
 
       color: var(--text);
 
       font-family:
-
-        "Inter",
-
+        Inter,
         -apple-system,
-
         BlinkMacSystemFont,
-
         "Segoe UI",
-
         sans-serif;
 
-      letter-spacing: -0.015em;
-
       background:
-
         linear-gradient(
-
-          rgba(3, 5, 9, 0.72),
-
-          rgba(3, 5, 9, 0.86)
-
+          rgba(4, 6, 10, 0.72),
+          rgba(4, 6, 10, 0.86)
         ),
-
         url("./background.png")
-
         center / cover
-
         fixed
+        no-repeat;
 
-        no-repeat,
-
-        #05070b;
-
+      overflow-x: hidden;
     }
 
-
-    body::after {
-
+    body::before {
       content: "";
 
       position: fixed;
-
       inset: 0;
 
       pointer-events: none;
 
       background:
-
         radial-gradient(
-
-          700px 500px at 50% 0%,
-
-          rgba(95, 157, 255, 0.12),
-
+          600px 500px at 50% 0%,
+          rgba(92, 143, 255, 0.14),
           transparent 70%
-
         ),
 
         radial-gradient(
-
-          600px 500px at 100% 100%,
-
-          rgba(138, 114, 255, 0.08),
-
+          500px 500px at 100% 100%,
+          rgba(139, 115, 255, 0.1),
           transparent 70%
-
         );
-
-      z-index: -1;
-
     }
 
-
     .page {
+      min-height: 100vh;
 
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
       width: 100%;
-
       max-width: 1180px;
 
       margin: 0 auto;
-
-      padding: 32px 24px 70px;
-
-    }
-
-
-    .topbar {
+      padding: 30px 28px;
 
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
-
-      margin-bottom: 90px;
-
     }
-
 
     .brand {
+      color: #ffffff;
 
-      display: flex;
-
-      align-items: center;
-
-      gap: 13px;
-
-    }
-
-
-    .brand-logo {
-
-      width: 48px;
-
-      height: 48px;
-
-      object-fit: contain;
-
-      filter:
-
-        drop-shadow(
-
-          0 0 22px
-
-          rgba(108, 157, 255, 0.45)
-
-        );
-
-    }
-
-
-    .brand-name {
-
-      font-size: 20px;
-
-      font-weight: 700;
-
-      letter-spacing: -0.04em;
-
-    }
-
-
-    .topbar-label {
-
-      color: var(--muted-2);
-
-      font-size: 11px;
-
-      font-weight: 700;
-
-      letter-spacing: 0.14em;
-
-      text-transform: uppercase;
-
-    }
-
-
-    .hero {
-
-      max-width: 800px;
-
-      margin: 0 auto 70px;
-
-      text-align: center;
-
-    }
-
-
-    .eyebrow {
-
-      display: inline-flex;
-
-      align-items: center;
-
-      gap: 8px;
-
-      padding: 9px 15px;
-
-      border: 1px solid var(--border);
-
-      border-radius: 999px;
-
-      color: #b4bfd0;
-
-      background: rgba(255,255,255,0.035);
-
-      font-size: 12px;
-
-      font-weight: 600;
-
-      letter-spacing: 0.05em;
-
-    }
-
-
-    .eyebrow-dot {
-
-      width: 7px;
-
-      height: 7px;
-
-      border-radius: 50%;
-
-      background: var(--success);
-
-      box-shadow:
-
-        0 0 15px
-
-        rgba(111, 225, 163, 0.8);
-
-    }
-
-
-    h1 {
-
-      margin: 25px 0 0;
-
-      font-size: clamp(48px, 8vw, 88px);
-
-      line-height: 0.98;
-
-      font-weight: 800;
-
-      letter-spacing: -0.08em;
-
-    }
-
-
-    .gradient-text {
-
-      color: transparent;
-
-      background:
-
-        linear-gradient(
-
-          135deg,
-
-          #ffffff 0%,
-
-          #b8c8ff 42%,
-
-          #76aaff 100%
-
-        );
-
-      -webkit-background-clip: text;
-
-      background-clip: text;
-
-    }
-
-
-    .hero-description {
-
-      max-width: 600px;
-
-      margin: 28px auto 0;
-
-      color: var(--muted);
-
-      font-size: 17px;
-
-      line-height: 1.65;
-
-    }
-
-
-    .main-grid {
-
-      display: grid;
-
-      grid-template-columns:
-
-        minmax(0, 1fr)
-
-        minmax(360px, 0.85fr);
-
-      gap: 24px;
-
-      align-items: start;
-
-    }
-
-
-    .panel {
-
-      overflow: hidden;
-
-      border: 1px solid var(--border);
-
-      border-radius: 28px;
-
-      background:
-
-        linear-gradient(
-
-          145deg,
-
-          rgba(255,255,255,0.075),
-
-          rgba(255,255,255,0.025)
-
-        ),
-
-        var(--panel);
-
-      box-shadow:
-
-        0 30px 100px
-
-        rgba(0,0,0,0.45),
-
-        inset 0 1px 0
-
-        rgba(255,255,255,0.04);
-
-      backdrop-filter: blur(26px);
-
-    }
-
-
-    .panel-inner {
-
-      padding: 32px;
-
-    }
-
-
-    .panel-header {
-
-      margin-bottom: 30px;
-
-    }
-
-
-    .panel-title {
-
-      margin: 0;
-
-      font-size: 22px;
-
-      font-weight: 700;
-
-      letter-spacing: -0.04em;
-
-    }
-
-
-    .panel-subtitle {
-
-      margin: 9px 0 0;
-
-      color: var(--muted);
-
-      font-size: 14px;
-
-      line-height: 1.6;
-
-    }
-
-
-    .auth-panel {
-
-      position: sticky;
-
-      top: 24px;
-
-    }
-
-
-    .auth-visual {
-
-      min-height: 500px;
-
-      padding: 34px;
-
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: space-between;
-
-    }
-
-
-    .auth-top {
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-    }
-
-
-    .auth-badge {
-
-      display: inline-flex;
-
-      align-items: center;
-
-      gap: 8px;
-
-      color: #aab5c5;
-
-      font-size: 11px;
-
-      font-weight: 700;
-
-      letter-spacing: 0.1em;
-
-      text-transform: uppercase;
-
-    }
-
-
-    .auth-badge span {
-
-      width: 7px;
-
-      height: 7px;
-
-      border-radius: 50%;
-
-      background: var(--success);
-
-      box-shadow:
-
-        0 0 13px
-
-        rgba(111,225,163,0.8);
-
-    }
-
-
-    .auth-icon {
-
-      width: 78px;
-
-      height: 78px;
-
-      display: grid;
-
-      place-items: center;
-
-    }
-
-
-    .auth-icon img {
-
-      width: 100%;
-
-      height: 100%;
-
-      object-fit: contain;
-
-      filter:
-
-        drop-shadow(
-
-          0 0 35px
-
-          rgba(98, 153, 255, 0.55)
-
-        );
-
-    }
-
-
-    .auth-content h2 {
-
-      margin: 35px 0 12px;
-
-      font-size: 31px;
-
-      line-height: 1.08;
-
+      font-size: 21px;
       font-weight: 700;
 
       letter-spacing: -0.06em;
-
     }
 
+    .network {
+      color: var(--muted-2);
 
-    .auth-content p {
+      font-size: 10px;
+      font-weight: 700;
 
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .main {
+      flex: 1;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 50px 20px 90px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 520px;
+
+      padding: 46px 42px;
+
+      border: 1px solid var(--border);
+      border-radius: 30px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.08),
+          rgba(255, 255, 255, 0.025)
+        ),
+        var(--panel);
+
+      box-shadow:
+        0 40px 120px rgba(0, 0, 0, 0.52),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+      backdrop-filter: blur(28px);
+    }
+
+    .status-pill {
+      width: fit-content;
+
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      margin-bottom: 30px;
+      padding: 8px 13px;
+
+      border: 1px solid var(--border);
+      border-radius: 999px;
+
+      color: #b4bdcc;
+
+      background: rgba(255, 255, 255, 0.035);
+
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: var(--success);
+
+      box-shadow:
+        0 0 15px rgba(112, 224, 163, 0.8);
+    }
+
+    h1 {
       margin: 0;
+
+      font-size: clamp(42px, 7vw, 66px);
+      line-height: 0.98;
+
+      letter-spacing: -0.08em;
+    }
+
+    .gradient {
+      color: transparent;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ffffff,
+          #b7c8ff 48%,
+          #78aaff
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .description {
+      max-width: 430px;
+
+      margin: 25px 0 0;
 
       color: var(--muted);
 
-      font-size: 14px;
-
-      line-height: 1.65;
-
+      font-size: 16px;
+      line-height: 1.7;
     }
 
+    .wallet-section {
+      margin-top: 38px;
+      padding-top: 28px;
 
-    .button {
-
-      min-height: 46px;
-
-      padding: 0 16px;
-
-      border: 1px solid transparent;
-
-      border-radius: 13px;
-
-      color: white;
-
-      cursor: pointer;
-
-      font-family: inherit;
-
-      font-size: 13px;
-
-      font-weight: 600;
-
-      transition:
-
-        transform 0.2s ease,
-
-        opacity 0.2s ease,
-
-        background 0.2s ease,
-
-        border-color 0.2s ease;
-
+      border-top: 1px solid var(--border);
     }
 
-
-    .button:hover {
-
-      transform: translateY(-1px);
-
-      opacity: 0.94;
-
-    }
-
-
-    .gramid-login-button {
-
-      width: 100%;
-
-      min-height: 52px;
-
-      margin-top: 30px;
-
-      background:
-
-        linear-gradient(
-
-          135deg,
-
-          #5e91ff,
-
-          #806cff
-
-        );
-
-      box-shadow:
-
-        0 15px 45px
-
-        rgba(91, 118, 255, 0.28);
-
-    }
-
-
-    .gramid-login-button:hover {
-
-      background:
-
-        linear-gradient(
-
-          135deg,
-
-          #72a0ff,
-
-          #917fff
-
-        );
-
-    }
-
-
-    .connection-box {
-
-      padding: 22px;
-
-      border: 1px solid var(--border-soft);
-
-      border-radius: 20px;
-
-      background: rgba(0,0,0,0.18);
-
-    }
-
-
-    .connection-label {
-
+    .wallet-label {
       margin-bottom: 14px;
 
       color: var(--muted-2);
 
-      font-size: 11px;
-
+      font-size: 10px;
       font-weight: 700;
 
-      letter-spacing: 0.12em;
-
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-
     }
 
+    #ton-connect-button {
+      min-height: 52px;
+    }
 
-    .identity {
+    /*
+      Настраиваем стандартную кнопку TON Connect
+    */
 
+    #ton-connect-button button {
+      width: 100% !important;
+      min-height: 52px !important;
+
+      border-radius: 14px !important;
+
+      font-family: inherit !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--purple)
+        ) !important;
+
+      box-shadow:
+        0 16px 45px rgba(91, 118, 255, 0.28) !important;
+    }
+
+    #ton-connect-button button:hover {
+      transform: translateY(-1px);
+
+      background:
+        linear-gradient(
+          135deg,
+          #7aa8ff,
+          #9984ff
+        ) !important;
+    }
+
+    .connected {
       display: none;
 
-      margin-top: 20px;
+      margin-top: 18px;
+      padding: 18px;
 
+      border: 1px solid rgba(112, 224, 163, 0.25);
+      border-radius: 16px;
+
+      background: rgba(112, 224, 163, 0.06);
     }
 
-
-    .wallet-address {
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      gap: 14px;
-
-      padding: 16px 18px;
-
-      border: 1px solid var(--border-soft);
-
-      border-radius: 15px;
-
-      background: rgba(255,255,255,0.03);
-
-    }
-
-
-    .wallet-address-label {
-
-      color: var(--muted-2);
-
-      font-size: 11px;
-
-      font-weight: 700;
-
-      letter-spacing: 0.08em;
-
-      text-transform: uppercase;
-
-    }
-
-
-    .address {
-
-      margin-top: 7px;
-
-      color: #dbe4f1;
-
-      font-family: monospace;
+    .connected-title {
+      color: var(--success);
 
       font-size: 13px;
-
+      font-weight: 700;
     }
 
+    .connected-address {
+      margin-top: 9px;
 
-    .copy-button {
+      color: #cbd6e5;
 
-      padding: 9px 12px;
+      font-family: monospace;
+      font-size: 12px;
 
-      border: 1px solid var(--border);
+      word-break: break-all;
+    }
 
-      border-radius: 10px;
+    .continue-button {
+      width: 100%;
 
-      color: #dbe5f4;
+      min-height: 48px;
 
-      background: rgba(255,255,255,0.045);
+      margin-top: 16px;
+
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 13px;
+
+      color: white;
+
+      background: rgba(255, 255, 255, 0.06);
 
       cursor: pointer;
 
       font-family: inherit;
-
-      font-size: 12px;
-
+      font-size: 13px;
       font-weight: 600;
 
+      transition:
+        background 0.2s ease,
+        transform 0.2s ease;
     }
 
+    .continue-button:hover {
+      transform: translateY(-1px);
 
-    .section-divider {
-
-      height: 1px;
-
-      margin: 28px 0;
-
-      background: var(--border-soft);
-
+      background: rgba(255, 255, 255, 0.11);
     }
 
+    .security {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
 
-    .form-title {
-
-      margin: 0 0 16px;
-
-      font-size: 16px;
-
-      font-weight: 700;
-
-    }
-
-
-    .profile-input {
-
-      width: 100%;
-
-      height: 48px;
-
-      margin: 6px 0;
-
-      padding: 0 15px;
-
-      border: 1px solid var(--border-soft);
-
-      border-radius: 12px;
-
-      outline: none;
-
-      color: var(--text);
-
-      background: rgba(255,255,255,0.035);
-
-      font-family: inherit;
-
-      font-size: 14px;
-
-    }
-
-
-    .profile-input:focus {
-
-      border-color: rgba(95,157,255,0.7);
-
-      background: rgba(255,255,255,0.055);
-
-    }
-
-
-    .profile-input::placeholder {
+      margin-top: 28px;
 
       color: var(--muted-2);
 
+      font-size: 11px;
     }
-
-
-    .button-row {
-
-      display: grid;
-
-      grid-template-columns: 1fr 1fr;
-
-      gap: 10px;
-
-      margin-top: 12px;
-
-    }
-
-
-    .save-button {
-
-      background:
-
-        linear-gradient(
-
-          135deg,
-
-          #2d9e83,
-
-          #1b765f
-
-        );
-
-    }
-
-
-    .verify-button {
-
-      background:
-
-        linear-gradient(
-
-          135deg,
-
-          #287eb8,
-
-          #235c8c
-
-        );
-
-    }
-
-
-    .profile-button,
-
-    .clear-button,
-
-    .disconnect-button {
-
-      width: 100%;
-
-      margin-top: 10px;
-
-    }
-
-
-    .profile-button {
-
-      color: #cbd8ec;
-
-      background: rgba(96,157,255,0.09);
-
-      border-color: rgba(96,157,255,0.28);
-
-    }
-
-
-    .clear-button {
-
-      color: #c3ccd9;
-
-      background: rgba(255,255,255,0.035);
-
-      border-color: rgba(255,255,255,0.13);
-
-    }
-
-
-    .disconnect-button {
-
-      color: #aeb8c7;
-
-      background: rgba(255,255,255,0.02);
-
-      border-color: rgba(255,255,255,0.09);
-
-    }
-
-
-    .telegram-link {
-
-      display: none;
-
-      margin-top: 12px;
-
-      padding: 13px;
-
-      border: 1px solid rgba(95,157,255,0.28);
-
-      border-radius: 12px;
-
-      color: #a5caff;
-
-      background: rgba(95,157,255,0.08);
-
-      text-align: center;
-
-      text-decoration: none;
-
-      font-size: 13px;
-
-      font-weight: 600;
-
-    }
-
-
-    .profile-result {
-
-      display: none;
-
-      margin-top: 20px;
-
-      padding: 22px;
-
-      border: 1px solid var(--border);
-
-      border-radius: 18px;
-
-      background:
-
-        linear-gradient(
-
-          145deg,
-
-          rgba(95,157,255,0.09),
-
-          rgba(138,114,255,0.05)
-
-        );
-
-    }
-
-
-    .profile-label {
-
-      color: var(--muted-2);
-
-      font-size: 10px;
-
-      font-weight: 700;
-
-      letter-spacing: 0.13em;
-
-      text-transform: uppercase;
-
-    }
-
-
-    .profile-name {
-
-      margin-top: 13px;
-
-      font-size: 25px;
-
-      font-weight: 700;
-
-      letter-spacing: -0.04em;
-
-    }
-
-
-    .profile-domain {
-
-      margin-top: 8px;
-
-      color: #91bfff;
-
-      font-size: 14px;
-
-    }
-
-
-    .profile-telegram {
-
-      margin-top: 7px;
-
-      color: #82aceb;
-
-      font-size: 14px;
-
-    }
-
-
-    .status {
-
-      min-height: 20px;
-
-      margin-top: 16px;
-
-      color: var(--muted);
-
-      font-size: 13px;
-
-      text-align: center;
-
-    }
-
-
-    .login-result {
-
-      display: none;
-
-      margin-top: 20px;
-
-      padding: 22px;
-
-      border: 1px solid var(--border);
-
-      border-radius: 18px;
-
-      background: rgba(0,0,0,0.22);
-
-      text-align: center;
-
-    }
-
-
-    .identity-status {
-
-      margin: 9px 0;
-
-      color: var(--success);
-
-      font-size: 13px;
-
-      font-weight: 600;
-
-    }
-
-
-    .login-result h2 {
-
-      margin: 22px 0 6px;
-
-      font-size: 24px;
-
-      font-weight: 700;
-
-    }
-
-
-    .login-result p {
-
-      margin: 0;
-
-      color: #8bbcff;
-
-      font-size: 14px;
-
-    }
-
-
-    .login-success {
-
-      margin-top: 18px;
-
-      color: var(--success);
-
-      font-size: 13px;
-
-      font-weight: 600;
-
-    }
-
-
-    .features {
-
-      display: grid;
-
-      grid-template-columns: repeat(4, 1fr);
-
-      gap: 12px;
-
-      margin-top: 24px;
-
-    }
-
-
-    .feature {
-
-      min-height: 105px;
-
-      padding: 18px;
-
-      border: 1px solid var(--border-soft);
-
-      border-radius: 18px;
-
-      color: #c7cfdb;
-
-      background: rgba(255,255,255,0.028);
-
-      font-size: 13px;
-
-      line-height: 1.5;
-
-    }
-
-
-    .feature strong {
-
-      display: block;
-
-      margin-bottom: 8px;
-
-      color: #f1f4f8;
-
-      font-size: 14px;
-
-      font-weight: 650;
-
-    }
-
 
     .footer {
-
-      margin-top: 60px;
+      padding: 24px;
 
       color: var(--muted-2);
 
-      font-size: 12px;
+      font-size: 11px;
 
       text-align: center;
-
     }
-
-
-    @media (max-width: 900px) {
-
-      .main-grid {
-
-        grid-template-columns: 1fr;
-
-      }
-
-
-      .auth-panel {
-
-        position: static;
-
-      }
-
-
-      .features {
-
-        grid-template-columns: repeat(2, 1fr);
-
-      }
-
-    }
-
 
     @media (max-width: 600px) {
-
-      .page {
-
-        padding: 24px 15px 50px;
-
-      }
-
-
       .topbar {
-
-        margin-bottom: 65px;
-
+        padding: 24px 18px;
       }
 
-
-      .topbar-label {
-
+      .network {
         display: none;
-
       }
 
-
-      .hero {
-
-        margin-bottom: 45px;
-
+      .main {
+        padding:
+          25px
+          15px
+          60px;
       }
 
+      .card {
+        padding: 32px 24px;
 
-      .hero-description {
-
-        font-size: 16px;
-
+        border-radius: 24px;
       }
 
+      .security {
+        flex-direction: column;
 
-      .panel-inner,
+        align-items: center;
 
-      .auth-visual {
-
-        padding: 22px;
-
+        gap: 8px;
       }
-
-
-      .button-row {
-
-        grid-template-columns: 1fr;
-
-      }
-
-
-      .features {
-
-        grid-template-columns: 1fr;
-
-      }
-
     }
-
   </style>
-
 </head>
-
 
 <body>
 
-
-  <main class="page">
-
+  <div class="page">
 
     <header class="topbar">
 
-
       <div class="brand">
-
-
-        <img
-
-          class="brand-logo"
-
-          src="./gram-diamond.png"
-
-          alt="Gram ID"
-
-        >
-
-
-        <span class="brand-name">
-
-          Gram ID
-
-        </span>
-
-
+        Gram ID
       </div>
 
-
-      <div class="topbar-label">
-
-        TON IDENTITY PROTOCOL
-
+      <div class="network">
+        TON IDENTITY
       </div>
-
 
     </header>
 
 
-    <section class="hero">
+    <main class="main">
+
+      <section class="card">
+
+        <div class="status-pill">
+
+          <span class="status-dot"></span>
+
+          TON Network
+
+        </div>
 
 
-      <div class="eyebrow">
+        <h1>
+
+          Connect your
+
+          <br />
+
+          <span class="gradient">
+            TON wallet.
+          </span>
+
+        </h1>
 
 
-        <span class="eyebrow-dot"></span>
+        <p class="description">
+
+          Your wallet is the foundation of your digital identity.
+          Connect it to continue with Gram ID.
+
+        </p>
 
 
-        Identity layer for TON
+        <div class="wallet-section">
 
-
-      </div>
-
-
-      <h1>
-
-
-        Your identity,
-
-
-        <br>
-
-
-        <span class="gradient-text">
-
-
-          verified.
-
-
-        </span>
-
-
-      </h1>
-
-
-      <p class="hero-description">
-
-
-        Connect your TON wallet and Telegram.
-
-        Create one verified identity for the next generation of Web3 applications.
-
-
-      </p>
-
-
-    </section>
-
-
-    <section class="main-grid">
-
-
-      <div class="panel">
-
-
-        <div class="panel-inner">
-
-
-          <div class="panel-header">
-
-
-            <h2 class="panel-title">
-
-
-              Gram ID Account
-
-
-            </h2>
-
-
-            <p class="panel-subtitle">
-
-
-              Sign in with your verified TON and Telegram identity.
-
-
-            </p>
-
-
+          <div class="wallet-label">
+            Wallet connection
           </div>
 
 
-          <div class="connection-box">
-
-
-            <div class="connection-label">
-
-
-              Gram ID authentication
-
-
-            </div>
-
-
-            <button
-
-              class="button gramid-login-button"
-
-              onclick="signInWithGramID()"
-
-            >
-
-
-              Open Gram ID
-
-
-            </button>
-
-
-          </div>
+          <div id="ton-connect-button"></div>
 
 
           <div
-
-            class="identity"
-
-            id="identity"
-
+            class="connected"
+            id="connected"
           >
 
-
-            <div class="wallet-address">
-
-
-              <div>
-
-
-                <div class="wallet-address-label">
-
-
-                  Connected wallet
-
-
-                </div>
-
-
-                <div
-
-                  class="address"
-
-                  id="address"
-
-                ></div>
-
-
-              </div>
-
-
-              <button
-
-                class="copy-button"
-
-                onclick="copyAddress()"
-
-              >
-
-
-                Copy
-
-
-              </button>
-
-
+            <div class="connected-title">
+              ✓ TON wallet connected
             </div>
-
-
-            <div class="section-divider"></div>
-
-
-            <h3 class="form-title">
-
-
-              Profile details
-
-
-            </h3>
-
-
-            <input
-
-              class="profile-input"
-
-              id="profileName"
-
-              type="text"
-
-              placeholder="Name or username"
-
-            >
-
-
-            <input
-
-              class="profile-input"
-
-              id="profileDomain"
-
-              type="text"
-
-              placeholder="TON domain · gramid.ton"
-
-            >
-
-
-            <input
-
-              class="profile-input"
-
-              id="telegramUsername"
-
-              type="text"
-
-              placeholder="Telegram username · @username"
-
-            >
-
-
-            <div class="button-row">
-
-
-              <button
-
-                class="button save-button"
-
-                onclick="saveProfile()"
-
-              >
-
-
-                Save profile
-
-
-              </button>
-
-
-              <button
-
-                class="button verify-button"
-
-                onclick="verifyTelegram()"
-
-              >
-
-
-                Verify Telegram
-
-
-              </button>
-
-
-            </div>
-
-
-            <a
-
-              class="telegram-link"
-
-              id="telegramLink"
-
-              target="_blank"
-
-            >
-
-
-              Open Telegram and verify
-
-
-            </a>
 
 
             <div
-
-              class="profile-result"
-
-              id="profileResult"
-
-            >
-
-
-              <div class="profile-label">
-
-
-                Your Gram ID profile
-
-
-              </div>
-
-
-              <div
-
-                class="profile-name"
-
-                id="savedName"
-
-              ></div>
-
-
-              <div
-
-                class="profile-domain"
-
-                id="savedDomain"
-
-              ></div>
-
-
-              <div
-
-                class="profile-telegram"
-
-                id="savedTelegram"
-
-              ></div>
-
-
-            </div>
-
-
-            <button
-
-              class="button profile-button"
-
-              onclick="viewPublicProfile()"
-
-            >
-
-
-              View Public Profile
-
-
-            </button>
-
-
-            <button
-
-              class="button clear-button"
-
-              onclick="clearProfile()"
-
-            >
-
-
-              Clear Profile
-
-
-            </button>
-
-
-            <div
-
-              class="status"
-
-              id="status"
-
+              class="connected-address"
+              id="wallet-address"
             ></div>
 
 
             <button
-
-              class="button disconnect-button"
-
-              onclick="disconnectWallet()"
-
+              class="continue-button"
+              onclick="continueToNextStep()"
             >
 
-
-              Disconnect Wallet
-
+              Continue
 
             </button>
 
-
           </div>
-
 
         </div>
 
 
-      </div>
+        <div class="security">
 
+          <span>
+            Secure
+          </span>
 
-      <div class="panel auth-panel">
+          <span>
+            Non-custodial
+          </span>
 
-
-        <div class="auth-visual">
-
-
-          <div class="auth-top">
-
-
-            <div class="auth-badge">
-
-
-              <span></span>
-
-
-              Gram ID Authentication
-
-
-            </div>
-
-
-            <div class="auth-icon">
-
-
-              <img
-
-                src="./gram-diamond.png"
-
-                alt="Gram ID"
-
-              >
-
-
-            </div>
-
-
-          </div>
-
-
-          <div class="auth-content">
-
-
-            <h2>
-
-
-              One identity.
-
-
-              <br>
-
-
-              Every connection.
-
-
-            </h2>
-
-
-            <p>
-
-
-              Sign in once with Gram ID.
-
-              Your verified TON wallet and Telegram identity become one trusted account for the TON ecosystem.
-
-
-            </p>
-
-
-            <button
-
-              class="button gramid-login-button"
-
-              onclick="signInWithGramID()"
-
-            >
-
-
-              Open Gram ID
-
-
-            </button>
-
-
-            <div
-
-              class="login-result"
-
-              id="loginResult"
-
-            ></div>
-
-
-          </div>
-
+          <span>
+            TON-native
+          </span>
 
         </div>
 
+      </section>
 
-      </div>
-
-
-    </section>
-
-
-    <section class="features">
-
-
-      <div class="feature">
-
-
-        <strong>
-
-
-          Wallet-native
-
-
-        </strong>
-
-
-        Your TON wallet is the foundation of your identity.
-
-
-      </div>
-
-
-      <div class="feature">
-
-
-        <strong>
-
-
-          Telegram verified
-
-
-        </strong>
-
-
-        Prove the connection between your Telegram and wallet.
-
-
-      </div>
-
-
-      <div class="feature">
-
-
-        <strong>
-
-
-          One identity
-
-
-        </strong>
-
-
-        Use one verified profile across the TON ecosystem.
-
-
-      </div>
-
-
-      <div class="feature">
-
-
-        <strong>
-
-
-          Built for TON
-
-
-        </strong>
-
-
-        Identity infrastructure for the next generation of Web3.
-
-
-      </div>
-
-
-    </section>
+    </main>
 
 
     <footer class="footer">
 
-
-      Gram ID — decentralized identity
-
-      for the next generation of Web3.
-
+      Gram ID · Identity infrastructure for TON
 
     </footer>
 
-
-  </main>
+  </div>
 
 
   <script>
 
-
-    const SUPABASE_URL =
-
-      'https://beuymvtrabmawogqrhni.supabase.co';
-
-
-    const SUPABASE_KEY =
-
-      'sb_publishable_WHFBkb-8c_iDJ2uBG9g2TQ_CSMkumUg';
-
-
-    const VERIFY_FUNCTION_URL =
-
-      SUPABASE_URL +
-
-      '/functions/v1/verify-telegram';
-
-
-    const GRAMID_LOGIN_URL =
-
-      SUPABASE_URL +
-
-      '/functions/v1/gramid-login';
-
-
-    const GRAMID_USERINFO_URL =
-
-      SUPABASE_URL +
-
-      '/functions/v1/gramid-userinfo';
-
-
     const tonConnectUI =
-
       new TON_CONNECT_UI.TonConnectUI({
 
         manifestUrl:
+          "./tonconnect-manifest.json",
 
-          './tonconnect-manifest.json'
+        buttonRootId:
+          "ton-connect-button"
 
       });
 
 
-    let currentWalletAddress = '';
+    const connectedBox =
+      document.getElementById(
+        "connected"
+      );
 
 
-    let gramidIdentity = null;
-
-
-    function setStatus(message) {
-
-
-      const status =
-
-        document.getElementById(
-
-          'status'
-
-        );
-
-
-      if (status) {
-
-
-        status.textContent =
-
-          message;
-
-
-      }
-
-    }
+    const walletAddress =
+      document.getElementById(
+        "wallet-address"
+      );
 
 
     tonConnectUI.onStatusChange(
-
-      async wallet => {
-
-
-        const identity =
-
-          document.getElementById(
-
-            'identity'
-
-          );
-
-
-        const addressElement =
-
-          document.getElementById(
-
-            'address'
-
-          );
-
+      function(wallet) {
 
         if (wallet) {
 
-
-          currentWalletAddress =
-
+          const address =
             wallet.account.address;
 
 
-          addressElement.textContent =
+          walletAddress.textContent =
+            address;
 
 
-            currentWalletAddress.slice(0, 6) +
+          connectedBox.style.display =
+            "block";
 
-            '...' +
+        }
 
-            currentWalletAddress.slice(-6);
+        else {
 
+          connectedBox.style.display =
+            "none";
 
-          addressElement.dataset.fullAddress =
-
-            currentWalletAddress;
-
-
-          identity.style.display =
-
-            'block';
-
-
-          loadProfile();
-
-
-          loadGramIDSession();
-
-
-        } else {
-
-
-          currentWalletAddress = '';
-
-
-          gramidIdentity = null;
-
-
-          identity.style.display =
-
-            'none';
-
-
-          const loginResult =
-
-            document.getElementById(
-
-              'loginResult'
-
-            );
-
-
-          if (loginResult) {
-
-
-            loginResult.innerHTML = '';
-
-
-            loginResult.style.display =
-
-              'none';
-
-          }
+          walletAddress.textContent =
+            "";
 
         }
 
@@ -2068,1628 +574,43 @@
     );
 
 
-    async function signInWithGramID() {
+    async function continueToNextStep() {
 
+      const wallet =
+        tonConnectUI.wallet;
 
-      try {
 
-
-        if (!currentWalletAddress) {
-
-
-          setStatus(
-
-            'Choose your TON wallet...'
-
-          );
-
-
-          await tonConnectUI.openModal();
-
-
-          return;
-
-        }
-
-
-        setStatus(
-
-          'Signing in with Gram ID...'
-
-        );
-
-
-        const response =
-
-          await fetch(
-
-            GRAMID_LOGIN_URL,
-
-            {
-
-              method: 'POST',
-
-              headers: {
-
-                'Content-Type':
-
-                  'application/json',
-
-                'apikey':
-
-                  SUPABASE_KEY
-
-              },
-
-              body:
-
-                JSON.stringify({
-
-                  wallet:
-
-                    currentWalletAddress
-
-                })
-
-            }
-
-          );
-
-
-        const data =
-
-          await response.json();
-
-
-        if (!response.ok) {
-
-
-          throw new Error(
-
-            data.error ||
-
-            'Gram ID Login failed'
-
-          );
-
-        }
-
-
-        if (
-
-          !data.authenticated ||
-
-          !data.session_token
-
-        ) {
-
-
-          throw new Error(
-
-            'Authentication failed'
-
-          );
-
-        }
-
-
-        localStorage.setItem(
-
-          'gramid_session_token',
-
-          data.session_token
-
-        );
-
-
-        localStorage.setItem(
-
-          'gramid_session_expires',
-
-          data.expires_at
-
-        );
-
-
-        localStorage.setItem(
-
-          'gramid_wallet',
-
-          currentWalletAddress
-
-        );
-
-
-        showLoggedInIdentity(
-
-          data.identity
-
-        );
-
-
-        setStatus(
-
-          'Gram ID authentication successful ✓'
-
-        );
-
-
-      } catch (error) {
-
-
-        console.error(
-
-          'Gram ID Login error:',
-
-          error
-
-        );
-
-
-        setStatus(
-
-          'Error: ' +
-
-          error.message
-
-        );
-
-      }
-
-    }
-
-
-    function copyAddress() {
-
-
-      const address =
-
-        document
-
-          .getElementById(
-
-            'address'
-
-          )
-
-          .dataset
-
-          .fullAddress;
-
-
-      if (!address) {
-
+      if (!wallet) {
 
         return;
 
       }
 
 
-      navigator.clipboard.writeText(
+      /*
+        Следующим этапом сюда добавим
+        переход к Telegram-подтверждению.
 
-        address
+        Пока просто сохраняем адрес
+        для следующего шага.
+      */
+
+      localStorage.setItem(
+
+        "gramid_wallet_address",
+
+        wallet.account.address
 
       );
 
 
-      setStatus(
-
-        'TON address copied'
-
+      alert(
+        "TON wallet connected successfully"
       );
 
     }
-
-
-    async function saveProfile() {
-
-
-      const name =
-
-        document
-
-          .getElementById(
-
-            'profileName'
-
-          )
-
-          .value
-
-          .trim();
-
-
-      const domain =
-
-        document
-
-          .getElementById(
-
-            'profileDomain'
-
-          )
-
-          .value
-
-          .trim();
-
-
-      const telegramUsername =
-
-        document
-
-          .getElementById(
-
-            'telegramUsername'
-
-          )
-
-          .value
-
-          .trim();
-
-
-      if (!currentWalletAddress) {
-
-
-        setStatus(
-
-          'Please connect your TON wallet first'
-
-        );
-
-
-        return;
-
-      }
-
-
-      if (!name) {
-
-
-        setStatus(
-
-          'Please enter your name'
-
-        );
-
-
-        return;
-
-      }
-
-
-      setStatus(
-
-        'Saving profile...'
-
-      );
-
-
-      try {
-
-
-        const checkResponse =
-
-          await fetch(
-
-            SUPABASE_URL +
-
-            '/rest/v1/profiles?wallet_address=eq.' +
-
-            encodeURIComponent(
-
-              currentWalletAddress
-
-            ) +
-
-            '&select=id',
-
-            {
-
-              method: 'GET',
-
-              headers: {
-
-                'apikey':
-
-                  SUPABASE_KEY,
-
-                'Authorization':
-
-                  'Bearer ' +
-
-                  SUPABASE_KEY
-
-              }
-
-            }
-
-          );
-
-
-        if (!checkResponse.ok) {
-
-
-          throw new Error(
-
-            await checkResponse.text()
-
-          );
-
-        }
-
-
-        const existingProfiles =
-
-          await checkResponse.json();
-
-
-        const profileData = {
-
-
-          wallet_address:
-
-            currentWalletAddress,
-
-
-          name:
-
-
-            name,
-
-
-          domain:
-
-
-            domain || null,
-
-
-          telegram_username:
-
-
-            telegramUsername || null
-
-        };
-
-
-        let response;
-
-
-        if (
-
-          existingProfiles.length > 0
-
-        ) {
-
-
-          response =
-
-            await fetch(
-
-              SUPABASE_URL +
-
-              '/rest/v1/profiles?id=eq.' +
-
-              existingProfiles[0].id,
-
-              {
-
-                method: 'PATCH',
-
-                headers: {
-
-                  'Content-Type':
-
-                    'application/json',
-
-                  'apikey':
-
-                    SUPABASE_KEY,
-
-                  'Authorization':
-
-                    'Bearer ' +
-
-                    SUPABASE_KEY,
-
-                  'Prefer':
-
-                    'return=minimal'
-
-                },
-
-                body:
-
-                  JSON.stringify(
-
-                    profileData
-
-                  )
-
-              }
-
-            );
-
-
-        } else {
-
-
-          response =
-
-            await fetch(
-
-              SUPABASE_URL +
-
-              '/rest/v1/profiles',
-
-              {
-
-                method: 'POST',
-
-                headers: {
-
-                  'Content-Type':
-
-                    'application/json',
-
-                  'apikey':
-
-                    SUPABASE_KEY,
-
-                  'Authorization':
-
-                    'Bearer ' +
-
-                    SUPABASE_KEY,
-
-                  'Prefer':
-
-                    'return=minimal'
-
-                },
-
-                body:
-
-                  JSON.stringify(
-
-                    profileData
-
-                  )
-
-              }
-
-            );
-
-        }
-
-
-        if (!response.ok) {
-
-
-          throw new Error(
-
-            await response.text()
-
-          );
-
-        }
-
-
-        showProfile(profileData);
-
-
-        setStatus(
-
-          'Profile saved online'
-
-        );
-
-
-      } catch (error) {
-
-
-        console.error(
-
-          'Profile save error:',
-
-          error
-
-        );
-
-
-        setStatus(
-
-          'Error: ' +
-
-          error.message
-
-        );
-
-      }
-
-    }
-
-
-    async function verifyTelegram() {
-
-
-      const telegramUsername =
-
-        document
-
-          .getElementById(
-
-            'telegramUsername'
-
-          )
-
-          .value
-
-          .trim();
-
-
-      if (!currentWalletAddress) {
-
-
-        setStatus(
-
-          'Please connect your TON wallet first'
-
-        );
-
-
-        return;
-
-      }
-
-
-      if (!telegramUsername) {
-
-
-        setStatus(
-
-          'Please enter your Telegram username'
-
-        );
-
-
-        return;
-
-      }
-
-
-      setStatus(
-
-        'Creating Telegram verification link...'
-
-      );
-
-
-      try {
-
-
-        const response =
-
-          await fetch(
-
-            VERIFY_FUNCTION_URL,
-
-            {
-
-              method: 'POST',
-
-              headers: {
-
-                'Content-Type':
-
-                  'application/json',
-
-                'apikey':
-
-                  SUPABASE_KEY
-
-              },
-
-              body:
-
-                JSON.stringify({
-
-                  wallet:
-
-                    currentWalletAddress,
-
-                  telegram_username:
-
-                    telegramUsername
-
-                })
-
-            }
-
-          );
-
-
-        const data =
-
-          await response.json();
-
-
-        if (!response.ok) {
-
-
-          throw new Error(
-
-            data.error ||
-
-            'Verification error'
-
-          );
-
-        }
-
-
-        const telegramLink =
-
-          document.getElementById(
-
-            'telegramLink'
-
-          );
-
-
-        telegramLink.href =
-
-          data.verification_url;
-
-
-        telegramLink.style.display =
-
-          'block';
-
-
-        setStatus(
-
-          'Verification link created'
-
-        );
-
-
-      } catch (error) {
-
-
-        console.error(
-
-          'Telegram verification error:',
-
-          error
-
-        );
-
-
-        setStatus(
-
-          'Error: ' +
-
-          error.message
-
-        );
-
-      }
-
-    }
-
-
-    async function loadProfile() {
-
-
-      if (!currentWalletAddress) {
-
-
-        return;
-
-      }
-
-
-      const response =
-
-        await fetch(
-
-          SUPABASE_URL +
-
-          '/rest/v1/profiles' +
-
-          '?wallet_address=eq.' +
-
-          encodeURIComponent(
-
-            currentWalletAddress
-
-          ) +
-
-          '&select=*',
-
-          {
-
-            method: 'GET',
-
-            headers: {
-
-              'apikey':
-
-                SUPABASE_KEY,
-
-              'Authorization':
-
-                'Bearer ' +
-
-                SUPABASE_KEY
-
-            }
-
-          }
-
-        );
-
-
-      if (!response.ok) {
-
-
-        return;
-
-      }
-
-
-      const profiles =
-
-        await response.json();
-
-
-      if (profiles.length > 0) {
-
-
-        const profile =
-
-          profiles[0];
-
-
-        document
-
-          .getElementById(
-
-            'profileName'
-
-          )
-
-          .value =
-
-          profile.name || '';
-
-
-        document
-
-          .getElementById(
-
-            'profileDomain'
-
-          )
-
-          .value =
-
-          profile.domain || '';
-
-
-        document
-
-          .getElementById(
-
-            'telegramUsername'
-
-          )
-
-          .value =
-
-          profile.telegram_username || '';
-
-
-        showProfile(profile);
-
-      }
-
-    }
-
-
-    function showProfile(profile) {
-
-
-      document
-
-        .getElementById(
-
-          'savedName'
-
-        )
-
-        .textContent =
-
-        profile.name || '';
-
-
-      document
-
-        .getElementById(
-
-          'savedDomain'
-
-        )
-
-        .textContent =
-
-        profile.domain ||
-
-        'TON domain not added';
-
-
-      document
-
-        .getElementById(
-
-          'savedTelegram'
-
-        )
-
-        .textContent =
-
-        profile.telegram_username ||
-
-        'Telegram username not added';
-
-
-      document
-
-        .getElementById(
-
-          'profileResult'
-
-        )
-
-        .style
-
-        .display =
-
-        'block';
-
-    }
-
-
-    function viewPublicProfile() {
-
-
-      if (!currentWalletAddress) {
-
-
-        setStatus(
-
-          'Please connect your TON wallet first'
-
-        );
-
-
-        return;
-
-      }
-
-
-      const profileUrl =
-
-
-        window.location.origin +
-
-
-        window.location.pathname.replace(
-
-          'index.html',
-
-          ''
-
-        ) +
-
-
-        'profile.html?wallet=' +
-
-
-        encodeURIComponent(
-
-          currentWalletAddress
-
-        );
-
-
-      window.location.href =
-
-        profileUrl;
-
-    }
-
-
-    function clearProfile() {
-
-
-      document
-
-        .getElementById(
-
-          'profileName'
-
-        )
-
-        .value = '';
-
-
-      document
-
-        .getElementById(
-
-          'profileDomain'
-
-        )
-
-        .value = '';
-
-
-      document
-
-        .getElementById(
-
-          'telegramUsername'
-
-        )
-
-        .value = '';
-
-
-      document
-
-        .getElementById(
-
-          'profileResult'
-
-        )
-
-        .style
-
-        .display =
-
-        'none';
-
-
-      document
-
-        .getElementById(
-
-          'telegramLink'
-
-        )
-
-        .style
-
-        .display =
-
-        'none';
-
-
-      setStatus(
-
-        'Form cleared'
-
-      );
-
-    }
-
-
-    async function disconnectWallet() {
-
-
-      const confirmed =
-
-        confirm(
-
-          'Вы действительно хотите выйти из Gram ID и отключить TON-кошелёк?'
-
-        );
-
-
-      if (!confirmed) {
-
-
-        return;
-
-      }
-
-
-      try {
-
-
-        // Удаляем Gram ID сессию
-
-        localStorage.removeItem(
-
-          'gramid_session_token'
-
-        );
-
-
-        localStorage.removeItem(
-
-          'gramid_session_expires'
-
-        );
-
-
-        localStorage.removeItem(
-
-          'gramid_wallet'
-
-        );
-
-
-        // Сбрасываем идентичность
-
-        gramidIdentity = null;
-
-
-        // Полностью отключаем TON Connect
-
-        await tonConnectUI.disconnect();
-
-
-        // Сбрасываем адрес
-
-        currentWalletAddress = '';
-
-
-        // Скрываем данные кошелька
-
-        const identity =
-
-          document.getElementById(
-
-            'identity'
-
-          );
-
-
-        if (identity) {
-
-
-          identity.style.display =
-
-          'none';
-
-        }
-
-
-        // Очищаем результат входа
-
-        const loginResult =
-
-          document.getElementById(
-
-            'loginResult'
-
-          );
-
-
-        if (loginResult) {
-
-
-          loginResult.innerHTML = '';
-
-
-          loginResult.style.display =
-
-            'none';
-
-        }
-
-
-        // Очищаем адрес
-
-        const addressElement =
-
-          document.getElementById(
-
-            'address'
-
-          );
-
-
-        if (addressElement) {
-
-
-          addressElement.textContent = '';
-
-
-          addressElement.dataset.fullAddress = '';
-
-        }
-
-
-        // Очищаем поля профиля
-
-        document
-
-          .getElementById(
-
-            'profileName'
-
-          )
-
-          .value = '';
-
-
-        document
-
-          .getElementById(
-
-            'profileDomain'
-
-          )
-
-          .value = '';
-
-
-        document
-
-          .getElementById(
-
-            'telegramUsername'
-
-          )
-
-          .value = '';
-
-
-        document
-
-          .getElementById(
-
-            'profileResult'
-
-          )
-
-          .style
-
-          .display =
-
-          'none';
-
-
-        document
-
-          .getElementById(
-
-            'telegramLink'
-
-          )
-
-          .style
-
-          .display =
-
-          'none';
-
-
-        setStatus(
-
-          'Вы вышли. TON-кошелёк отключён.'
-
-        );
-
-
-      } catch (error) {
-
-
-        console.error(
-
-          'Disconnect error:',
-
-          error
-
-        );
-
-
-        setStatus(
-
-          'Ошибка выхода: ' +
-
-          error.message
-
-        );
-
-      }
-
-    }
-
-
-    async function loadGramIDSession() {
-
-
-      const sessionToken =
-
-        localStorage.getItem(
-
-          'gramid_session_token'
-
-        );
-
-
-      const savedWallet =
-
-        localStorage.getItem(
-
-          'gramid_wallet'
-
-        );
-
-
-      if (
-
-        !sessionToken ||
-
-        !savedWallet ||
-
-        !currentWalletAddress ||
-
-        savedWallet !== currentWalletAddress
-
-      ) {
-
-
-        return;
-
-      }
-
-
-      try {
-
-
-        const response =
-
-          await fetch(
-
-            GRAMID_USERINFO_URL,
-
-            {
-
-              method: 'POST',
-
-              headers: {
-
-                'Content-Type':
-
-                  'application/json',
-
-                'apikey':
-
-                  SUPABASE_KEY
-
-              },
-
-              body:
-
-                JSON.stringify({
-
-                  session_token:
-
-                    sessionToken
-
-                })
-
-            }
-
-          );
-
-
-        const data =
-
-          await response.json();
-
-
-        if (
-
-          !response.ok ||
-
-          !data.authenticated
-
-        ) {
-
-
-          clearGramIDSession();
-
-
-          return;
-
-        }
-
-
-        showLoggedInIdentity(
-
-          data.identity
-
-        );
-
-
-      } catch (error) {
-
-
-        console.error(
-
-          'Session restore error:',
-
-          error
-
-        );
-
-      }
-
-    }
-
-
-    function clearGramIDSession() {
-
-
-      localStorage.removeItem(
-
-        'gramid_session_token'
-
-      );
-
-
-      localStorage.removeItem(
-
-        'gramid_session_expires'
-
-      );
-
-
-      localStorage.removeItem(
-
-        'gramid_wallet'
-
-      );
-
-
-      gramidIdentity = null;
-
-
-      const loginResult =
-
-        document.getElementById(
-
-          'loginResult'
-
-        );
-
-
-      if (loginResult) {
-
-
-        loginResult.innerHTML = '';
-
-
-        loginResult.style.display =
-
-          'none';
-
-      }
-
-    }
-
-
-    function showLoggedInIdentity(identity) {
-
-
-      gramidIdentity = identity;
-
-
-      const loginResult =
-
-        document.getElementById(
-
-          'loginResult'
-
-        );
-
-
-      if (!loginResult) {
-
-
-        return;
-
-      }
-
-
-      loginResult.innerHTML = `
-
-
-        <div class="identity-status">
-
-          ✓ TON wallet connected
-
-        </div>
-
-
-        <div class="identity-status">
-
-          ✓ Telegram connected
-
-        </div>
-
-
-        <div class="identity-status">
-
-          ✓ Identity verified
-
-        </div>
-
-
-        <h2>
-
-          ${escapeHtml(
-
-            identity.name ||
-
-            'Test User'
-
-          )}
-
-        </h2>
-
-
-        <p>
-
-          ${escapeHtml(
-
-            identity.telegram_username ||
-
-            ''
-
-          )}
-
-        </p>
-
-
-        <p style="margin-top:12px;color:#a9b8ff;">
-
-          Gram ID:
-
-          ${escapeHtml(
-
-            identity.gram_id ||
-
-            identity.id ||
-
-            'GID-USER'
-
-          )}
-
-        </p>
-
-
-        <button
-
-          class="button disconnect-button"
-
-          onclick="signOutGramID()"
-
-        >
-
-          Sign out of Gram ID
-
-        </button>
-
-
-        <div class="login-success">
-
-          Gram ID authentication successful ✓
-
-        </div>
-
-
-      `;
-
-
-      loginResult.style.display =
-
-        'block';
-
-    }
-
-
-    function signOutGramID() {
-
-
-      const confirmed =
-
-        confirm(
-
-          'Вы действительно хотите выйти из Gram ID?'
-
-        );
-
-
-      if (!confirmed) {
-
-
-        return;
-
-      }
-
-
-      clearGramIDSession();
-
-
-      setStatus(
-
-        'Вы вышли из Gram ID'
-
-      );
-
-    }
-
-
-    function escapeHtml(value) {
-
-
-      return String(value)
-
-        .replace(
-
-          /&/g,
-
-          '&amp;'
-
-        )
-
-        .replace(
-
-          /</g,
-
-          '&lt;'
-
-        )
-
-        .replace(
-
-          />/g,
-
-          '&gt;'
-
-        )
-
-        .replace(
-
-          /"/g,
-
-          '&quot;'
-
-        )
-
-        .replace(
-
-          /'/g,
-
-          '&#039;'
-
-        );
-
-    }
-
 
   </script>
 
-
 </body>
-
 </html>
