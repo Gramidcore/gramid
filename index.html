@@ -146,9 +146,7 @@
     h1 {
       max-width: 780px;
 
-      margin:
-        0
-        auto;
+      margin: 0 auto;
 
       font-size:
         clamp(
@@ -198,7 +196,7 @@
     .login-area {
       width: 100%;
 
-      max-width: 360px;
+      max-width: 900px;
 
       margin:
         38px
@@ -210,19 +208,18 @@
       width: 100%;
 
       min-height: 52px;
-    }
 
-    /*
-      Размер кнопки не меняем.
-      Только центрируем содержимое.
-    */
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+    }
 
     #ton-connect-button button {
       width: 100% !important;
 
       min-height: 52px !important;
-
-      border-radius: 14px !important;
 
       display: flex !important;
 
@@ -231,6 +228,8 @@
       justify-content: center !important;
 
       text-align: center !important;
+
+      border-radius: 14px !important;
 
       font-family: inherit !important;
 
@@ -409,7 +408,6 @@
 
       <section class="content">
 
-
         <h1>
 
           Один аккаунт
@@ -417,9 +415,7 @@
           <br>
 
           <span class="gradient">
-
             для всего Web3.
-
           </span>
 
         </h1>
@@ -437,7 +433,9 @@
 
         <div class="login-area">
 
-          <div id="ton-connect-button"></div>
+          <div
+            id="ton-connect-button"
+          ></div>
 
 
           <div
@@ -529,12 +527,14 @@
 
 
     tonConnectUI.onStatusChange(
+
       function(wallet) {
 
         if (wallet) {
 
           walletAddress.textContent =
             wallet.account.address;
+
 
           connectedBox.style.display =
             "block";
@@ -544,12 +544,19 @@
           connectedBox.style.display =
             "none";
 
+
           walletAddress.textContent =
             "";
+
+
+          localStorage.removeItem(
+            "gramid_wallet_address"
+          );
 
         }
 
       }
+
     );
 
 
@@ -558,22 +565,25 @@
       const wallet =
         tonConnectUI.wallet;
 
+
       if (!wallet) {
 
         return;
 
       }
 
+
       localStorage.setItem(
+
         "gramid_wallet_address",
 
         wallet.account.address
+
       );
 
 
-      alert(
-        "TON-кошелёк подключён. Следующий этап — создание Gram ID."
-      );
+      window.location.href =
+        "create.html";
 
     }
 
