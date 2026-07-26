@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Create Gram ID — Gram ID</title>
+  <title>Create Gram ID</title>
 
   <style>
+
     :root {
       --text: #f5f7fb;
       --muted: #9aa3b2;
@@ -20,17 +21,22 @@
       --success: #72dfa5;
     }
 
+
     * {
       box-sizing: border-box;
     }
 
+
     html,
     body {
       margin: 0;
+
       min-height: 100%;
     }
 
+
     body {
+
       min-height: 100vh;
 
       color: var(--text);
@@ -43,6 +49,7 @@
         sans-serif;
 
       background:
+
         linear-gradient(
           rgba(4, 6, 10, 0.70),
           rgba(4, 6, 10, 0.88)
@@ -56,7 +63,9 @@
       overflow-x: hidden;
     }
 
+
     body::after {
+
       content: "";
 
       position: fixed;
@@ -66,14 +75,19 @@
       pointer-events: none;
 
       background:
+
         radial-gradient(
           700px 500px at 50% 0%,
           rgba(95, 157, 255, 0.13),
           transparent 70%
         );
+
+      z-index: -1;
     }
 
+
     .page {
+
       min-height: 100vh;
 
       display: flex;
@@ -81,7 +95,9 @@
       flex-direction: column;
     }
 
+
     .header {
+
       width: 100%;
 
       max-width: 1200px;
@@ -99,7 +115,9 @@
       justify-content: space-between;
     }
 
+
     .brand {
+
       color: #ffffff;
 
       font-size: 21px;
@@ -109,7 +127,9 @@
       letter-spacing: -0.055em;
     }
 
+
     .header-label {
+
       color: var(--muted-soft);
 
       font-size: 10px;
@@ -121,7 +141,9 @@
       text-transform: uppercase;
     }
 
+
     .main {
+
       flex: 1;
 
       display: flex;
@@ -132,20 +154,48 @@
 
       padding:
         60px
-        24px
+        20px
         100px;
     }
 
-    .content {
+
+    .card {
+
       width: 100%;
 
-      max-width: 620px;
+      max-width: 560px;
 
-      text-align: center;
+      padding: 38px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius: 26px;
+
+      background:
+
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,0.075),
+          rgba(255,255,255,0.025)
+        ),
+
+        rgba(12, 15, 22, 0.82);
+
+      box-shadow:
+
+        0 30px 100px
+        rgba(0,0,0,0.45),
+
+        inset 0 1px 0
+        rgba(255,255,255,0.04);
+
+      backdrop-filter: blur(26px);
     }
 
+
     .step {
-      margin-bottom: 28px;
 
       color: var(--muted-soft);
 
@@ -158,27 +208,28 @@
       text-transform: uppercase;
     }
 
-    h1 {
-      margin: 0;
 
-      font-size:
-        clamp(
-          44px,
-          7vw,
-          72px
-        );
+    h1 {
+
+      margin:
+        16px
+        0
+        12px;
+
+      font-size: 42px;
 
       line-height: 1;
 
-      font-weight: 700;
-
-      letter-spacing: -0.08em;
+      letter-spacing: -0.07em;
     }
 
+
     .gradient {
+
       color: transparent;
 
       background:
+
         linear-gradient(
           135deg,
           #ffffff 0%,
@@ -191,53 +242,253 @@
       background-clip: text;
     }
 
-    .description {
-      max-width: 520px;
 
-      margin:
-        28px
-        auto
-        0;
+    .description {
+
+      margin: 0;
 
       color: var(--muted);
 
-      font-size: 17px;
+      font-size: 15px;
 
-      line-height: 1.7;
+      line-height: 1.65;
     }
 
-    .card {
-      margin:
-        42px
-        auto
-        0;
 
-      padding: 26px;
+    .wallet-box {
+
+      margin-top: 28px;
+
+      padding: 16px 18px;
 
       border:
         1px solid
-        var(--border);
+        rgba(114, 223, 165, 0.22);
 
-      border-radius: 22px;
+      border-radius: 14px;
 
       background:
-        rgba(255, 255, 255, 0.045);
-
-      box-shadow:
-        0 25px 80px
-        rgba(0, 0, 0, 0.30);
-
-      backdrop-filter: blur(20px);
-
-      text-align: left;
+        rgba(114, 223, 165, 0.06);
     }
 
+
+    .wallet-title {
+
+      color: var(--success);
+
+      font-size: 12px;
+
+      font-weight: 700;
+    }
+
+
+    .wallet-address {
+
+      margin-top: 8px;
+
+      color: #cbd5e3;
+
+      font-family: monospace;
+
+      font-size: 12px;
+
+      line-height: 1.5;
+
+      word-break: break-all;
+    }
+
+
+    .divider {
+
+      height: 1px;
+
+      margin:
+        28px
+        0;
+
+      background:
+        rgba(255,255,255,0.08);
+    }
+
+
     .label {
+
       display: block;
 
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+
+      color: #c8d0dc;
+
+      font-size: 13px;
+
+      font-weight: 600;
+    }
+
+
+    .input {
+
+      width: 100%;
+
+      height: 52px;
+
+      padding:
+        0
+        16px;
+
+      border:
+        1px solid
+        rgba(255,255,255,0.10);
+
+      border-radius: 13px;
+
+      outline: none;
+
+      color: white;
+
+      background:
+        rgba(255,255,255,0.045);
+
+      font-family: inherit;
+
+      font-size: 15px;
+
+      transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+    }
+
+
+    .input:focus {
+
+      border-color:
+        rgba(109,157,255,0.75);
+
+      background:
+        rgba(255,255,255,0.065);
+    }
+
+
+    .input::placeholder {
 
       color: var(--muted-soft);
+    }
+
+
+    .field {
+
+      margin-top: 18px;
+    }
+
+
+    .hint {
+
+      margin-top: 8px;
+
+      color: var(--muted-soft);
+
+      font-size: 11px;
+
+      line-height: 1.5;
+    }
+
+
+    .create-button {
+
+      width: 100%;
+
+      min-height: 52px;
+
+      margin-top: 28px;
+
+      border: none;
+
+      border-radius: 14px;
+
+      color: white;
+
+      cursor: pointer;
+
+      font-family: inherit;
+
+      font-size: 14px;
+
+      font-weight: 600;
+
+      background:
+
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--purple)
+        );
+
+      box-shadow:
+
+        0 18px 50px
+        rgba(92, 119, 255, 0.28);
+
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+    }
+
+
+    .create-button:hover {
+
+      transform: translateY(-1px);
+
+      opacity: 0.94;
+    }
+
+
+    .create-button:disabled {
+
+      opacity: 0.55;
+
+      cursor: not-allowed;
+
+      transform: none;
+    }
+
+
+    .status {
+
+      min-height: 22px;
+
+      margin-top: 18px;
+
+      color: var(--muted);
+
+      font-size: 13px;
+
+      text-align: center;
+    }
+
+
+    .result {
+
+      display: none;
+
+      margin-top: 24px;
+
+      padding: 24px;
+
+      border:
+        1px solid
+        rgba(114, 223, 165, 0.25);
+
+      border-radius: 18px;
+
+      background:
+        rgba(114, 223, 165, 0.06);
+
+      text-align: center;
+    }
+
+
+    .result-label {
+
+      color: var(--success);
 
       font-size: 11px;
 
@@ -248,176 +499,69 @@
       text-transform: uppercase;
     }
 
-    .id-input-wrapper {
-      display: flex;
 
-      align-items: center;
-
-      width: 100%;
-
-      height: 58px;
-
-      border:
-        1px solid
-        rgba(255, 255, 255, 0.14);
-
-      border-radius: 14px;
-
-      background:
-        rgba(0, 0, 0, 0.20);
-
-      overflow: hidden;
-    }
-
-    .id-input {
-      flex: 1;
-
-      min-width: 0;
-
-      height: 100%;
-
-      padding:
-        0
-        18px;
-
-      border: 0;
-
-      outline: none;
-
-      color: #ffffff;
-
-      background: transparent;
-
-      font-family: inherit;
-
-      font-size: 17px;
-
-      font-weight: 600;
-    }
-
-    .id-input::placeholder {
-      color: #667181;
-    }
-
-    .suffix {
-      padding-right: 18px;
-
-      color: #91a5c4;
-
-      font-size: 15px;
-
-      font-weight: 600;
-
-      white-space: nowrap;
-    }
-
-    .availability {
-      min-height: 22px;
+    .gram-id {
 
       margin-top: 12px;
+
+      color: white;
+
+      font-size: 28px;
+
+      font-weight: 700;
+
+      letter-spacing: 0.03em;
+    }
+
+
+    .result-subtitle {
+
+      margin-top: 10px;
 
       color: var(--muted);
 
       font-size: 13px;
     }
 
-    .availability.available {
-      color: var(--success);
-    }
 
-    .availability.taken {
-      color: #ff8d9b;
-    }
+    .profile-button {
 
-    .wallet-box {
-      margin-top: 18px;
+      width: 100%;
 
-      padding:
-        16px
-        18px;
+      min-height: 46px;
+
+      margin-top: 20px;
 
       border:
         1px solid
-        rgba(114, 223, 165, 0.20);
+        rgba(255,255,255,0.13);
 
-      border-radius: 14px;
+      border-radius: 12px;
 
-      background:
-        rgba(114, 223, 165, 0.055);
-    }
-
-    .wallet-title {
-      color: var(--success);
-
-      font-size: 12px;
-
-      font-weight: 700;
-    }
-
-    .wallet-address {
-      margin-top: 8px;
-
-      color: #bfc9d8;
-
-      font-family: monospace;
-
-      font-size: 11px;
-
-      line-height: 1.5;
-
-      word-break: break-all;
-    }
-
-    .continue-button {
-      width: 100%;
-
-      min-height: 52px;
-
-      margin-top: 18px;
-
-      border: 0;
-
-      border-radius: 14px;
-
-      color: #ffffff;
+      color: white;
 
       background:
-        linear-gradient(
-          135deg,
-          var(--blue),
-          var(--purple)
-        );
-
-      box-shadow:
-        0 18px 50px
-        rgba(92, 119, 255, 0.28);
+        rgba(255,255,255,0.07);
 
       cursor: pointer;
 
       font-family: inherit;
 
-      font-size: 14px;
+      font-size: 13px;
 
       font-weight: 600;
-
-      transition:
-        transform 0.2s ease,
-        opacity 0.2s ease;
     }
 
-    .continue-button:hover {
-      transform: translateY(-1px);
+
+    .profile-button:hover {
+
+      background:
+        rgba(255,255,255,0.12);
     }
 
-    .continue-button:disabled {
-      opacity: 0.45;
-
-      cursor: not-allowed;
-
-      transform: none;
-    }
 
     .footer {
+
       padding: 24px;
 
       color: var(--muted-soft);
@@ -427,73 +571,106 @@
       text-align: center;
     }
 
+
     @media (max-width: 600px) {
 
       .header {
+
         padding:
           24px
           20px;
       }
 
+
       .header-label {
+
         display: none;
       }
 
+
       .main {
+
         padding:
-          50px
-          18px
-          80px;
+          40px
+          16px
+          70px;
       }
+
 
       .card {
-        padding: 20px;
+
+        padding: 24px;
+
+        border-radius: 22px;
       }
 
-      .suffix {
-        padding-right: 14px;
 
-        font-size: 13px;
+      h1 {
+
+        font-size: 36px;
+      }
+
+
+      .gram-id {
+
+        font-size: 23px;
       }
 
     }
+
   </style>
 </head>
 
+
 <body>
+
 
   <div class="page">
 
+
     <header class="header">
 
+
       <div class="brand">
+
         Gram ID
+
       </div>
 
+
       <div class="header-label">
+
         Web3 Identity
+
       </div>
+
 
     </header>
 
 
     <main class="main">
 
-      <section class="content">
+
+      <section class="card">
+
 
         <div class="step">
-          Шаг 2 из 3
+
+          STEP 02 · CREATE IDENTITY
+
         </div>
 
 
         <h1>
 
-          Создайте свой
+          Создайте
 
           <br>
 
           <span class="gradient">
+
             Gram ID.
+
           </span>
 
         </h1>
@@ -501,89 +678,168 @@
 
         <p class="description">
 
-          Выберите уникальное имя для своей цифровой идентичности
+          Выберите имя для своей цифровой идентичности
           в экосистеме TON.
 
         </p>
 
 
-        <div class="card">
+        <div class="wallet-box">
+
+
+          <div class="wallet-title">
+
+            ✓ TON-кошелёк подключён
+
+          </div>
+
+
+          <div
+            class="wallet-address"
+            id="walletAddress"
+          ></div>
+
+
+        </div>
+
+
+        <div class="divider"></div>
+
+
+        <div class="field">
+
 
           <label
             class="label"
-            for="gramIdInput"
+            for="name"
           >
 
-            Ваш Gram ID
+            Ваше имя
 
           </label>
 
 
-          <div class="id-input-wrapper">
+          <input
 
-            <input
-              class="id-input"
-              id="gramIdInput"
-              type="text"
-              placeholder="username"
-              autocomplete="off"
-              maxlength="24"
-            >
+            class="input"
+
+            id="name"
+
+            type="text"
+
+            maxlength="30"
+
+            placeholder="Например, Alex"
+
+          >
 
 
-            <div class="suffix">
+        </div>
 
-              .gramid.ton
 
-            </div>
+        <div class="field">
+
+
+          <label
+            class="label"
+            for="telegram"
+          >
+
+            Telegram username
+
+          </label>
+
+
+          <input
+
+            class="input"
+
+            id="telegram"
+
+            type="text"
+
+            maxlength="32"
+
+            placeholder="@username"
+
+          >
+
+
+          <div class="hint">
+
+            Telegram можно будет подтвердить на следующем этапе.
+
+          </div>
+
+
+        </div>
+
+
+        <button
+
+          class="create-button"
+
+          id="createButton"
+
+          onclick="createGramID()"
+
+        >
+
+          Создать Gram ID
+
+        </button>
+
+
+        <div
+          class="status"
+          id="status"
+        ></div>
+
+
+        <div
+          class="result"
+          id="result"
+        >
+
+
+          <div class="result-label">
+
+            Identity created
 
           </div>
 
 
           <div
-            class="availability"
-            id="availability"
-          >
-
-            Введите имя от 3 до 24 символов
-
-          </div>
+            class="gram-id"
+            id="gramId"
+          ></div>
 
 
-          <div
-            class="wallet-box"
-            id="walletBox"
-          >
+          <div class="result-subtitle">
 
-            <div class="wallet-title">
-
-              ✓ TON-кошелёк подключён
-
-            </div>
-
-
-            <div
-              class="wallet-address"
-              id="walletAddress"
-            ></div>
+            Ваша цифровая идентичность создана.
 
           </div>
 
 
           <button
-            class="continue-button"
-            id="continueButton"
-            disabled
-            onclick="continueToTelegram()"
+
+            class="profile-button"
+
+            onclick="openProfile()"
+
           >
 
-            Продолжить
+            Открыть профиль
 
           </button>
 
+
         </div>
 
+
       </section>
+
 
     </main>
 
@@ -594,151 +850,312 @@
 
     </footer>
 
+
   </div>
 
 
   <script>
 
-    const input =
-      document.getElementById(
-        "gramIdInput"
-      );
-
-
-    const availability =
-      document.getElementById(
-        "availability"
-      );
-
-
-    const continueButton =
-      document.getElementById(
-        "continueButton"
-      );
-
 
     const walletAddress =
-      document.getElementById(
-        "walletAddress"
-      );
 
-
-    const wallet =
       localStorage.getItem(
+
         "gramid_wallet_address"
+
       );
 
 
-    if (wallet) {
+    const walletAddressElement =
 
-      walletAddress.textContent =
-        wallet;
+      document.getElementById(
 
-    } else {
+        "walletAddress"
 
-      walletAddress.textContent =
-        "Кошелёк не найден";
+      );
+
+
+    const statusElement =
+
+      document.getElementById(
+
+        "status"
+
+      );
+
+
+    const resultElement =
+
+      document.getElementById(
+
+        "result"
+
+      );
+
+
+    const gramIdElement =
+
+      document.getElementById(
+
+        "gramId"
+
+      );
+
+
+    const nameInput =
+
+      document.getElementById(
+
+        "name"
+
+      );
+
+
+    const telegramInput =
+
+      document.getElementById(
+
+        "telegram"
+
+      );
+
+
+    const createButton =
+
+      document.getElementById(
+
+        "createButton"
+
+      );
+
+
+    let createdGramId = "";
+
+
+    if (!walletAddress) {
+
+
+      window.location.href =
+
+        "index.html";
+
 
     }
 
 
-    input.addEventListener(
-      "input",
-      function() {
-
-        const value =
-          input.value
-            .trim()
-            .toLowerCase();
+    if (walletAddress) {
 
 
-        input.value =
-          value.replace(
-            /[^a-z0-9_]/g,
-            ""
+      walletAddressElement.textContent =
+
+        walletAddress;
+
+
+    }
+
+
+    function setStatus(message) {
+
+
+      statusElement.textContent =
+
+        message;
+
+    }
+
+
+    function generateGramID() {
+
+
+      const characters =
+
+        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+
+      let result = "GID-";
+
+
+      for (let i = 0; i < 4; i++) {
+
+
+        result +=
+
+          characters.charAt(
+
+            Math.floor(
+
+              Math.random() *
+
+              characters.length
+
+            )
+
           );
 
-
-        if (
-          value.length < 3
-        ) {
-
-          availability.textContent =
-            "Введите имя от 3 до 24 символов";
-
-          availability.className =
-            "availability";
-
-          continueButton.disabled =
-            true;
-
-          return;
-
-        }
+      }
 
 
-        if (
-          value.length > 24
-        ) {
-
-          availability.textContent =
-            "Максимальная длина — 24 символа";
-
-          availability.className =
-            "availability taken";
-
-          continueButton.disabled =
-            true;
-
-          return;
-
-        }
+      result += "-";
 
 
-        availability.textContent =
-          "✓ Имя доступно";
-
-        availability.className =
-          "availability available";
+      for (let i = 0; i < 4; i++) {
 
 
-        continueButton.disabled =
-          false;
+        result +=
+
+          characters.charAt(
+
+            Math.floor(
+
+              Math.random() *
+
+              characters.length
+
+            )
+
+          );
 
       }
-    );
 
 
-    function continueToTelegram() {
+      return result;
 
-      const gramId =
-        input.value
-          .trim()
-          .toLowerCase();
+    }
 
 
-      if (
-        gramId.length < 3
-      ) {
+    function createGramID() {
+
+
+      const name =
+
+        nameInput.value.trim();
+
+
+      const telegram =
+
+        telegramInput.value.trim();
+
+
+      if (!name) {
+
+
+        setStatus(
+
+          "Введите имя для создания Gram ID."
+
+        );
+
+
+        nameInput.focus();
+
 
         return;
 
       }
 
 
-      localStorage.setItem(
-        "gramid_username",
+      createButton.disabled = true;
 
-        gramId
+
+      setStatus(
+
+        "Создание Gram ID..."
+
       );
 
 
-      window.location.href =
-        "telegram.html";
+      setTimeout(function() {
+
+
+        createdGramId =
+
+          generateGramID();
+
+
+        const profileData = {
+
+
+          gram_id:
+            createdGramId,
+
+
+          wallet_address:
+            walletAddress,
+
+
+          name:
+            name,
+
+
+          telegram_username:
+            telegram || ""
+
+
+        };
+
+
+        localStorage.setItem(
+
+          "gramid_profile",
+
+          JSON.stringify(
+
+            profileData
+
+          )
+
+        );
+
+
+        localStorage.setItem(
+
+          "gramid_id",
+
+          createdGramId
+
+        );
+
+
+        gramIdElement.textContent =
+
+          createdGramId;
+
+
+        resultElement.style.display =
+
+          "block";
+
+
+        setStatus(
+
+          "Gram ID успешно создан ✓"
+
+        );
+
+
+        createButton.style.display =
+
+          "none";
+
+
+      }, 700);
 
     }
 
+
+    function openProfile() {
+
+
+      window.location.href =
+
+        "profile.html";
+
+    }
+
+
   </script>
 
+
 </body>
+
 </html>
