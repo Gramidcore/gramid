@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -33,7 +32,6 @@
 
     body {
       min-height: 100vh;
-
       color: var(--text);
 
       font-family:
@@ -349,10 +347,22 @@
       box-shadow:
         0 18px 50px
         rgba(92, 119, 255, 0.25);
+
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
     }
 
     .create-button:hover {
       transform: translateY(-1px);
+    }
+
+    .create-button:disabled {
+      opacity: 0.6;
+
+      cursor: not-allowed;
+
+      transform: none;
     }
 
     .message {
@@ -411,149 +421,166 @@
 
     }
   </style>
-
 </head>
 
 <body>
 
   <div class="page">
 
-```
-<header class="header">
+    <header class="header">
 
-  <div class="brand">
-    Gram ID
-  </div>
-
-  <div class="header-label">
-    Web3 Identity
-  </div>
-
-</header>
-
-
-<main class="main">
-
-  <section class="content">
-
-    <h1>
-
-      Создайте
-
-      <br>
-
-      <span class="gradient">
-        Gram ID.
-      </span>
-
-    </h1>
-
-
-    <p class="description">
-
-      Выберите уникальное имя для своей
-      цифровой идентичности в экосистеме TON.
-
-    </p>
-
-
-    <div class="create-card">
-
-      <label
-        class="label"
-        for="username"
-      >
-
-        Ваш Gram ID
-
-      </label>
-
-
-      <div class="username-wrapper">
-
-        <span class="username-prefix">
-          @
-        </span>
-
-
-        <input
-          id="username"
-          type="text"
-          maxlength="24"
-          placeholder="username"
-          autocomplete="off"
-        >
-
+      <div class="brand">
+        Gram ID
       </div>
 
-
-      <div class="hint">
-
-        Используйте от 3 до 24 символов.
-        Только латинские буквы, цифры и символ "_".
-
+      <div class="header-label">
+        Web3 Identity
       </div>
 
-
-      <div
-        class="wallet-status"
-        id="wallet-status"
-      >
-
-        <span class="wallet-dot"></span>
-
-        <span>
-          TON-кошелёк подключён
-        </span>
-
-        <span
-          class="wallet-address"
-          id="wallet-address"
-        ></span>
-
-      </div>
+    </header>
 
 
-      <button
-        class="create-button"
-        id="create-button"
-      >
+    <main class="main">
 
-        Создать Gram ID
+      <section class="content">
 
-      </button>
+        <h1>
 
+          Создайте
 
-      <div
-        class="message"
-        id="message"
-      ></div>
+          <br>
 
-    </div>
+          <span class="gradient">
+            Gram ID.
+          </span>
 
-  </section>
-
-</main>
+        </h1>
 
 
-<footer class="footer">
+        <p class="description">
 
-  Gram ID · Digital identity for Web3
+          Выберите уникальное имя для своей
+          цифровой идентичности в экосистеме TON.
 
-</footer>
-```
+        </p>
+
+
+        <div class="create-card">
+
+          <label
+            class="label"
+            for="username"
+          >
+
+            Ваш Gram ID
+
+          </label>
+
+
+          <div class="username-wrapper">
+
+            <span class="username-prefix">
+              @
+            </span>
+
+
+            <input
+              id="username"
+              type="text"
+              maxlength="24"
+              placeholder="username"
+              autocomplete="off"
+            >
+
+          </div>
+
+
+          <div class="hint">
+
+            Используйте от 4 до 24 символов.
+            Только латинские буквы, цифры и символ "_".
+
+          </div>
+
+
+          <div
+            class="wallet-status"
+            id="wallet-status"
+          >
+
+            <span class="wallet-dot"></span>
+
+            <span id="wallet-status-text">
+              Демо-режим
+            </span>
+
+            <span
+              class="wallet-address"
+              id="wallet-address"
+            ></span>
+
+          </div>
+
+
+          <button
+            class="create-button"
+            id="create-button"
+          >
+
+            Создать Gram ID
+
+          </button>
+
+
+          <div
+            class="message"
+            id="message"
+          ></div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <footer class="footer">
+
+      Gram ID · Digital identity for Web3
+
+    </footer>
 
   </div>
+
 
   <script>
 
-    const tonConnectUI =
-      new TON_CONNECT_UI.TonConnectUI({
+    /*
+      =====================================
+      DEMO MODE
+      =====================================
 
-        manifestUrl:
-          "https://gramidcore.github.io/gramid/tonconnect-manifest.json"
+      Пока Registry-контракт ещё не создан,
+      кошелёк можно не подключать.
 
-      });
+      Позже:
+
+      const DEMO_MODE = false;
+
+      и добавим реальный адрес Registry.
+    */
+
+    const DEMO_MODE = true;
+
+
+    /*
+      Будущий адрес Registry-контракта.
+
+      Пока НЕ используется.
+    */
+
+    const REGISTRY_ADDRESS =
+      "";
 
 
     const usernameInput =
@@ -580,8 +607,35 @@
       );
 
 
-    let currentWallet = null;
+    const walletStatusText =
+      document.getElementById(
+        "wallet-status-text"
+      );
 
+
+    let currentWallet =
+      null;
+
+
+    /*
+      TON Connect работает уже сейчас,
+      но подключение не является обязательным
+      в DEMO_MODE.
+    */
+
+    const tonConnectUI =
+      new TON_CONNECT_UI.TonConnectUI({
+
+        manifestUrl:
+          "https://gramidcore.github.io/gramid/tonconnect-manifest.json"
+
+      });
+
+
+    /*
+      Восстанавливаем сохранённый адрес,
+      если он уже был подключён ранее.
+    */
 
     const savedWalletAddress =
       localStorage.getItem(
@@ -589,20 +643,41 @@
       );
 
 
-    if (savedWalletAddress) {
+    if (
+      savedWalletAddress
+    ) {
 
       walletAddress.textContent =
         savedWalletAddress;
 
+      walletStatusText.textContent =
+        "TON-кошелёк подключён";
+
     }
 
+
+    /*
+      Отслеживаем состояние кошелька.
+    */
 
     tonConnectUI.onStatusChange(
 
       function(wallet) {
 
         if (!wallet) {
+
+          currentWallet =
+            null;
+
+          if (DEMO_MODE) {
+
+            walletStatusText.textContent =
+              "Демо-режим";
+
+          }
+
           return;
+
         }
 
 
@@ -618,9 +693,16 @@
           address;
 
 
+        walletStatusText.textContent =
+          "TON-кошелёк подключён";
+
+
         localStorage.setItem(
+
           "gramid_wallet_address",
+
           address
+
         );
 
       }
@@ -628,11 +710,95 @@
     );
 
 
+    /*
+      Проверка имени.
+    */
+
+    function validateUsername(
+      username
+    ) {
+
+      return /^[a-z0-9_]{4,24}$/
+        .test(username);
+
+    }
+
+
+    /*
+      DEMO REGISTRATION
+    */
+
+    function createDemoGramId(
+      username
+    ) {
+
+      const gramId =
+        "@" + username;
+
+
+      localStorage.setItem(
+
+        "gramid_username",
+
+        gramId
+
+      );
+
+
+      if (
+        currentWallet
+      ) {
+
+        localStorage.setItem(
+
+          "gramid_wallet_address",
+
+          currentWallet
+            .account
+            .address
+
+        );
+
+      }
+
+
+      message.textContent =
+        "Gram ID создан в демо-режиме. Переходим в профиль...";
+
+
+      message.className =
+        "message success";
+
+
+      createButton.disabled =
+        true;
+
+
+      setTimeout(
+
+        function() {
+
+          window.location.href =
+            "./profile.html";
+
+        },
+
+        700
+
+      );
+
+    }
+
+
+    /*
+      CREATE BUTTON
+    */
+
     createButton.addEventListener(
 
       "click",
 
-      function() {
+      async function() {
 
         const username =
           usernameInput.value
@@ -640,80 +806,89 @@
             .toLowerCase();
 
 
-        const validUsername =
-          /^[a-z0-9_]{3,24}$/;
-
-
         if (
-          !validUsername.test(
+          !validateUsername(
             username
           )
         ) {
 
           message.textContent =
-            "Введите корректный Gram ID.";
+            "Введите от 4 до 24 символов: a-z, 0-9 или _.";
+
 
           message.className =
             "message error";
+
 
           return;
 
         }
 
 
-        const wallet =
-          currentWallet ||
-          tonConnectUI.wallet;
+        /*
+          Пока работаем без Registry.
+        */
+
+        if (
+          DEMO_MODE
+        ) {
+
+          createDemoGramId(
+            username
+          );
 
 
-        if (!wallet) {
+          return;
+
+        }
+
+
+        /*
+          Этот блок будет использоваться
+          после создания Registry-контракта.
+        */
+
+        if (
+          !REGISTRY_ADDRESS
+        ) {
 
           message.textContent =
-            "TON-кошелёк ещё не подключён.";
+            "Адрес Registry-контракта ещё не указан.";
+
 
           message.className =
             "message error";
+
 
           return;
 
         }
 
 
-        const gramId =
-          "@" + username;
+        if (
+          !currentWallet
+        ) {
+
+          message.textContent =
+            "Сначала подключите TON-кошелёк.";
 
 
-        localStorage.setItem(
-          "gramid_username",
-          gramId
-        );
+          message.className =
+            "message error";
 
 
-        localStorage.setItem(
-          "gramid_wallet_address",
-          wallet.account.address
-        );
+          return;
+
+        }
 
 
         message.textContent =
-          "Gram ID создан. Переходим в профиль...";
+          "Registry-контракт готовится к подключению.";
+
 
         message.className =
-          "message success";
+          "message";
 
-
-        setTimeout(
-
-          function() {
-
-            window.location.href =
-              "./profile.html";
-
-          },
-
-          700
-
-        );
 
       }
 
