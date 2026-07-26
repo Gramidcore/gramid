@@ -14,10 +14,8 @@
       --muted: #9aa3b2;
       --muted-soft: #687281;
       --border: rgba(255, 255, 255, 0.12);
-
       --blue: #6d9dff;
       --purple: #8d76ff;
-
       --success: #72dfa5;
     }
 
@@ -140,7 +138,7 @@
     .content {
       width: 100%;
 
-      max-width: 1000px;
+      max-width: 760px;
 
       text-align: center;
     }
@@ -200,7 +198,7 @@
     .login-area {
       width: 100%;
 
-      max-width: 900px;
+      max-width: 360px;
 
       margin:
         38px
@@ -212,24 +210,12 @@
       width: 100%;
 
       min-height: 52px;
-
-      display: flex;
-
-      justify-content: center;
     }
 
     #ton-connect-button button {
       width: 100% !important;
 
       min-height: 52px !important;
-
-      display: flex !important;
-
-      align-items: center !important;
-
-      justify-content: center !important;
-
-      padding: 0 !important;
 
       border-radius: 14px !important;
 
@@ -251,10 +237,6 @@
       box-shadow:
         0 18px 50px
         rgba(92, 119, 255, 0.28) !important;
-
-      transition:
-        transform 0.2s ease,
-        filter 0.2s ease;
     }
 
     #ton-connect-button button:hover {
@@ -358,14 +340,6 @@
       text-align: center;
     }
 
-    @media (max-width: 950px) {
-
-      .login-area {
-        max-width: 100%;
-      }
-
-    }
-
     @media (max-width: 600px) {
 
       .header {
@@ -391,10 +365,6 @@
 
       .description {
         font-size: 16px;
-      }
-
-      .login-area {
-        max-width: 100%;
       }
 
       .trust {
@@ -578,15 +548,17 @@
         tonConnectUI.wallet;
 
       if (!wallet) {
+
         return;
+
       }
 
       localStorage.setItem(
         "gramid_wallet_address",
 
         wallet.account.address
-
       );
+
 
       alert(
         "TON-кошелёк подключён. Следующий этап — создание Gram ID."
