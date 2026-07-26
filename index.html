@@ -28,27 +28,19 @@
       --muted: #8e98a8;
       --muted-2: #657080;
 
-      --blue: #5f9dff;
-      --purple: #8a72ff;
-
       --success: #6fe1a3;
     }
-
 
     * {
       box-sizing: border-box;
     }
 
-
     html {
       scroll-behavior: smooth;
     }
 
-
     body {
-
       margin: 0;
-
       min-height: 100vh;
 
       color: var(--text);
@@ -76,13 +68,10 @@
         #05070b;
     }
 
-
     body::after {
-
       content: "";
 
       position: fixed;
-
       inset: 0;
 
       pointer-events: none;
@@ -104,11 +93,8 @@
       z-index: -1;
     }
 
-
     .page {
-
       width: 100%;
-
       max-width: 1180px;
 
       margin: 0 auto;
@@ -119,31 +105,16 @@
         70px;
     }
 
-
     .topbar {
-
       display: flex;
 
       align-items: center;
-
       justify-content: space-between;
 
       margin-bottom: 110px;
     }
 
-
-    .brand {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 0;
-    }
-
-
     .brand-name {
-
       font-size: 22px;
 
       font-weight: 700;
@@ -151,9 +122,7 @@
       letter-spacing: -0.055em;
     }
 
-
     .topbar-label {
-
       color: var(--muted-2);
 
       font-size: 11px;
@@ -165,9 +134,7 @@
       text-transform: uppercase;
     }
 
-
     .hero {
-
       max-width: 800px;
 
       margin:
@@ -177,9 +144,7 @@
       text-align: center;
     }
 
-
     .eyebrow {
-
       display: inline-flex;
 
       align-items: center;
@@ -206,11 +171,8 @@
       letter-spacing: 0.05em;
     }
 
-
     .eyebrow-dot {
-
       width: 7px;
-
       height: 7px;
 
       border-radius: 50%;
@@ -222,9 +184,7 @@
         rgba(111, 225, 163, 0.8);
     }
 
-
     h1 {
-
       margin:
         25px
         0
@@ -244,13 +204,10 @@
       letter-spacing: -0.08em;
     }
 
-
     .gradient-text {
-
       color: transparent;
 
       background:
-
         linear-gradient(
           135deg,
           #ffffff 0%,
@@ -259,13 +216,10 @@
         );
 
       -webkit-background-clip: text;
-
       background-clip: text;
     }
 
-
     .hero-description {
-
       max-width: 600px;
 
       margin:
@@ -279,9 +233,7 @@
       line-height: 1.65;
     }
 
-
     .single-auth {
-
       width: 100%;
 
       max-width: 760px;
@@ -289,9 +241,7 @@
       margin: 0 auto;
     }
 
-
     .panel {
-
       overflow: hidden;
 
       border: 1px solid var(--border);
@@ -319,15 +269,7 @@
       backdrop-filter: blur(26px);
     }
 
-
-    .auth-panel {
-
-      position: relative;
-    }
-
-
     .auth-visual {
-
       min-height: 450px;
 
       padding: 42px;
@@ -339,9 +281,7 @@
       justify-content: space-between;
     }
 
-
     .auth-top {
-
       display: flex;
 
       align-items: center;
@@ -349,9 +289,7 @@
       justify-content: space-between;
     }
 
-
     .auth-badge {
-
       display: inline-flex;
 
       align-items: center;
@@ -369,11 +307,8 @@
       text-transform: uppercase;
     }
 
-
     .auth-badge span {
-
       width: 7px;
-
       height: 7px;
 
       border-radius: 50%;
@@ -385,9 +320,7 @@
         rgba(111,225,163,0.8);
     }
 
-
     .auth-content {
-
       max-width: 560px;
 
       margin: 0 auto;
@@ -395,9 +328,7 @@
       text-align: center;
     }
 
-
     .auth-content h2 {
-
       margin:
         35px
         0
@@ -417,9 +348,7 @@
       letter-spacing: -0.07em;
     }
 
-
     .auth-content p {
-
       max-width: 470px;
 
       margin: 0 auto;
@@ -431,9 +360,7 @@
       line-height: 1.7;
     }
 
-
     .button {
-
       min-height: 46px;
 
       padding:
@@ -455,27 +382,19 @@
       font-weight: 600;
 
       transition:
-
         transform 0.2s ease,
-
         opacity 0.2s ease,
-
         background 0.2s ease,
-
         border-color 0.2s ease;
     }
 
-
     .button:hover {
-
       transform: translateY(-1px);
 
       opacity: 0.94;
     }
 
-
     .gramid-login-button {
-
       width: 100%;
 
       max-width: 360px;
@@ -490,7 +409,6 @@
       display: block;
 
       background:
-
         linear-gradient(
           135deg,
           #5e91ff,
@@ -498,16 +416,12 @@
         );
 
       box-shadow:
-
         0 15px 45px
         rgba(91, 118, 255, 0.28);
     }
 
-
     .gramid-login-button:hover {
-
       background:
-
         linear-gradient(
           135deg,
           #72a0ff,
@@ -515,9 +429,7 @@
         );
     }
 
-
     .login-result {
-
       display: none;
 
       max-width: 420px;
@@ -539,9 +451,7 @@
       text-align: center;
     }
 
-
     .identity-status {
-
       margin:
         9px
         0;
@@ -553,9 +463,7 @@
       font-weight: 600;
     }
 
-
     .login-result h2 {
-
       margin:
         22px
         0
@@ -566,9 +474,7 @@
       font-weight: 700;
     }
 
-
     .login-result p {
-
       margin: 0;
 
       color: #8bbcff;
@@ -576,9 +482,29 @@
       font-size: 14px;
     }
 
+    .gram-id-value {
+      margin-top: 14px;
+
+      padding: 12px;
+
+      border: 1px solid
+        rgba(95,157,255,0.22);
+
+      border-radius: 12px;
+
+      color: #b8ccff;
+
+      background:
+        rgba(95,157,255,0.08);
+
+      font-family: monospace;
+
+      font-size: 13px;
+
+      letter-spacing: 0.06em;
+    }
 
     .login-success {
-
       margin-top: 18px;
 
       color: var(--success);
@@ -588,12 +514,23 @@
       font-weight: 600;
     }
 
-
-    .disconnect-button {
-
+    .action-button {
       width: 100%;
 
       margin-top: 18px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #5e91ff,
+          #806cff
+        );
+    }
+
+    .disconnect-button {
+      width: 100%;
+
+      margin-top: 10px;
 
       color: #aeb8c7;
 
@@ -604,18 +541,26 @@
         rgba(255,255,255,0.09);
     }
 
-
     .disconnect-button:hover {
-
       color: #f0f3f7;
 
       background:
         rgba(255,255,255,0.07);
     }
 
+    .status {
+      min-height: 20px;
+
+      margin-top: 18px;
+
+      color: var(--muted);
+
+      font-size: 13px;
+
+      text-align: center;
+    }
 
     .features {
-
       display: grid;
 
       grid-template-columns:
@@ -629,9 +574,7 @@
       margin-top: 24px;
     }
 
-
     .feature {
-
       min-height: 105px;
 
       padding: 18px;
@@ -650,9 +593,7 @@
       line-height: 1.5;
     }
 
-
     .feature strong {
-
       display: block;
 
       margin-bottom: 8px;
@@ -664,9 +605,7 @@
       font-weight: 650;
     }
 
-
     .footer {
-
       margin-top: 60px;
 
       color: var(--muted-2);
@@ -676,25 +615,9 @@
       text-align: center;
     }
 
-
-    .status {
-
-      min-height: 20px;
-
-      margin-top: 18px;
-
-      color: var(--muted);
-
-      font-size: 13px;
-
-      text-align: center;
-    }
-
-
     @media (max-width: 900px) {
 
       .features {
-
         grid-template-columns:
           repeat(
             2,
@@ -704,44 +627,32 @@
 
     }
 
-
     @media (max-width: 600px) {
 
       .page {
-
         padding:
           24px
           15px
           50px;
       }
 
-
       .topbar {
-
         margin-bottom: 65px;
       }
 
-
       .topbar-label {
-
         display: none;
       }
 
-
       .hero {
-
         margin-bottom: 45px;
       }
 
-
       .hero-description {
-
         font-size: 16px;
       }
 
-
       .auth-visual {
-
         min-height: 420px;
 
         padding:
@@ -749,16 +660,13 @@
           22px;
       }
 
-
       .features {
-
         grid-template-columns: 1fr;
       }
 
     }
 
   </style>
-
 </head>
 
 
@@ -770,30 +678,18 @@
 
     <header class="topbar">
 
-
-      <div class="brand">
-
-        <span class="brand-name">
-
-          Gram ID
-
-        </span>
-
+      <div class="brand-name">
+        Gram ID
       </div>
-
 
       <div class="topbar-label">
-
         TON IDENTITY PROTOCOL
-
       </div>
-
 
     </header>
 
 
     <section class="hero">
-
 
       <div class="eyebrow">
 
@@ -811,9 +707,7 @@
         <br>
 
         <span class="gradient-text">
-
           verified.
-
         </span>
 
       </h1>
@@ -826,21 +720,19 @@
 
       </p>
 
-
     </section>
 
 
     <section class="single-auth">
 
 
-      <div class="panel auth-panel">
+      <div class="panel">
 
 
         <div class="auth-visual">
 
 
           <div class="auth-top">
-
 
             <div class="auth-badge">
 
@@ -849,7 +741,6 @@
               Gram ID Authentication
 
             </div>
-
 
           </div>
 
@@ -864,9 +755,7 @@
               <br>
 
               <span class="gradient-text">
-
                 Every connection.
-
               </span>
 
             </h2>
@@ -882,6 +771,7 @@
 
 
             <button
+              id="loginButton"
               class="button gramid-login-button"
               onclick="signInWithGramID()"
             >
@@ -921,9 +811,7 @@
       <div class="feature">
 
         <strong>
-
           Wallet-native
-
         </strong>
 
         Your TON wallet is the foundation of your identity.
@@ -934,9 +822,7 @@
       <div class="feature">
 
         <strong>
-
           Telegram verified
-
         </strong>
 
         Prove the connection between your Telegram and wallet.
@@ -947,9 +833,7 @@
       <div class="feature">
 
         <strong>
-
           One identity
-
         </strong>
 
         Use one verified profile across the TON ecosystem.
@@ -960,9 +844,7 @@
       <div class="feature">
 
         <strong>
-
           Built for TON
-
         </strong>
 
         Identity infrastructure for the next generation of Web3.
@@ -1032,6 +914,79 @@
     }
 
 
+    function generateGramID() {
+
+      const chars =
+        'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
+
+      function part(length) {
+
+        let result = '';
+
+
+        for (
+          let i = 0;
+          i < length;
+          i++
+        ) {
+
+          result +=
+            chars[
+              Math.floor(
+                Math.random() *
+                chars.length
+              )
+            ];
+
+        }
+
+
+        return result;
+
+      }
+
+
+      return 'GID-' +
+        part(4) +
+        '-' +
+        part(4);
+
+    }
+
+
+    function getGramID(identity) {
+
+      const key =
+        'gramid_identity_id';
+
+
+      const saved =
+        localStorage.getItem(key);
+
+
+      if (saved) {
+
+        return saved;
+
+      }
+
+
+      const newID =
+        generateGramID();
+
+
+      localStorage.setItem(
+        key,
+        newID
+      );
+
+
+      return newID;
+
+    }
+
+
     tonConnectUI.onStatusChange(wallet => {
 
 
@@ -1055,7 +1010,6 @@
 
         currentWalletAddress =
           '';
-
 
       }
 
@@ -1152,9 +1106,7 @@
         ) {
 
           throw new Error(
-
             'Authentication failed'
-
           );
 
         }
@@ -1185,12 +1137,7 @@
         );
 
 
-        setStatus(
-
-          'Gram ID authentication successful ✓'
-
-        );
-
+        setStatus('');
 
       } catch (error) {
 
@@ -1247,17 +1194,15 @@
               method:
                 'POST',
 
-              headers:
+              headers: {
 
-                {
+                'Content-Type':
+                  'application/json',
 
-                  'Content-Type':
-                    'application/json',
+                'apikey':
+                  SUPABASE_KEY
 
-                  'apikey':
-                    SUPABASE_KEY
-
-                },
+              },
 
               body:
 
@@ -1334,12 +1279,29 @@
         identity;
 
 
+      const gramID =
+        getGramID(identity);
+
+
+      const loginButton =
+        document
+          .getElementById(
+            'loginButton'
+          );
+
+
+      loginButton.textContent =
+        'Open Gram ID';
+
+
+      loginButton.onclick =
+        openGramID;
+
+
       const loginResult =
         document
           .getElementById(
-
             'loginResult'
-
           );
 
 
@@ -1381,6 +1343,20 @@
         </p>
 
 
+        <div class="gram-id-value">
+
+          Gram ID: ${gramID}
+
+        </div>
+
+
+        <div class="login-success">
+
+          Gram ID authentication successful ✓
+
+        </div>
+
+
         <button
 
           class="button disconnect-button"
@@ -1394,18 +1370,20 @@
         </button>
 
 
-        <div class="login-success">
-
-          Gram ID authentication successful ✓
-
-        </div>
-
-
       `;
 
 
       loginResult.style.display =
         'block';
+
+    }
+
+
+    function openGramID() {
+
+
+      window.location.href =
+        './profile.html';
 
     }
 
@@ -1442,16 +1420,36 @@
       );
 
 
+      localStorage.removeItem(
+
+        'gramid_identity_id'
+
+      );
+
+
       gramidIdentity =
         null;
+
+
+      const loginButton =
+        document
+          .getElementById(
+            'loginButton'
+          );
+
+
+      loginButton.textContent =
+        'Sign in with Gram ID';
+
+
+      loginButton.onclick =
+        signInWithGramID;
 
 
       const loginResult =
         document
           .getElementById(
-
             'loginResult'
-
           );
 
 
