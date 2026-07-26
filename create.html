@@ -129,18 +129,6 @@
       text-align: center;
     }
 
-    .step {
-      margin-bottom: 24px;
-
-      color: var(--muted-soft);
-
-      font-size: 11px;
-      font-weight: 700;
-
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
     h1 {
       margin: 0;
 
@@ -448,11 +436,6 @@
 
   <section class="content">
 
-    <div class="step">
-      Step 01 · Identity
-    </div>
-
-
     <h1>
 
       Создайте
@@ -519,7 +502,7 @@
 
         <span class="wallet-dot"></span>
 
-        <span id="wallet-status-text">
+        <span>
           TON-кошелёк подключён
         </span>
 
@@ -597,12 +580,6 @@
       );
 
 
-    const walletStatusText =
-      document.getElementById(
-        "wallet-status-text"
-      );
-
-
     let currentWallet = null;
 
 
@@ -625,9 +602,7 @@
       function(wallet) {
 
         if (!wallet) {
-
           return;
-
         }
 
 
@@ -641,10 +616,6 @@
 
         walletAddress.textContent =
           address;
-
-
-        walletStatusText.textContent =
-          "TON-кошелёк подключён";
 
 
         localStorage.setItem(
@@ -735,9 +706,8 @@
 
           function() {
 
-            window.location.replace(
-              "./profile.html"
-            );
+            window.location.href =
+              "./profile.html";
 
           },
 
