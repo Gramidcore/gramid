@@ -18,6 +18,7 @@
       --purple: #8d76ff;
       --success: #72dfa5;
       --danger: #ff7f8a;
+      --warning: #f2c96d;
     }
 
     * {
@@ -32,6 +33,7 @@
 
     body {
       min-height: 100vh;
+
       color: var(--text);
 
       font-family:
@@ -256,6 +258,26 @@
       font-size: 11px;
 
       line-height: 1.5;
+    }
+
+    .availability {
+      min-height: 20px;
+
+      margin-top: 12px;
+
+      font-size: 12px;
+    }
+
+    .availability.available {
+      color: var(--success);
+    }
+
+    .availability.taken {
+      color: var(--danger);
+    }
+
+    .availability.invalid {
+      color: var(--warning);
     }
 
     .wallet-status {
@@ -504,6 +526,12 @@
 
 
           <div
+            class="availability"
+            id="availability"
+          ></div>
+
+
+          <div
             class="wallet-status"
             id="wallet-status"
           >
@@ -556,31 +584,14 @@
   <script>
 
     /*
-      =====================================
       DEMO MODE
-      =====================================
 
-      Пока Registry-контракт ещё не создан,
-      кошелёк можно не подключать.
-
-      Позже:
-
-      const DEMO_MODE = false;
-
-      и добавим реальный адрес Registry.
+      Пока Registry-контракт не подключён,
+      занятые имена хранятся локально.
     */
 
-    const DEMO_MODE = true;
-
-
-    /*
-      Будущий адрес Registry-контракта.
-
-      Пока НЕ используется.
-    */
-
-    const REGISTRY_ADDRESS =
-      "";
+    const DEMO_MODE =
+      true;
 
 
     const usernameInput =
@@ -601,6 +612,12 @@
       );
 
 
+    const availability =
+      document.getElementById(
+        "availability"
+      );
+
+
     const walletAddress =
       document.getElementById(
         "wallet-address"
@@ -618,9 +635,7 @@
 
 
     /*
-      TON Connect работает уже сейчас,
-      но подключение не является обязательным
-      в DEMO_MODE.
+      TON Connect
     */
 
     const tonConnectUI =
@@ -633,8 +648,7 @@
 
 
     /*
-      Восстанавливаем сохранённый адрес,
-      если он уже был подключён ранее.
+      Восстанавливаем ранее сохранённый кошелёк
     */
 
     const savedWalletAddress =
@@ -657,24 +671,211 @@
 
 
     /*
-      Отслеживаем состояние кошелька.
+      Получить зарегистрированные Gram ID
+    */
+
+    function getRegisteredGramIds() {
+
+      const stored =
+        localStorage.getItem(
+          "gramid_registered_ids"
+        );
+
+
+      if (
+        !stored
+      ) {
+
+        return {};
+
+      }
+
+
+      try {
+
+        return JSON.parse(
+          stored
+        );
+
+      }
+
+      catch (
+        error
+      ) {
+
+        return {};
+
+      }
+
+    }
+
+
+    /*
+      Сохранить зарегистрированные Gram ID
+    */
+
+    function saveRegisteredGramIds(
+      registered
+    ) {
+
+      localStorage.setItem(
+
+        "gramid_registered_ids",
+
+        JSON.stringify(
+          registered
+        )
+
+      );
+
+    }
+
+
+    /*
+      Проверка формата
+    */
+
+    function validateUsername(
+      username
+    ) {
+
+      return /^[a-z0-9_]{4,24}$/
+        .test(
+          username
+        );
+
+    }
+
+
+    /*
+      Проверка доступности
+    */
+
+    function isGramIdAvailable(
+      username
+    ) {
+
+      const registered =
+        getRegisteredGramIds();
+
+
+      return !registered[
+        username
+      ];
+
+    }
+
+
+    /*
+      Обновление статуса имени
+    */
+
+    function updateAvailability() {
+
+      const username =
+        usernameInput.value
+          .trim()
+          .toLowerCase();
+
+
+      availability.textContent =
+        "";
+
+
+      availability.className =
+        "availability";
+
+
+      if (
+        username.length === 0
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        !validateUsername(
+          username
+        )
+      ) {
+
+        availability.textContent =
+          "Используйте от 4 до 24 символов: a-z, 0-9 или _.";
+
+        availability.className =
+          "availability invalid";
+
+        return;
+
+      }
+
+
+      if (
+        !isGramIdAvailable(
+          username
+        )
+      ) {
+
+        availability.textContent =
+          "Этот Gram ID уже занят.";
+
+        availability.className =
+          "availability taken";
+
+        return;
+
+      }
+
+
+      availability.textContent =
+        "Gram ID доступен.";
+
+      availability.className =
+        "availability available";
+
+    }
+
+
+    /*
+      Проверяем имя во время ввода
+    */
+
+    usernameInput.addEventListener(
+
+      "input",
+
+      updateAvailability
+
+    );
+
+
+    /*
+      TON Connect status
     */
 
     tonConnectUI.onStatusChange(
 
       function(wallet) {
 
-        if (!wallet) {
+        if (
+          !wallet
+        ) {
 
           currentWallet =
             null;
 
-          if (DEMO_MODE) {
+
+          if (
+            DEMO_MODE
+          ) {
 
             walletStatusText.textContent =
               "Демо-режим";
 
           }
+
 
           return;
 
@@ -711,29 +912,64 @@
 
 
     /*
-      Проверка имени.
-    */
-
-    function validateUsername(
-      username
-    ) {
-
-      return /^[a-z0-9_]{4,24}$/
-        .test(username);
-
-    }
-
-
-    /*
-      DEMO REGISTRATION
+      Создание Gram ID
     */
 
     function createDemoGramId(
       username
     ) {
 
+      const registered =
+        getRegisteredGramIds();
+
+
+      if (
+        registered[
+          username
+        ]
+      ) {
+
+        message.textContent =
+          "Этот Gram ID уже занят.";
+
+        message.className =
+          "message error";
+
+        return;
+
+      }
+
+
       const gramId =
         "@" + username;
+
+
+      const wallet =
+        currentWallet
+          ? currentWallet.account.address
+          : "demo-wallet";
+
+
+      registered[
+        username
+      ] = {
+
+        username:
+          gramId,
+
+        wallet:
+          wallet,
+
+        createdAt:
+          new Date()
+            .toISOString()
+
+      };
+
+
+      saveRegisteredGramIds(
+        registered
+      );
 
 
       localStorage.setItem(
@@ -745,26 +981,17 @@
       );
 
 
-      if (
-        currentWallet
-      ) {
+      localStorage.setItem(
 
-        localStorage.setItem(
+        "gramid_wallet_address",
 
-          "gramid_wallet_address",
+        wallet
 
-          currentWallet
-            .account
-            .address
-
-        );
-
-      }
+      );
 
 
       message.textContent =
-        "Gram ID создан в демо-режиме. Переходим в профиль...";
-
+        "Gram ID создан. Переходим в профиль...";
 
       message.className =
         "message success";
@@ -791,14 +1018,14 @@
 
 
     /*
-      CREATE BUTTON
+      Основная кнопка
     */
 
     createButton.addEventListener(
 
       "click",
 
-      async function() {
+      function() {
 
         const username =
           usernameInput.value
@@ -815,19 +1042,30 @@
           message.textContent =
             "Введите от 4 до 24 символов: a-z, 0-9 или _.";
 
-
           message.className =
             "message error";
-
 
           return;
 
         }
 
 
-        /*
-          Пока работаем без Registry.
-        */
+        if (
+          !isGramIdAvailable(
+            username
+          )
+        ) {
+
+          message.textContent =
+            "Этот Gram ID уже занят.";
+
+          message.className =
+            "message error";
+
+          return;
+
+        }
+
 
         if (
           DEMO_MODE
@@ -837,58 +1075,9 @@
             username
           );
 
-
           return;
 
         }
-
-
-        /*
-          Этот блок будет использоваться
-          после создания Registry-контракта.
-        */
-
-        if (
-          !REGISTRY_ADDRESS
-        ) {
-
-          message.textContent =
-            "Адрес Registry-контракта ещё не указан.";
-
-
-          message.className =
-            "message error";
-
-
-          return;
-
-        }
-
-
-        if (
-          !currentWallet
-        ) {
-
-          message.textContent =
-            "Сначала подключите TON-кошелёк.";
-
-
-          message.className =
-            "message error";
-
-
-          return;
-
-        }
-
-
-        message.textContent =
-          "Registry-контракт готовится к подключению.";
-
-
-        message.className =
-          "message";
-
 
       }
 
