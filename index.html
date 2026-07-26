@@ -167,13 +167,6 @@
       line-height: 1.7;
     }
 
-    /*
-      Главный блок подключения.
-      Ширина 900px — и кнопка,
-      и блок подключённого кошелька
-      имеют одинаковую ширину.
-    */
-
     .login-area {
       width: 100%;
       max-width: 900px;
@@ -221,11 +214,6 @@
     #ton-connect-button button:hover {
       transform: translateY(-1px);
     }
-
-    /*
-      Блок после подключения кошелька.
-      Он такой же ширины, как Connect Wallet.
-    */
 
     .connected {
       display: none;
@@ -481,10 +469,7 @@
           "https://gramidcore.github.io/gramid/tonconnect-manifest.json",
 
         buttonRootId:
-          "ton-connect-button",
-
-        restoreConnection:
-          false
+          "ton-connect-button"
 
       });
 
