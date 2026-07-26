@@ -4,29 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Gram ID Account</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
+  <title>Gram ID Profile</title>
 
   <style>
 
     :root {
       --text: #f5f7fb;
-      --muted: #8e98a8;
-      --muted-2: #657080;
+      --muted: #9aa3b2;
+      --muted-soft: #687281;
 
-      --border: rgba(255,255,255,0.11);
-      --border-soft: rgba(255,255,255,0.07);
+      --border: rgba(255, 255, 255, 0.12);
 
-      --panel: rgba(12,15,22,0.82);
+      --blue: #6d9dff;
+      --purple: #8d76ff;
 
-      --success: #6fe1a3;
+      --success: #72dfa5;
     }
 
 
@@ -35,34 +27,40 @@
     }
 
 
+    html,
     body {
-
       margin: 0;
+
+      min-height: 100%;
+    }
+
+
+    body {
 
       min-height: 100vh;
 
       color: var(--text);
 
       font-family:
-        "Inter",
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
+        Inter,
         sans-serif;
 
       background:
 
         linear-gradient(
-          rgba(3,5,9,0.72),
-          rgba(3,5,9,0.88)
+          rgba(4, 6, 10, 0.70),
+          rgba(4, 6, 10, 0.88)
         ),
 
         url("./background.png")
         center / cover
         fixed
-        no-repeat,
+        no-repeat;
 
-        #05070b;
+      overflow-x: hidden;
     }
 
 
@@ -80,13 +78,7 @@
 
         radial-gradient(
           700px 500px at 50% 0%,
-          rgba(95,157,255,0.12),
-          transparent 70%
-        ),
-
-        radial-gradient(
-          600px 500px at 100% 100%,
-          rgba(138,114,255,0.08),
+          rgba(95, 157, 255, 0.13),
           transparent 70%
         );
 
@@ -96,36 +88,39 @@
 
     .page {
 
+      min-height: 100vh;
+
+      display: flex;
+
+      flex-direction: column;
+    }
+
+
+    .header {
+
       width: 100%;
 
-      max-width: 920px;
+      max-width: 1200px;
 
       margin: 0 auto;
 
       padding:
         32px
-        24px
-        70px;
-    }
-
-
-    .topbar {
+        36px;
 
       display: flex;
 
       align-items: center;
 
       justify-content: space-between;
-
-      margin-bottom: 70px;
     }
 
 
     .brand {
 
-      color: white;
+      color: #ffffff;
 
-      font-size: 22px;
+      font-size: 21px;
 
       font-weight: 700;
 
@@ -133,130 +128,48 @@
     }
 
 
-    .back-button {
+    .header-label {
 
-      padding:
-        10px
-        15px;
+      color: var(--muted-soft);
 
-      border: 1px solid var(--border);
-
-      border-radius: 12px;
-
-      color: #c8d2e1;
-
-      background:
-
-        rgba(255,255,255,0.04);
-
-      cursor: pointer;
-
-      font-family: inherit;
-
-      font-size: 13px;
-
-      font-weight: 600;
-    }
-
-
-    .back-button:hover {
-
-      color: white;
-
-      background:
-
-        rgba(255,255,255,0.08);
-    }
-
-
-    .account-header {
-
-      margin-bottom: 28px;
-
-      text-align: center;
-    }
-
-
-    .account-label {
-
-      color: var(--muted-2);
-
-      font-size: 11px;
+      font-size: 10px;
 
       font-weight: 700;
 
-      letter-spacing: 0.15em;
+      letter-spacing: 0.16em;
 
       text-transform: uppercase;
     }
 
 
-    .account-title {
+    .main {
 
-      margin:
-        16px
-        0
-        0;
+      flex: 1;
 
-      font-size:
+      display: flex;
 
-        clamp(
-          42px,
-          7vw,
-          72px
-        );
+      align-items: center;
 
-      line-height: 0.98;
+      justify-content: center;
 
-      font-weight: 800;
-
-      letter-spacing: -0.08em;
+      padding:
+        50px
+        20px
+        90px;
     }
 
 
-    .gradient-text {
+    .profile-card {
 
-      color: transparent;
+      width: 100%;
 
-      background:
+      max-width: 620px;
 
-        linear-gradient(
-          135deg,
-          #ffffff,
-          #b8c8ff 45%,
-          #76aaff
-        );
+      padding: 42px;
 
-      -webkit-background-clip: text;
-
-      background-clip: text;
-    }
-
-
-    .account-description {
-
-      max-width: 560px;
-
-      margin:
-        22px
-        auto
-        0;
-
-      color: var(--muted);
-
-      font-size: 15px;
-
-      line-height: 1.7;
-    }
-
-
-    .account-card {
-
-      overflow: hidden;
-
-      padding: 34px;
-
-      border: 1px solid var(--border);
+      border:
+        1px solid
+        var(--border);
 
       border-radius: 28px;
 
@@ -268,7 +181,7 @@
           rgba(255,255,255,0.025)
         ),
 
-        var(--panel);
+        rgba(12, 15, 22, 0.82);
 
       box-shadow:
 
@@ -291,134 +204,20 @@
       justify-content: space-between;
 
       gap: 20px;
-
-      padding-bottom: 28px;
-
-      border-bottom: 1px solid var(--border-soft);
     }
 
 
-    .profile-user {
+    .verified {
 
-      display: flex;
+      display: inline-flex;
 
       align-items: center;
 
-      gap: 18px;
-    }
-
-
-    .avatar {
-
-      width: 68px;
-
-      height: 68px;
-
-      display: grid;
-
-      place-items: center;
-
-      border: 1px solid
-        rgba(118,170,255,0.35);
-
-      border-radius: 20px;
-
-      color: #c8d8ff;
-
-      background:
-
-        linear-gradient(
-          135deg,
-          rgba(95,157,255,0.22),
-          rgba(138,114,255,0.16)
-        );
-
-      font-size: 25px;
-
-      font-weight: 800;
-    }
-
-
-    .profile-name {
-
-      font-size: 25px;
-
-      font-weight: 700;
-
-      letter-spacing: -0.04em;
-    }
-
-
-    .profile-telegram {
-
-      margin-top: 5px;
-
-      color: #8bbcff;
-
-      font-size: 14px;
-    }
-
-
-    .verified-badge {
-
-      padding:
-        9px
-        13px;
-
-      border: 1px solid
-        rgba(111,225,163,0.25);
-
-      border-radius: 999px;
+      gap: 8px;
 
       color: var(--success);
 
-      background:
-
-        rgba(111,225,163,0.08);
-
       font-size: 11px;
-
-      font-weight: 700;
-
-      white-space: nowrap;
-    }
-
-
-    .identity-grid {
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(
-          2,
-          1fr
-        );
-
-      gap: 14px;
-
-      margin-top: 26px;
-    }
-
-
-    .identity-box {
-
-      padding: 20px;
-
-      border: 1px solid var(--border-soft);
-
-      border-radius: 17px;
-
-      background:
-
-        rgba(255,255,255,0.028);
-    }
-
-
-    .identity-label {
-
-      color: var(--muted-2);
-
-      font-size: 10px;
 
       font-weight: 700;
 
@@ -428,75 +227,123 @@
     }
 
 
-    .identity-value {
+    .verified-dot {
 
-      margin-top: 11px;
+      width: 7px;
 
-      color: #e5ebf4;
+      height: 7px;
 
-      font-family: monospace;
+      border-radius: 50%;
 
-      font-size: 13px;
+      background: var(--success);
+
+      box-shadow:
+        0 0 15px
+        rgba(114, 223, 165, 0.85);
+    }
+
+
+    .profile-label {
+
+      color: var(--muted-soft);
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      letter-spacing: 0.12em;
+
+      text-transform: uppercase;
+    }
+
+
+    .identity {
+
+      margin-top: 42px;
+    }
+
+
+    .identity-name {
+
+      font-size: 48px;
+
+      line-height: 1;
+
+      font-weight: 700;
+
+      letter-spacing: -0.075em;
 
       word-break: break-word;
     }
 
 
-    .gram-id-box {
+    .identity-id {
 
-      grid-column: span 2;
+      margin-top: 14px;
 
-      border-color:
-
-        rgba(95,157,255,0.23);
+      color: transparent;
 
       background:
 
         linear-gradient(
           135deg,
-          rgba(95,157,255,0.09),
-          rgba(138,114,255,0.06)
+          #ffffff,
+          #9bb7ff,
+          #8d76ff
         );
+
+      -webkit-background-clip: text;
+
+      background-clip: text;
+
+      font-size: 22px;
+
+      font-weight: 700;
+
+      letter-spacing: 0.04em;
     }
 
 
-    .gram-id-value {
+    .telegram {
 
       margin-top: 12px;
 
-      color: #b9ceff;
-
-      font-family: monospace;
-
-      font-size: 19px;
-
-      font-weight: 700;
-
-      letter-spacing: 0.08em;
-    }
-
-
-    .status-section {
-
-      margin-top: 26px;
-
-      padding-top: 26px;
-
-      border-top: 1px solid var(--border-soft);
-    }
-
-
-    .status-title {
-
-      margin-bottom: 16px;
+      color: #8db5ff;
 
       font-size: 15px;
-
-      font-weight: 700;
     }
 
 
-    .status-row {
+    .divider {
+
+      height: 1px;
+
+      margin:
+        34px
+        0;
+
+      background:
+        rgba(255,255,255,0.08);
+    }
+
+
+    .data-title {
+
+      margin-bottom: 14px;
+
+      color: var(--muted-soft);
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      letter-spacing: 0.12em;
+
+      text-transform: uppercase;
+    }
+
+
+    .data-box {
 
       display: flex;
 
@@ -504,39 +351,102 @@
 
       justify-content: space-between;
 
-      gap: 20px;
+      gap: 14px;
 
       padding:
-        14px
-        0;
+        16px
+        18px;
 
-      border-bottom: 1px solid var(--border-soft);
+      border:
+        1px solid
+        rgba(255,255,255,0.08);
 
-      color: #cbd4e1;
+      border-radius: 14px;
 
-      font-size: 14px;
+      background:
+        rgba(255,255,255,0.035);
     }
 
 
-    .status-row:last-child {
+    .data-content {
 
-      border-bottom: 0;
+      min-width: 0;
     }
 
 
-    .status-ok {
+    .data-label {
 
-      color: var(--success);
+      color: var(--muted-soft);
 
-      font-size: 13px;
+      font-size: 10px;
 
       font-weight: 700;
+
+      letter-spacing: 0.08em;
+
+      text-transform: uppercase;
+    }
+
+
+    .data-value {
+
+      margin-top: 8px;
+
+      color: #dbe4f1;
+
+      font-family: monospace;
+
+      font-size: 12px;
+
+      line-height: 1.5;
+
+      word-break: break-all;
+    }
+
+
+    .copy-button {
+
+      flex-shrink: 0;
+
+      padding:
+        9px
+        12px;
+
+      border:
+        1px solid
+        rgba(255,255,255,0.13);
+
+      border-radius: 10px;
+
+      color: #dbe5f4;
+
+      background:
+        rgba(255,255,255,0.045);
+
+      cursor: pointer;
+
+      font-family: inherit;
+
+      font-size: 12px;
+
+      font-weight: 600;
+    }
+
+
+    .copy-button:hover {
+
+      background:
+        rgba(255,255,255,0.10);
     }
 
 
     .actions {
 
-      display: flex;
+      display: grid;
+
+      grid-template-columns:
+        1fr
+        1fr;
 
       gap: 12px;
 
@@ -546,17 +456,9 @@
 
     .button {
 
-      min-height: 46px;
-
-      padding:
-        0
-        18px;
-
-      border: 1px solid transparent;
+      min-height: 48px;
 
       border-radius: 13px;
-
-      color: white;
 
       cursor: pointer;
 
@@ -565,112 +467,142 @@
       font-size: 13px;
 
       font-weight: 600;
+
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease;
     }
 
 
-    .primary-button {
+    .button:hover {
 
-      flex: 1;
+      transform: translateY(-1px);
+    }
+
+
+    .primary {
+
+      border: none;
+
+      color: white;
 
       background:
 
         linear-gradient(
           135deg,
-          #5e91ff,
-          #806cff
+          var(--blue),
+          var(--purple)
         );
+
+      box-shadow:
+
+        0 15px 40px
+        rgba(92,119,255,0.24);
     }
 
 
-    .secondary-button {
+    .secondary {
 
-      flex: 1;
+      border:
+        1px solid
+        rgba(255,255,255,0.13);
 
-      color: #c0cad8;
+      color: #dbe4f1;
 
       background:
-
-        rgba(255,255,255,0.035);
-
-      border-color: var(--border);
+        rgba(255,255,255,0.055);
     }
 
 
-    .footer {
+    .status {
 
-      margin-top: 45px;
+      min-height: 20px;
 
-      color: var(--muted-2);
+      margin-top: 18px;
 
-      font-size: 12px;
+      color: var(--muted);
+
+      font-size: 13px;
 
       text-align: center;
     }
 
 
-    @media (max-width: 650px) {
+    .footer {
+
+      padding: 24px;
+
+      color: var(--muted-soft);
+
+      font-size: 11px;
+
+      text-align: center;
+    }
 
 
-      .page {
+    @media (max-width: 600px) {
+
+      .header {
 
         padding:
           24px
-          15px
-          50px;
+          20px;
       }
 
 
-      .topbar {
+      .header-label {
 
-        margin-bottom: 50px;
+        display: none;
       }
 
 
-      .account-card {
+      .main {
 
-        padding: 22px;
+        padding:
+          40px
+          16px
+          70px;
       }
 
 
-      .profile-top {
+      .profile-card {
 
-        align-items: flex-start;
+        padding: 25px;
 
-        flex-direction: column;
+        border-radius: 22px;
       }
 
 
-      .identity-grid {
+      .identity-name {
 
-        grid-template-columns: 1fr;
+        font-size: 38px;
       }
 
 
-      .gram-id-box {
+      .identity-id {
 
-        grid-column: span 1;
+        font-size: 18px;
       }
 
 
       .actions {
 
-        flex-direction: column;
+        grid-template-columns: 1fr;
       }
 
     }
 
   </style>
-
 </head>
 
 
 <body>
 
 
-  <main class="page">
+  <div class="page">
 
 
-    <header class="topbar">
+    <header class="header">
 
 
       <div class="brand">
@@ -680,637 +612,356 @@
       </div>
 
 
-      <button
-        class="back-button"
-        onclick="goBack()"
-      >
+      <div class="header-label">
 
-        ← Back
+        Web3 Identity
 
-      </button>
+      </div>
 
 
     </header>
 
 
-    <section class="account-header">
+    <main class="main">
 
 
-      <div class="account-label">
-
-        Gram ID Account
-
-      </div>
+      <section class="profile-card">
 
 
-      <h1 class="account-title">
-
-        Your identity,
-
-        <br>
-
-        <span class="gradient-text">
-
-          connected.
-
-        </span>
-
-      </h1>
+        <div class="profile-top">
 
 
-      <p class="account-description">
-
-        Your verified TON wallet and Telegram identity
-        are connected to one Gram ID account.
-
-      </p>
+          <div class="verified">
 
 
-    </section>
+            <span class="verified-dot"></span>
 
 
-    <section class="account-card">
+            Verified identity
 
 
-      <div class="profile-top">
+          </div>
 
 
-        <div class="profile-user">
+          <div class="profile-label">
+
+            Gram ID Profile
+
+          </div>
+
+
+        </div>
+
+
+        <div class="identity">
 
 
           <div
-            class="avatar"
-            id="avatar"
+            class="identity-name"
+            id="profileName"
           >
 
-            G
-
-          </div>
-
-
-          <div>
-
-
-            <div
-              class="profile-name"
-              id="profileName"
-            >
-
-              Gram ID User
-
-            </div>
-
-
-            <div
-              class="profile-telegram"
-              id="profileTelegram"
-            >
-
-              —
-
-            </div>
-
-
-          </div>
-
-
-        </div>
-
-
-        <div class="verified-badge">
-
-          ✓ VERIFIED
-
-        </div>
-
-
-      </div>
-
-
-      <div class="identity-grid">
-
-
-        <div class="identity-box gram-id-box">
-
-
-          <div class="identity-label">
-
-            Gram ID
-
           </div>
 
 
           <div
-            class="gram-id-value"
-            id="gramID"
+            class="identity-id"
+            id="gramId"
           >
 
-            —
-
-          </div>
-
-
-        </div>
-
-
-        <div class="identity-box">
-
-
-          <div class="identity-label">
-
-            TON Wallet
-
           </div>
 
 
           <div
-            class="identity-value"
-            id="wallet"
-          >
-
-            —
-
-          </div>
-
-
-        </div>
-
-
-        <div class="identity-box">
-
-
-          <div class="identity-label">
-
-            Telegram
-
-          </div>
-
-
-          <div
-            class="identity-value"
+            class="telegram"
             id="telegram"
           >
 
-            —
-
           </div>
 
 
         </div>
 
 
-      </div>
+        <div class="divider"></div>
 
 
-      <div class="status-section">
+        <div class="data-title">
 
-
-        <div class="status-title">
-
-          Verification status
+          Connected wallet
 
         </div>
 
 
-        <div class="status-row">
+        <div class="data-box">
 
 
-          <span>
-
-            TON Wallet
-
-          </span>
+          <div class="data-content">
 
 
-          <span class="status-ok">
+            <div class="data-label">
 
-            ✓ Verified
+              TON Address
 
-          </span>
-
-
-        </div>
+            </div>
 
 
-        <div class="status-row">
+            <div
+              class="data-value"
+              id="walletAddress"
+            >
+
+            </div>
 
 
-          <span>
-
-            Telegram Account
-
-          </span>
+          </div>
 
 
-          <span class="status-ok">
+          <button
+            class="copy-button"
+            onclick="copyWallet()"
+          >
 
-            ✓ Verified
+            Copy
 
-          </span>
+          </button>
 
 
         </div>
 
 
-        <div class="status-row">
+        <div class="actions">
 
 
-          <span>
+          <button
+            class="button primary"
+            onclick="goToCreate()"
+          >
 
-            Gram ID Identity
+            Edit profile
 
-          </span>
+          </button>
 
 
-          <span class="status-ok">
+          <button
+            class="button secondary"
+            onclick="goHome()"
+          >
 
-            ✓ Active
+            На главную
 
-          </span>
+          </button>
 
 
         </div>
 
 
-      </div>
+        <div
+          class="status"
+          id="status"
+        ></div>
 
 
-      <div class="actions">
+      </section>
 
 
-        <button
-          class="button primary-button"
-          onclick="goBack()"
-        >
-
-          ← Back to Gram ID
-
-        </button>
-
-
-        <button
-          class="button secondary-button"
-          onclick="signOut()"
-        >
-
-          Sign out
-
-        </button>
-
-
-      </div>
-
-
-    </section>
+    </main>
 
 
     <footer class="footer">
 
-      Gram ID — one identity for the TON ecosystem
+      Gram ID · Digital identity for Web3
 
     </footer>
 
 
-  </main>
+  </div>
 
 
   <script>
 
 
-    const SUPABASE_URL =
-      'https://beuymvtrabmawogqrhni.supabase.co';
+    const profileData =
 
+      JSON.parse(
 
-    const SUPABASE_KEY =
-      'sb_publishable_WHFBkb-8c_iDJ2uBG9g2TQ_CSMkumUg';
-
-
-    const GRAMID_USERINFO_URL =
-      SUPABASE_URL +
-      '/functions/v1/gramid-userinfo';
-
-
-    function getGramID() {
-
-
-      let gramID =
-        localStorage.getItem(
-          'gramid_identity_id'
-        );
-
-
-      if (!gramID) {
-
-
-        gramID =
-          generateGramID();
-
-
-        localStorage.setItem(
-
-          'gramid_identity_id',
-
-          gramID
-
-        );
-
-      }
-
-
-      return gramID;
-
-    }
-
-
-    function generateGramID() {
-
-
-      const chars =
-        'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-
-
-      function part(length) {
-
-
-        let result =
-          '';
-
-
-        for (
-          let i = 0;
-          i < length;
-          i++
-        ) {
-
-
-          result +=
-
-            chars[
-              Math.floor(
-                Math.random() *
-                chars.length
-              )
-            ];
-
-        }
-
-
-        return result;
-
-      }
-
-
-      return 'GID-' +
-        part(4) +
-        '-' +
-        part(4);
-
-    }
-
-
-    function shortAddress(address) {
-
-
-      if (!address) {
-
-        return '—';
-
-      }
-
-
-      return address.slice(0, 8) +
-        '...' +
-        address.slice(-8);
-
-    }
-
-
-    async function loadAccount() {
-
-
-      const sessionToken =
         localStorage.getItem(
 
-          'gramid_session_token'
+          "gramid_profile"
 
-        );
+        )
+
+      );
 
 
-      if (!sessionToken) {
+    const savedGramId =
+
+      localStorage.getItem(
+
+        "gramid_id"
+
+      );
 
 
-        window.location.href =
-          './index.html';
+    const profileName =
 
+      document.getElementById(
+
+        "profileName"
+
+      );
+
+
+    const gramId =
+
+      document.getElementById(
+
+        "gramId"
+
+      );
+
+
+    const telegram =
+
+      document.getElementById(
+
+        "telegram"
+
+      );
+
+
+    const walletAddress =
+
+      document.getElementById(
+
+        "walletAddress"
+
+      );
+
+
+    const status =
+
+      document.getElementById(
+
+        "status"
+
+      );
+
+
+    if (!profileData) {
+
+      window.location.href =
+        "create.html";
+
+    }
+
+
+    if (profileData) {
+
+
+      profileName.textContent =
+
+        profileData.name ||
+
+        "Gram ID User";
+
+
+      gramId.textContent =
+
+        profileData.gram_id ||
+
+        savedGramId ||
+
+        "GID-UNKNOWN";
+
+
+      if (
+
+        profileData.telegram_username
+
+      ) {
+
+
+        telegram.textContent =
+
+          profileData.telegram_username
+
+            .startsWith("@")
+
+            ? profileData.telegram_username
+
+            : "@" +
+              profileData.telegram_username;
+
+
+      } else {
+
+
+        telegram.textContent =
+
+          "Telegram не привязан";
+
+      }
+
+
+      walletAddress.textContent =
+
+        profileData.wallet_address ||
+
+        "Wallet not found";
+
+    }
+
+
+    function copyWallet() {
+
+
+      if (
+
+        !profileData ||
+
+        !profileData.wallet_address
+
+      ) {
 
         return;
 
       }
 
 
-      try {
+      navigator.clipboard.writeText(
+
+        profileData.wallet_address
+
+      );
 
 
-        const response =
-          await fetch(
+      status.textContent =
 
-            GRAMID_USERINFO_URL,
+        "Адрес кошелька скопирован ✓";
 
-            {
-
-              method:
-                'POST',
-
-              headers: {
-
-                'Content-Type':
-                  'application/json',
-
-                'apikey':
-                  SUPABASE_KEY
-
-              },
-
-              body:
-
-                JSON.stringify({
-
-                  session_token:
-                    sessionToken
-
-                })
-
-            }
-
-          );
-
-
-        const data =
-          await response.json();
-
-
-        if (
-
-          !response.ok ||
-          !data.authenticated
-
-        ) {
-
-
-          localStorage.removeItem(
-
-            'gramid_session_token'
-
-          );
-
-
-          localStorage.removeItem(
-
-            'gramid_session_expires'
-
-          );
-
-
-          window.location.href =
-            './index.html';
-
-
-          return;
-
-        }
-
-
-        const identity =
-          data.identity ||
-          {};
-
-
-        const name =
-          identity.name ||
-          'Gram ID User';
-
-
-        const telegram =
-          identity.telegram_username ||
-          'Telegram not connected';
-
-
-        document
-          .getElementById('profileName')
-          .textContent =
-          name;
-
-
-        document
-          .getElementById('profileTelegram')
-          .textContent =
-          telegram;
-
-
-        document
-          .getElementById('telegram')
-          .textContent =
-          telegram;
-
-
-        document
-          .getElementById('wallet')
-          .textContent =
-          shortAddress(
-            identity.wallet ||
-            identity.wallet_address
-          );
-
-
-        document
-          .getElementById('gramID')
-          .textContent =
-          getGramID();
-
-
-        document
-          .getElementById('avatar')
-          .textContent =
-          name
-            .charAt(0)
-            .toUpperCase();
-
-
-      } catch (error) {
-
-
-        console.error(
-
-          'Account loading error:',
-
-          error
-
-        );
-
-
-        window.location.href =
-          './index.html';
-
-      }
 
     }
 
 
-    function goBack() {
+    function goToCreate() {
 
 
       window.location.href =
-        './index.html';
+
+        "create.html";
 
     }
 
 
-    function signOut() {
-
-
-      const confirmed =
-        confirm(
-
-          'Вы действительно хотите выйти из Gram ID?'
-
-        );
-
-
-      if (!confirmed) {
-
-        return;
-
-      }
-
-
-      localStorage.removeItem(
-
-        'gramid_session_token'
-
-      );
-
-
-      localStorage.removeItem(
-
-        'gramid_session_expires'
-
-      );
-
-
-      localStorage.removeItem(
-
-        'gramid_identity_id'
-
-      );
+    function goHome() {
 
 
       window.location.href =
-        './index.html';
+
+        "index.html";
 
     }
-
-
-    loadAccount();
 
   </script>
 
