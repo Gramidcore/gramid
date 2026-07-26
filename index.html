@@ -32,6 +32,7 @@
 
     body {
       min-height: 100vh;
+
       color: var(--text);
 
       font-family:
@@ -199,9 +200,12 @@
 
     .login-area {
       width: 100%;
-      max-width: 360px;
+      max-width: 520px;
 
       margin: 38px auto 0;
+
+      display: flex;
+      justify-content: center;
     }
 
     #ton-connect-button {
@@ -212,6 +216,10 @@
     #ton-connect-button button {
       width: 100% !important;
       min-height: 52px !important;
+
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
 
       border-radius: 14px !important;
 
@@ -278,6 +286,10 @@
 
       .description {
         font-size: 16px;
+      }
+
+      .login-area {
+        max-width: 100%;
       }
 
       .trust {
@@ -421,9 +433,8 @@
         );
 
 
-        window.location.replace(
-          "./create.html"
-        );
+        window.location.href =
+          "./create.html";
 
       }
 
