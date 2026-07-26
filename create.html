@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Create Gram ID</title>
+  <title>Gram ID — Create</title>
 
   <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
 
@@ -520,7 +520,7 @@
         <span class="wallet-dot"></span>
 
         <span id="wallet-status-text">
-          Проверка TON-кошелька...
+          TON-кошелёк подключён
         </span>
 
         <span
@@ -606,19 +606,25 @@
     let currentWallet = null;
 
 
+    const savedWalletAddress =
+      localStorage.getItem(
+        "gramid_wallet_address"
+      );
+
+
+    if (savedWalletAddress) {
+
+      walletAddress.textContent =
+        savedWalletAddress;
+
+    }
+
+
     tonConnectUI.onStatusChange(
 
       function(wallet) {
 
         if (!wallet) {
-
-          currentWallet = null;
-
-          walletStatusText.textContent =
-            "Ожидание подключения TON-кошелька...";
-
-          walletAddress.textContent =
-            "";
 
           return;
 
@@ -629,11 +635,22 @@
           wallet;
 
 
+        const address =
+          wallet.account.address;
+
+
+        walletAddress.textContent =
+          address;
+
+
         walletStatusText.textContent =
           "TON-кошелёк подключён";
 
-        walletAddress.textContent =
-          wallet.account.address;
+
+        localStorage.setItem(
+          "gramid_wallet_address",
+          address
+        );
 
       }
 
@@ -673,7 +690,12 @@
         }
 
 
-        if (!currentWallet) {
+        const wallet =
+          currentWallet ||
+          tonConnectUI.wallet;
+
+
+        if (!wallet) {
 
           message.textContent =
             "TON-кошелёк ещё не подключён.";
@@ -698,7 +720,7 @@
 
         localStorage.setItem(
           "gramid_wallet_address",
-          currentWallet.account.address
+          wallet.account.address
         );
 
 
@@ -713,8 +735,9 @@
 
           function() {
 
-            window.location.href =
-              "profile.html";
+            window.location.replace(
+              "./profile.html"
+            );
 
           },
 
