@@ -1,2188 +1,2428 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>GramID — Identity for TON</title>
+  <title>GramID — Identity for TON</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link
-href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-rel="stylesheet"
->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
 
-<script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
+  <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
 
-<style>
+  <style>
 
-:root {
-  --bg: #05070b;
-  --panel: rgba(10, 13, 20, 0.82);
-  --border: rgba(255,255,255,0.11);
-  --text: #f7f9fc;
-  --muted: #929aaa;
-  --blue: #75aaff;
-  --purple: #8e7cff;
-  --green: #68d99a;
-}
+    :root {
+      --bg: #07080b;
+      --panel: rgba(10, 13, 18, 0.82);
+      --border: rgba(255,255,255,0.11);
+      --border-soft: rgba(255,255,255,0.07);
 
-* {
-  box-sizing: border-box;
-}
+      --text: #f5f7fa;
+      --muted: #9aa3b1;
+      --muted-2: #69717e;
 
-html {
-  scroll-behavior: smooth;
-}
+      --accent: #72a9ff;
+      --accent-2: #8c7cff;
 
-body {
+      --success: #69d89a;
+    }
 
-  margin: 0;
+    * {
+      box-sizing: border-box;
+    }
 
-  min-height: 100vh;
+    html {
+      scroll-behavior: smooth;
+    }
 
-  color: var(--text);
+    body {
+      margin: 0;
+      min-height: 100vh;
 
-  font-family:
-    "Inter",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+      color: var(--text);
 
-  background:
+      font-family:
+        "Inter",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
 
-    linear-gradient(
-      rgba(3,5,10,0.48),
-      rgba(3,5,10,0.82)
-    ),
+      letter-spacing: -0.015em;
 
-    url("./Gram Diamond.png") center / cover fixed no-repeat,
+      background:
+        linear-gradient(
+          rgba(5, 7, 11, 0.68),
+          rgba(5, 7, 11, 0.88)
+        ),
 
-    radial-gradient(
-      900px 500px at 50% -100px,
-      rgba(91,120,255,0.2),
-      transparent 70%
-    ),
+        url("./background.png") center / cover fixed no-repeat,
 
-    #05070b;
+        var(--bg);
+    }
 
-  overflow-x: hidden;
-}
+    body::after {
+      content: "";
 
-body::before {
+      position: fixed;
 
-  content: "";
+      inset: 0;
 
-  position: fixed;
+      pointer-events: none;
 
-  inset: 0;
+      background:
+        radial-gradient(
+          700px 400px at 50% 0%,
+          rgba(100, 140, 255, 0.12),
+          transparent 70%
+        );
 
-  pointer-events: none;
+      z-index: -1;
+    }
 
-  background:
+    .page {
+      width: 100%;
+      max-width: 1180px;
 
-    linear-gradient(
-      rgba(255,255,255,0.018) 1px,
-      transparent 1px
-    ),
+      margin: 0 auto;
 
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,0.018) 1px,
-      transparent 1px
-    );
+      padding: 32px 24px 70px;
+    }
 
-  background-size: 64px 64px;
+    .topbar {
+      display: flex;
 
-  mask-image:
-    linear-gradient(
-      to bottom,
-      black,
-      transparent 85%
-    );
+      align-items: center;
+      justify-content: space-between;
 
-  z-index: -1;
-}
+      margin-bottom: 90px;
+    }
 
-.page {
+    .brand {
+      display: flex;
 
-  width: 100%;
+      align-items: center;
+      gap: 12px;
 
-  max-width: 1180px;
+      font-size: 18px;
+      font-weight: 700;
 
-  margin: 0 auto;
+      letter-spacing: -0.04em;
+    }
 
-  padding: 30px 24px 70px;
-}
+    .brand-mark {
+      width: 42px;
+      height: 42px;
 
-.topbar {
+      display: flex;
 
-  display: flex;
+      align-items: center;
+      justify-content: center;
 
-  align-items: center;
+      overflow: hidden;
 
-  justify-content: space-between;
+      border-radius: 12px;
 
-  margin-bottom: 86px;
-}
+      background:
+        rgba(255,255,255,0.04);
 
-.brand {
+      border: 1px solid rgba(255,255,255,0.13);
 
-  display: flex;
+      box-shadow:
+        0 0 30px rgba(108, 150, 255, 0.22);
+    }
 
-  align-items: center;
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
 
-  gap: 13px;
-}
+      object-fit: cover;
 
-.brand-logo {
+      display: block;
+    }
 
-  width: 145px;
+    .topbar-label {
+      color: var(--muted-2);
 
-  height: auto;
+      font-size: 12px;
+      font-weight: 600;
 
-  display: block;
+      letter-spacing: 0.08em;
+    }
 
-  object-fit: contain;
+    .hero {
+      max-width: 800px;
 
-  filter:
-    drop-shadow(
-      0 0 22px
-      rgba(110,145,255,0.28)
-    );
-}
+      margin: 0 auto 68px;
 
-.topbar-label {
+      text-align: center;
+    }
 
-  color: #7f8999;
+    .eyebrow {
+      display: inline-flex;
 
-  font-size: 11px;
+      align-items: center;
+      gap: 8px;
 
-  font-weight: 700;
+      margin-bottom: 22px;
 
-  letter-spacing: 0.13em;
-}
+      padding: 8px 13px;
 
-.hero {
+      border: 1px solid var(--border);
 
-  max-width: 780px;
+      border-radius: 999px;
 
-  margin: 0 auto 68px;
+      color: #b2bdce;
 
-  text-align: center;
-}
+      background:
+        rgba(255,255,255,0.035);
 
-.eyebrow {
+      font-size: 12px;
+      font-weight: 500;
 
-  display: inline-flex;
+      letter-spacing: 0.04em;
+    }
 
-  align-items: center;
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
 
-  gap: 8px;
+      border-radius: 50%;
 
-  margin-bottom: 22px;
+      background: var(--success);
 
-  padding: 8px 14px;
+      box-shadow:
+        0 0 12px rgba(105,216,154,0.8);
+    }
 
-  border: 1px solid var(--border);
+    h1 {
+      margin: 0;
 
-  border-radius: 999px;
+      font-size:
+        clamp(48px, 8vw, 86px);
 
-  color: #aeb8c9;
+      line-height: 0.98;
 
-  background: rgba(255,255,255,0.035);
+      font-weight: 800;
 
-  font-size: 12px;
+      letter-spacing: -0.075em;
+    }
 
-  font-weight: 600;
+    .gradient-text {
+      color: transparent;
 
-  letter-spacing: 0.04em;
-}
+      background:
+        linear-gradient(
+          135deg,
+          #ffffff 0%,
+          #b7c4ff 45%,
+          #79adff 100%
+        );
 
-.eyebrow-dot {
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
 
-  width: 6px;
+    .hero-description {
+      max-width: 590px;
 
-  height: 6px;
+      margin: 26px auto 0;
 
-  border-radius: 50%;
+      color: var(--muted);
 
-  background: var(--green);
+      font-size: 18px;
 
-  box-shadow:
-    0 0 14px
-    rgba(104,217,154,0.9);
-}
+      line-height: 1.65;
+    }
 
-h1 {
+    .main-grid {
+      display: grid;
 
-  margin: 0;
+      grid-template-columns:
+        minmax(0, 1.15fr)
+        minmax(360px, 0.85fr);
 
-  font-size: clamp(48px, 8vw, 86px);
+      gap: 22px;
 
-  line-height: 0.98;
+      align-items: start;
+    }
 
-  font-weight: 800;
+    .panel {
+      overflow: hidden;
 
-  letter-spacing: -0.075em;
-}
+      border: 1px solid var(--border);
 
-.gradient-text {
+      border-radius: 26px;
 
-  color: transparent;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,0.075),
+          rgba(255,255,255,0.018)
+        );
 
-  background:
-    linear-gradient(
-      135deg,
-      #ffffff,
-      #b2c0ff 45%,
-      #75aaff
-    );
+      box-shadow:
+        0 30px 100px rgba(0,0,0,0.45);
 
-  -webkit-background-clip: text;
+      backdrop-filter: blur(24px);
+    }
 
-  background-clip: text;
-}
+    .panel-inner {
+      padding: 30px;
+    }
 
-.hero-description {
+    .panel-header {
+      display: flex;
 
-  max-width: 600px;
+      align-items: flex-start;
+      justify-content: space-between;
 
-  margin: 26px auto 0;
+      gap: 20px;
 
-  color: var(--muted);
+      margin-bottom: 28px;
+    }
 
-  font-size: 17px;
+    .panel-title {
+      margin: 0;
 
-  line-height: 1.65;
-}
+      font-size: 21px;
+      font-weight: 700;
 
-.main-grid {
+      letter-spacing: -0.035em;
+    }
 
-  display: grid;
+    .panel-subtitle {
+      margin: 8px 0 0;
 
-  grid-template-columns:
-    minmax(0, 1.15fr)
-    minmax(360px, 0.85fr);
+      color: var(--muted);
 
-  gap: 22px;
+      font-size: 14px;
 
-  align-items: start;
-}
+      line-height: 1.55;
+    }
 
-.panel {
+    .connection-box {
+      padding: 22px;
 
-  overflow: hidden;
+      border: 1px solid var(--border-soft);
 
-  border: 1px solid var(--border);
+      border-radius: 20px;
 
-  border-radius: 28px;
+      background:
+        rgba(0,0,0,0.20);
+    }
 
-  background:
+    .connection-label {
+      margin-bottom: 14px;
 
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,0.065),
-      rgba(255,255,255,0.018)
-    ),
+      color: var(--muted-2);
 
-    rgba(5,7,12,0.75);
+      font-size: 11px;
+      font-weight: 700;
 
-  box-shadow:
+      letter-spacing: 0.12em;
 
-    0 35px 110px
-    rgba(0,0,0,0.45);
+      text-transform: uppercase;
+    }
 
-  backdrop-filter: blur(26px);
-}
+    .wallet {
+      display: flex;
 
-.panel-inner {
+      justify-content: center;
 
-  padding: 30px;
-}
+      min-height: 42px;
+    }
 
-.panel-header {
+    .identity {
+      display: none;
 
-  margin-bottom: 28px;
-}
+      margin-top: 18px;
+    }
 
-.panel-title {
+    .wallet-address {
+      display: flex;
 
-  margin: 0;
+      align-items: center;
+      justify-content: space-between;
 
-  font-size: 21px;
+      gap: 14px;
 
-  font-weight: 700;
+      padding: 16px 18px;
 
-  letter-spacing: -0.035em;
-}
+      border: 1px solid var(--border-soft);
 
-.panel-subtitle {
+      border-radius: 15px;
 
-  margin: 8px 0 0;
+      background:
+        rgba(255,255,255,0.025);
+    }
 
-  color: var(--muted);
+    .wallet-address-label {
+      color: var(--muted-2);
 
-  font-size: 14px;
+      font-size: 11px;
+      font-weight: 600;
 
-  line-height: 1.55;
-}
+      letter-spacing: 0.08em;
 
-.connection-box {
+      text-transform: uppercase;
+    }
 
-  padding: 22px;
+    .address {
+      margin-top: 6px;
 
-  border: 1px solid rgba(255,255,255,0.07);
+      color: #d9e0ec;
 
-  border-radius: 20px;
+      font-family: monospace;
 
-  background: rgba(0,0,0,0.18);
-}
+      font-size: 13px;
+    }
 
-.connection-label {
+    .copy-button {
+      flex: 0 0 auto;
 
-  margin-bottom: 14px;
+      padding: 9px 12px;
 
-  color: #697383;
+      border: 1px solid var(--border);
 
-  font-size: 11px;
+      border-radius: 10px;
 
-  font-weight: 700;
+      color: #dbe3f0;
 
-  letter-spacing: 0.12em;
+      background:
+        rgba(255,255,255,0.045);
 
-  text-transform: uppercase;
-}
+      cursor: pointer;
 
-.wallet {
+      font-family: inherit;
 
-  display: flex;
+      font-size: 12px;
+      font-weight: 600;
+    }
 
-  justify-content: center;
+    .section-divider {
+      height: 1px;
 
-  min-height: 42px;
-}
+      margin: 28px 0;
 
-.identity {
+      background: var(--border-soft);
+    }
 
-  display: none;
+    .form-title {
+      margin: 0 0 16px;
 
-  margin-top: 18px;
-}
+      font-size: 16px;
+      font-weight: 700;
+    }
 
-.wallet-address {
+    .profile-input {
+      width: 100%;
 
-  display: flex;
+      height: 48px;
 
-  align-items: center;
+      margin: 6px 0;
 
-  justify-content: space-between;
+      padding: 0 15px;
 
-  gap: 14px;
+      border: 1px solid var(--border-soft);
 
-  padding: 16px 18px;
+      border-radius: 12px;
 
-  border: 1px solid rgba(255,255,255,0.07);
+      outline: none;
 
-  border-radius: 15px;
+      color: var(--text);
 
-  background: rgba(255,255,255,0.025);
-}
+      background:
+        rgba(255,255,255,0.035);
 
-.wallet-address-label {
+      font-family: inherit;
 
-  color: #697383;
+      font-size: 14px;
 
-  font-size: 11px;
+      transition:
+        border-color 0.2s,
+        background 0.2s;
+    }
 
-  font-weight: 600;
+    .profile-input:focus {
+      border-color:
+        rgba(101,167,255,0.7);
 
-  letter-spacing: 0.08em;
+      background:
+        rgba(255,255,255,0.055);
+    }
 
-  text-transform: uppercase;
-}
+    .profile-input::placeholder {
+      color: var(--muted-2);
+    }
 
-.address {
+    .button-row {
+      display: grid;
 
-  margin-top: 6px;
+      grid-template-columns: 1fr 1fr;
 
-  color: #d9e0ec;
+      gap: 10px;
 
-  font-family: monospace;
+      margin-top: 12px;
+    }
 
-  font-size: 13px;
-}
+    .button {
+      min-height: 45px;
 
-.copy-button {
+      padding: 0 15px;
 
-  padding: 9px 12px;
+      border: 1px solid transparent;
 
-  border: 1px solid var(--border);
+      border-radius: 12px;
 
-  border-radius: 10px;
+      color: white;
 
-  color: #dbe3f0;
+      cursor: pointer;
 
-  background: rgba(255,255,255,0.045);
+      font-family: inherit;
 
-  cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
 
-  font-family: inherit;
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
 
-  font-size: 12px;
+    .button:hover {
+      transform: translateY(-1px);
 
-  font-weight: 600;
-}
+      opacity: 0.92;
+    }
 
-.section-divider {
+    .save-button {
+      background:
+        linear-gradient(
+          135deg,
+          #2d9e83,
+          #1c7d68
+        );
+    }
 
-  height: 1px;
+    .verify-button {
+      background:
+        linear-gradient(
+          135deg,
+          #2c8dca,
+          #246ca4
+        );
+    }
 
-  margin: 28px 0;
+    .profile-button {
+      width: 100%;
 
-  background: rgba(255,255,255,0.06);
-}
+      margin-top: 10px;
 
-.form-title {
+      color: #dbe7f7;
 
-  margin: 0 0 16px;
+      background:
+        rgba(101,167,255,0.08);
 
-  font-size: 16px;
+      border-color:
+        rgba(101,167,255,0.28);
+    }
 
-  font-weight: 700;
-}
+    .profile-button:hover {
+      color: white;
 
-.profile-input {
+      background:
+        rgba(101,167,255,0.15);
 
-  width: 100%;
+      border-color:
+        rgba(101,167,255,0.5);
+    }
 
-  height: 48px;
+    .clear-button {
+      width: 100%;
 
-  margin: 6px 0;
+      margin-top: 10px;
 
-  padding: 0 15px;
+      color: #c3cad5;
 
-  border: 1px solid rgba(255,255,255,0.07);
+      background:
+        rgba(255,255,255,0.035);
 
-  border-radius: 12px;
+      border-color:
+        rgba(255,255,255,0.12);
+    }
 
-  outline: none;
+    .clear-button:hover {
+      color: #e6ebf2;
 
-  color: var(--text);
+      background:
+        rgba(255,255,255,0.07);
 
-  background: rgba(255,255,255,0.035);
+      border-color:
+        rgba(255,255,255,0.22);
+    }
 
-  font-family: inherit;
+    .disconnect-button {
+      width: 100%;
 
-  font-size: 14px;
-}
+      margin-top: 10px;
 
-.profile-input:focus {
+      color: #aeb8c7;
 
-  border-color: rgba(117,170,255,0.7);
+      background:
+        rgba(255,255,255,0.018);
 
-  background: rgba(255,255,255,0.055);
-}
+      border-color:
+        rgba(255,255,255,0.08);
+    }
 
-.profile-input::placeholder {
+    .disconnect-button:hover {
+      color: #d5dce7;
 
-  color: #606978;
-}
+      background:
+        rgba(255,255,255,0.055);
 
-.button-row {
+      border-color:
+        rgba(255,255,255,0.18);
+    }
 
-  display: grid;
+    .telegram-link {
+      display: none;
 
-  grid-template-columns: 1fr 1fr;
+      margin-top: 12px;
 
-  gap: 10px;
+      padding: 13px;
 
-  margin-top: 12px;
-}
+      border: 1px solid rgba(101,167,255,0.25);
 
-.button {
+      border-radius: 12px;
 
-  min-height: 45px;
+      color: #9bc5ff;
 
-  padding: 0 15px;
+      background:
+        rgba(101,167,255,0.07);
 
-  border: 1px solid transparent;
+      text-align: center;
 
-  border-radius: 12px;
+      text-decoration: none;
 
-  color: white;
+      font-size: 13px;
+      font-weight: 600;
+    }
 
-  cursor: pointer;
+    .profile-result {
+      display: none;
 
-  font-family: inherit;
+      margin-top: 20px;
 
-  font-size: 13px;
+      padding: 22px;
 
-  font-weight: 600;
+      border: 1px solid var(--border);
 
-  transition: all 0.2s ease;
-}
+      border-radius: 18px;
 
-.button:hover {
+      background:
+        linear-gradient(
+          145deg,
+          rgba(101,167,255,0.08),
+          rgba(139,124,255,0.04)
+        );
+    }
 
-  transform: translateY(-1px);
+    .profile-label {
+      color: var(--muted-2);
 
-}
+      font-size: 10px;
+      font-weight: 700;
 
-.save-button {
+      letter-spacing: 0.13em;
 
-  background:
-    linear-gradient(
-      135deg,
-      #2d9e83,
-      #1c7d68
-    );
-}
+      text-transform: uppercase;
+    }
 
-.verify-button {
+    .profile-name {
+      margin-top: 13px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #2c8dca,
-      #246ca4
-    );
-}
+      font-size: 25px;
+      font-weight: 750;
 
-.profile-button {
+      letter-spacing: -0.04em;
+    }
 
-  width: 100%;
+    .profile-domain {
+      margin-top: 8px;
 
-  margin-top: 10px;
+      color: #8bbcff;
 
-  color: #c5d9f7;
+      font-size: 14px;
+    }
 
-  background: rgba(117,170,255,0.08);
+    .profile-telegram {
+      margin-top: 7px;
 
-  border-color: rgba(117,170,255,0.28);
-}
+      color: #7ca9e7;
 
-.clear-button {
+      font-size: 14px;
+    }
 
-  width: 100%;
+    .status {
+      min-height: 20px;
 
-  margin-top: 10px;
+      margin-top: 16px;
 
-  color: #c3cad5;
+      color: var(--muted);
 
-  background: rgba(255,255,255,0.035);
+      font-size: 13px;
 
-  border-color: rgba(255,255,255,0.12);
-}
+      text-align: center;
+    }
 
-.disconnect-button {
+    .auth-panel {
+      position: sticky;
 
-  width: 100%;
+      top: 24px;
+    }
 
-  margin-top: 10px;
+    .auth-visual {
+      display: flex;
 
-  color: #aeb8c7;
+      min-height: 430px;
 
-  background: rgba(255,255,255,0.018);
+      padding: 32px;
 
-  border-color: rgba(255,255,255,0.08);
-}
+      flex-direction: column;
 
-.telegram-link {
+      justify-content: space-between;
+    }
 
-  display: none;
+    .auth-top {
+      display: flex;
 
-  margin-top: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-  padding: 13px;
+    .auth-badge {
+      display: inline-flex;
 
-  border: 1px solid rgba(101,167,255,0.25);
+      align-items: center;
 
-  border-radius: 12px;
+      gap: 7px;
 
-  color: #9bc5ff;
+      color: #9ca7b8;
 
-  background: rgba(101,167,255,0.07);
+      font-size: 11px;
+      font-weight: 600;
 
-  text-align: center;
+      letter-spacing: 0.08em;
 
-  text-decoration: none;
+      text-transform: uppercase;
+    }
 
-  font-size: 13px;
+    .auth-badge span {
+      width: 7px;
+      height: 7px;
 
-  font-weight: 600;
-}
+      border-radius: 50%;
 
-.profile-result {
+      background: var(--success);
 
-  display: none;
+      box-shadow:
+        0 0 12px rgba(105,216,154,0.8);
+    }
 
-  margin-top: 20px;
+    .auth-icon {
+      width: 100px;
+      height: 100px;
 
-  padding: 22px;
+      display: flex;
 
-  border: 1px solid var(--border);
+      align-items: center;
+      justify-content: center;
 
-  border-radius: 18px;
+      overflow: hidden;
 
-  background:
+      border-radius: 28px;
 
-    linear-gradient(
-      145deg,
-      rgba(101,167,255,0.08),
-      rgba(139,124,255,0.04)
-    );
-}
+      border: 1px solid rgba(255,255,255,0.13);
 
-.profile-label {
+      background:
+        rgba(255,255,255,0.04);
 
-  color: #697383;
+      box-shadow:
+        0 0 60px rgba(101,167,255,0.18);
+    }
 
-  font-size: 10px;
+    .auth-icon img {
+      width: 100%;
+      height: 100%;
 
-  font-weight: 700;
+      object-fit: cover;
 
-  letter-spacing: 0.13em;
+      display: block;
+    }
 
-  text-transform: uppercase;
-}
+    .auth-content h2 {
+      margin: 25px 0 10px;
 
-.profile-name {
+      font-size: 28px;
+      font-weight: 700;
 
-  margin-top: 13px;
+      letter-spacing: -0.05em;
+    }
 
-  font-size: 25px;
+    .auth-content p {
+      margin: 0;
 
-  font-weight: 700;
-}
+      color: var(--muted);
 
-.profile-domain {
+      font-size: 14px;
 
-  margin-top: 8px;
+      line-height: 1.6;
+    }
 
-  color: #8bbcff;
+    .gramid-login-button {
+      width: 100%;
 
-  font-size: 14px;
-}
+      margin: 26px 0 0;
 
-.profile-telegram {
+      background:
+        linear-gradient(
+          135deg,
+          #5f8fff,
+          #806eff
+        );
 
-  margin-top: 7px;
+      box-shadow:
+        0 12px 35px rgba(93,116,255,0.2);
+    }
 
-  color: #7ca9e7;
+    .login-result {
+      display: none;
 
-  font-size: 14px;
-}
+      margin-top: 20px;
 
-.status {
+      padding: 22px;
 
-  min-height: 20px;
+      border: 1px solid var(--border);
 
-  margin-top: 16px;
+      border-radius: 18px;
 
-  color: var(--muted);
+      background:
+        rgba(0,0,0,0.2);
 
-  font-size: 13px;
+      text-align: center;
+    }
 
-  text-align: center;
-}
+    .identity-status {
+      display: flex;
 
-.auth-panel {
+      align-items: center;
+      justify-content: center;
 
-  position: sticky;
+      gap: 8px;
 
-  top: 24px;
-}
+      margin: 9px 0;
 
-.auth-visual {
+      color: var(--success);
 
-  min-height: 450px;
+      font-size: 13px;
+      font-weight: 600;
+    }
 
-  padding: 32px;
+    .login-result h2 {
+      margin: 22px 0 6px;
 
-  display: flex;
+      font-size: 24px;
+      font-weight: 700;
+    }
 
-  flex-direction: column;
+    .login-result p {
+      margin: 0;
 
-  justify-content: space-between;
+      color: #8bbcff;
 
-  text-align: center;
-}
+      font-size: 14px;
+    }
 
-.auth-top {
+    .login-success {
+      margin-top: 18px;
 
-  display: flex;
+      color: var(--success);
 
-  justify-content: center;
-}
+      font-size: 13px;
+      font-weight: 600;
+    }
 
-.auth-icon {
+    .features {
+      display: grid;
 
-  width: 190px;
+      grid-template-columns: repeat(4, 1fr);
 
-  height: 190px;
+      gap: 12px;
 
-  position: relative;
+      margin-top: 22px;
+    }
 
-  display: flex;
+    .feature {
+      min-height: 100px;
 
-  align-items: center;
+      padding: 18px;
 
-  justify-content: center;
+      border: 1px solid var(--border-soft);
 
-  margin: 10px auto 0;
-}
+      border-radius: 18px;
 
-.diamond-image {
+      color: #c7ceda;
 
-  width: 190px;
+      background:
+        rgba(255,255,255,0.025);
 
-  height: 190px;
+      font-size: 13px;
 
-  object-fit: contain;
+      line-height: 1.5;
+    }
 
-  display: block;
+    .feature strong {
+      display: block;
 
-  filter:
+      margin-bottom: 8px;
 
-    drop-shadow(
-      0 0 35px
-      rgba(112,148,255,0.32)
-    );
+      color: #f1f4f8;
 
-  animation: diamondFloat 5s ease-in-out infinite;
-}
+      font-size: 14px;
+      font-weight: 650;
+    }
 
-@keyframes diamondFloat {
+    .footer {
+      margin-top: 60px;
 
-  0%,
-  100% {
+      color: var(--muted-2);
 
-    transform: translateY(0) rotate(0deg);
+      font-size: 12px;
 
-  }
+      text-align: center;
+    }
 
-  50% {
+    @media (max-width: 900px) {
 
-    transform: translateY(-8px) rotate(2deg);
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
 
-  }
+      .auth-panel {
+        position: static;
+      }
 
-}
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
 
-.auth-badge {
+    }
 
-  display: inline-flex;
+    @media (max-width: 600px) {
 
-  align-items: center;
+      .page {
+        padding: 24px 15px 50px;
+      }
 
-  gap: 7px;
+      .topbar {
+        margin-bottom: 65px;
+      }
 
-  color: #9ca7b8;
+      .topbar-label {
+        display: none;
+      }
 
-  font-size: 11px;
+      .hero {
+        margin-bottom: 45px;
+      }
 
-  font-weight: 600;
+      .hero-description {
+        font-size: 16px;
+      }
 
-  letter-spacing: 0.08em;
+      .panel-inner,
+      .auth-visual {
+        padding: 22px;
+      }
 
-  text-transform: uppercase;
-}
+      .button-row {
+        grid-template-columns: 1fr;
+      }
 
-.auth-badge span {
+      .features {
+        grid-template-columns: 1fr;
+      }
 
-  width: 7px;
+    }
 
-  height: 7px;
+  </style>
 
-  border-radius: 50%;
-
-  background: var(--green);
-
-  box-shadow: 0 0 12px rgba(105,216,154,0.8);
-}
-
-.auth-content h2 {
-
-  margin: 24px 0 10px;
-
-  font-size: 28px;
-
-  font-weight: 700;
-
-  letter-spacing: -0.05em;
-}
-
-.auth-content p {
-
-  margin: 0;
-
-  color: var(--muted);
-
-  font-size: 14px;
-
-  line-height: 1.6;
-}
-
-.gramid-login-button {
-
-  width: 100%;
-
-  margin-top: 26px;
-
-  background:
-
-    linear-gradient(
-      135deg,
-      #5f8fff,
-      #806eff
-    );
-
-  box-shadow:
-
-    0 12px 35px
-    rgba(93,116,255,0.2);
-}
-
-.login-result {
-
-  display: none;
-
-  margin-top: 20px;
-
-  padding: 22px;
-
-  border: 1px solid var(--border);
-
-  border-radius: 18px;
-
-  background: rgba(0,0,0,0.2);
-
-  text-align: center;
-}
-
-.identity-status {
-
-  margin: 9px 0;
-
-  color: var(--green);
-
-  font-size: 13px;
-
-  font-weight: 600;
-}
-
-.login-result h2 {
-
-  margin: 22px 0 6px;
-
-  font-size: 24px;
-}
-
-.login-result p {
-
-  margin: 0;
-
-  color: #8bbcff;
-
-  font-size: 14px;
-}
-
-.login-success {
-
-  margin-top: 18px;
-
-  color: var(--green);
-
-  font-size: 13px;
-
-  font-weight: 600;
-}
-
-.features {
-
-  display: grid;
-
-  grid-template-columns: repeat(4, 1fr);
-
-  gap: 12px;
-
-  margin-top: 22px;
-}
-
-.feature {
-
-  min-height: 100px;
-
-  padding: 18px;
-
-  border: 1px solid rgba(255,255,255,0.07);
-
-  border-radius: 18px;
-
-  color: #c7ceda;
-
-  background: rgba(255,255,255,0.025);
-
-  font-size: 13px;
-
-  line-height: 1.5;
-}
-
-.feature strong {
-
-  display: block;
-
-  margin-bottom: 8px;
-
-  color: #f1f4f8;
-
-  font-size: 14px;
-}
-
-.footer {
-
-  margin-top: 60px;
-
-  color: #646b77;
-
-  font-size: 12px;
-
-  text-align: center;
-}
-
-@media (max-width: 900px) {
-
-  .main-grid {
-
-    grid-template-columns: 1fr;
-  }
-
-  .auth-panel {
-
-    position: static;
-  }
-
-  .features {
-
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-}
-
-@media (max-width: 600px) {
-
-  .page {
-
-    padding: 24px 15px 50px;
-  }
-
-  .topbar {
-
-    margin-bottom: 65px;
-  }
-
-  .topbar-label {
-
-    display: none;
-  }
-
-  .hero-description {
-
-    font-size: 16px;
-  }
-
-  .panel-inner,
-
-  .auth-visual {
-
-    padding: 22px;
-  }
-
-  .button-row,
-
-  .features {
-
-    grid-template-columns: 1fr;
-  }
-
-  .brand-logo {
-
-    width: 125px;
-  }
-
-  .diamond-image {
-
-    width: 160px;
-
-    height: 160px;
-  }
-
-}
-
-</style>
 </head>
 
 <body>
 
-<main class="page">
+  <main class="page">
 
-<header class="topbar">
+    <header class="topbar">
 
-<div class="brand">
+      <div class="brand">
 
-<img
-src="./Логотип Gram ID.png"
-alt="Gram ID"
-class="brand-logo"
->
+        <div class="brand-mark">
 
-</div>
+          <img
+            src="./gram-diamond.png"
+            alt="GramID"
+          >
 
-<div class="topbar-label">
-TON IDENTITY PROTOCOL
-</div>
+        </div>
 
-</header>
+        <span>
+          GramID
+        </span>
 
-<section class="hero">
+      </div>
 
-<div class="eyebrow">
+      <div class="topbar-label">
+        TON IDENTITY PROTOCOL
+      </div>
 
-<span class="eyebrow-dot"></span>
+    </header>
 
-Identity layer for TON
 
-</div>
+    <section class="hero">
 
-<h1>
+      <div class="eyebrow">
 
-Your identity,
+        <span class="eyebrow-dot"></span>
 
-<br>
+        Identity layer for TON
 
-<span class="gradient-text">
-verified.
-</span>
+      </div>
 
-</h1>
 
-<p class="hero-description">
+      <h1>
 
-Connect your TON wallet and Telegram.
-Create one verified identity for the
-next generation of Web3 applications.
+        Your identity,
 
-</p>
+        <br>
 
-</section>
+        <span class="gradient-text">
+          verified.
+        </span>
 
-<section class="main-grid">
+      </h1>
 
-<div class="panel">
 
-<div class="panel-inner">
+      <p class="hero-description">
 
-<div class="panel-header">
+        Connect your TON wallet and Telegram.
+        Create one verified identity for the
+        next generation of Web3 applications.
 
-<h2 class="panel-title">
-Create your identity
-</h2>
+      </p>
 
-<p class="panel-subtitle">
+    </section>
 
-Your wallet is the foundation
-of your GramID profile.
 
-</p>
+    <section class="main-grid">
 
-</div>
 
-<div class="connection-box">
+      <div class="panel">
 
-<div class="connection-label">
-Connect TON wallet
-</div>
 
-<div class="wallet">
+        <div class="panel-inner">
 
-<div id="ton-connect"></div>
 
-</div>
+          <div class="panel-header">
 
-</div>
 
-<div
-class="identity"
-id="identity"
->
+            <div>
 
-<div class="wallet-address">
+              <h2 class="panel-title">
+                Create your identity
+              </h2>
 
-<div>
 
-<div class="wallet-address-label">
-Connected wallet
-</div>
+              <p class="panel-subtitle">
 
-<div
-class="address"
-id="address"
-></div>
+                Your wallet is the foundation
+                of your GramID profile.
 
-</div>
+              </p>
 
-<button
-class="copy-button"
-onclick="copyAddress()"
->
+            </div>
 
-Copy
+          </div>
 
-</button>
 
-</div>
+          <div class="connection-box">
 
-<div class="section-divider"></div>
 
-<h3 class="form-title">
-Profile details
-</h3>
+            <div class="connection-label">
+              Connect TON wallet
+            </div>
 
-<input
-class="profile-input"
-id="profileName"
-type="text"
-placeholder="Name or username"
->
 
-<input
-class="profile-input"
-id="profileDomain"
-type="text"
-placeholder="TON domain · gramid.ton"
->
+            <div class="wallet">
 
-<input
-class="profile-input"
-id="telegramUsername"
-type="text"
-placeholder="Telegram username · @username"
->
+              <div id="ton-connect"></div>
 
-<div class="button-row">
+            </div>
 
-<button
-class="button save-button"
-onclick="saveProfile()"
->
+          </div>
 
-Save profile
 
-</button>
+          <div
+            class="identity"
+            id="identity"
+          >
 
-<button
-class="button verify-button"
-onclick="verifyTelegram()"
->
 
-Verify Telegram
+            <div class="wallet-address">
 
-</button>
 
-</div>
+              <div>
 
-<a
-class="telegram-link"
-id="telegramLink"
-target="_blank"
->
+                <div class="wallet-address-label">
+                  Connected wallet
+                </div>
 
-Open Telegram and verify
 
-</a>
+                <div
+                  class="address"
+                  id="address"
+                ></div>
 
-<div
-class="profile-result"
-id="profileResult"
->
+              </div>
 
-<div class="profile-label">
-Your GramID profile
-</div>
 
-<div
-class="profile-name"
-id="savedName"
-></div>
+              <button
+                class="copy-button"
+                onclick="copyAddress()"
+              >
 
-<div
-class="profile-domain"
-id="savedDomain"
-></div>
+                Copy
 
-<div
-class="profile-telegram"
-id="savedTelegram"
-></div>
+              </button>
 
-</div>
+            </div>
 
-<button
-class="button profile-button"
-onclick="viewPublicProfile()"
->
 
-View Public Profile
+            <div class="section-divider"></div>
 
-</button>
 
-<button
-class="button clear-button"
-onclick="clearProfile()"
->
+            <h3 class="form-title">
+              Profile details
+            </h3>
 
-Clear Profile
 
-</button>
+            <input
+              class="profile-input"
+              id="profileName"
+              type="text"
+              placeholder="Name or username"
+            >
 
-<div
-class="status"
-id="status"
-></div>
 
-<button
-class="button disconnect-button"
-onclick="disconnectWallet()"
->
+            <input
+              class="profile-input"
+              id="profileDomain"
+              type="text"
+              placeholder="TON domain · gramid.ton"
+            >
 
-Disconnect Wallet
 
-</button>
+            <input
+              class="profile-input"
+              id="telegramUsername"
+              type="text"
+              placeholder="Telegram username · @username"
+            >
 
-</div>
 
-</div>
+            <div class="button-row">
 
-</div>
 
-<div class="panel auth-panel">
+              <button
+                class="button save-button"
+                onclick="saveProfile()"
+              >
 
-<div class="auth-visual">
+                Save profile
 
-<div class="auth-top">
+              </button>
 
-<div class="auth-badge">
 
-<span></span>
+              <button
+                class="button verify-button"
+                onclick="verifyTelegram()"
+              >
 
-GramID Authentication
+                Verify Telegram
 
-</div>
+              </button>
 
-</div>
+            </div>
 
-<div class="auth-icon">
 
-<img
-src="./Gram Diamond.png"
-alt="Gram Diamond"
-class="diamond-image"
->
+            <a
+              class="telegram-link"
+              id="telegramLink"
+              target="_blank"
+            >
 
-</div>
+              Open Telegram and verify
 
-<div class="auth-content">
+            </a>
 
-<h2>
 
-One identity.
+            <div
+              class="profile-result"
+              id="profileResult"
+            >
 
-<br>
+              <div class="profile-label">
+                Your GramID profile
+              </div>
 
-Every connection.
 
-</h2>
+              <div
+                class="profile-name"
+                id="savedName"
+              ></div>
 
-<p>
 
-Sign in with your verified
-TON and Telegram identity.
+              <div
+                class="profile-domain"
+                id="savedDomain"
+              ></div>
 
-</p>
 
-<button
-class="button gramid-login-button"
-onclick="signInWithGramID()"
->
+              <div
+                class="profile-telegram"
+                id="savedTelegram"
+              ></div>
 
-Sign in with GramID
+            </div>
 
-</button>
 
-<div
-class="login-result"
-id="loginResult"
-></div>
+            <button
+              class="button profile-button"
+              onclick="viewPublicProfile()"
+            >
 
-</div>
+              View Public Profile
 
-</div>
+            </button>
 
-</div>
 
-</section>
+            <button
+              class="button clear-button"
+              onclick="clearProfile()"
+            >
 
-<section class="features">
+              Clear Profile
 
-<div class="feature">
+            </button>
 
-<strong>
-Wallet-native
-</strong>
 
-Your TON wallet is the
-foundation of your identity.
+            <div
+              class="status"
+              id="status"
+            ></div>
 
-</div>
 
-<div class="feature">
+            <button
+              class="button disconnect-button"
+              onclick="disconnectWallet()"
+            >
 
-<strong>
-Telegram verified
-</strong>
+              Disconnect Wallet
 
-Prove the connection between
-your Telegram and wallet.
+            </button>
 
-</div>
+          </div>
 
-<div class="feature">
+        </div>
 
-<strong>
-One identity
-</strong>
+      </div>
 
-Use one verified profile
-across the TON ecosystem.
 
-</div>
+      <div class="panel auth-panel">
 
-<div class="feature">
 
-<strong>
-Built for TON
-</strong>
+        <div class="auth-visual">
 
-Identity infrastructure
-for the next generation of Web3.
 
-</div>
+          <div class="auth-top">
 
-</section>
 
-<footer class="footer">
+            <div class="auth-badge">
 
-GramID — decentralized identity
-for the next generation of Web3
+              <span></span>
 
-</footer>
+              GramID Authentication
 
-</main>
+            </div>
 
-<script>
 
-const SUPABASE_URL =
-'https://beuymvtrabmawogqrhni.supabase.co';
+            <div class="auth-icon">
 
-const SUPABASE_KEY =
-'sb_publishable_WHFBkb-8c_iDJ2uBG9g2TQ_CSMkumUg';
+              <img
+                src="./gram-diamond.png"
+                alt="GramID"
+              >
 
-const VERIFY_FUNCTION_URL =
-SUPABASE_URL +
-'/functions/v1/verify-telegram';
+            </div>
 
-const GRAMID_LOGIN_URL =
-SUPABASE_URL +
-'/functions/v1/gramid-login';
+          </div>
 
-const GRAMID_USERINFO_URL =
-SUPABASE_URL +
-'/functions/v1/gramid-userinfo';
 
-const tonConnectUI =
-new TON_CONNECT_UI.TonConnectUI({
+          <div class="auth-content">
 
-manifestUrl:
-'https://gramidcore.github.io/gramid/tonconnect-manifest.json',
 
-buttonRootId:
-'ton-connect'
+            <h2>
 
-});
+              One identity.
 
-let currentWalletAddress = '';
+              <br>
 
-let gramidIdentity = null;
+              Every connection.
 
-function setStatus(message) {
+            </h2>
 
-document
-.getElementById('status')
-.textContent = message;
 
-}
+            <p>
 
-tonConnectUI.onStatusChange(wallet => {
+              Sign in with your verified
+              TON and Telegram identity.
 
-const identity =
-document.getElementById('identity');
+            </p>
 
-const addressElement =
-document.getElementById('address');
 
-if (wallet) {
+            <button
+              class="button gramid-login-button"
+              onclick="signInWithGramID()"
+            >
 
-currentWalletAddress =
-wallet.account.address;
+              Sign in with GramID
 
-addressElement.textContent =
+            </button>
 
-currentWalletAddress.slice(0,6) +
-'...' +
-currentWalletAddress.slice(-6);
 
-addressElement.dataset.fullAddress =
-currentWalletAddress;
+            <div
+              class="login-result"
+              id="loginResult"
+            ></div>
 
-identity.style.display =
-'block';
+          </div>
 
-loadProfile();
+        </div>
 
-loadGramIDSession();
+      </div>
 
-} else {
+    </section>
 
-currentWalletAddress = '';
 
-identity.style.display =
-'none';
+    <section class="features">
 
-}
 
-});
+      <div class="feature">
 
-function copyAddress() {
+        <strong>
+          Wallet-native
+        </strong>
 
-const address =
-document
-.getElementById('address')
-.dataset
-.fullAddress;
+        Your TON wallet is the
+        foundation of your identity.
 
-navigator.clipboard.writeText(address);
+      </div>
 
-setStatus('TON address copied');
 
-}
+      <div class="feature">
 
-async function saveProfile() {
+        <strong>
+          Telegram verified
+        </strong>
 
-const name =
-document
-.getElementById('profileName')
-.value
-.trim();
+        Prove the connection between
+        your Telegram and wallet.
 
-const domain =
-document
-.getElementById('profileDomain')
-.value
-.trim();
+      </div>
 
-const telegramUsername =
-document
-.getElementById('telegramUsername')
-.value
-.trim();
 
-if (!currentWalletAddress) {
+      <div class="feature">
 
-setStatus(
-'Please connect your TON wallet first'
-);
+        <strong>
+          One identity
+        </strong>
 
-return;
+        Use one verified profile
+        across the TON ecosystem.
 
-}
+      </div>
 
-if (!name) {
 
-setStatus(
-'Please enter your name'
-);
+      <div class="feature">
 
-return;
+        <strong>
+          Built for TON
+        </strong>
 
-}
+        Identity infrastructure
+        for the next generation of Web3.
 
-setStatus('Saving profile...');
+      </div>
 
-try {
+    </section>
 
-const response =
-await fetch(
 
-SUPABASE_URL +
-'/rest/v1/profiles',
+    <footer class="footer">
 
-{
+      GramID — decentralized identity
+      for the next generation of Web3
 
-method: 'POST',
+    </footer>
 
-headers: {
+  </main>
 
-'Content-Type':
-'application/json',
 
-'apikey':
-SUPABASE_KEY,
+  <script>
 
-'Authorization':
-'Bearer ' +
-SUPABASE_KEY,
+    const SUPABASE_URL =
+      'https://beuymvtrabmawogqrhni.supabase.co';
 
-'Prefer':
-'resolution=merge-duplicates'
 
-},
+    const SUPABASE_KEY =
+      'sb_publishable_WHFBkb-8c_iDJ2uBG9g2TQ_CSMkumUg';
 
-body:
-JSON.stringify({
 
-wallet_address:
-currentWalletAddress,
+    const VERIFY_FUNCTION_URL =
+      SUPABASE_URL +
+      '/functions/v1/verify-telegram';
 
-name,
 
-domain:
-domain || null,
+    const GRAMID_LOGIN_URL =
+      SUPABASE_URL +
+      '/functions/v1/gramid-login';
 
-telegram_username:
-telegramUsername || null
 
-})
+    const GRAMID_USERINFO_URL =
+      SUPABASE_URL +
+      '/functions/v1/gramid-userinfo';
 
-}
 
-);
+    const tonConnectUI =
+      new TON_CONNECT_UI.TonConnectUI({
 
-if (!response.ok) {
+        manifestUrl:
+          'https://gramidcore.github.io/gramid/tonconnect-manifest.json',
 
-throw new Error(
-await response.text()
-);
+        buttonRootId:
+          'ton-connect'
 
-}
+      });
 
-showProfile({
 
-name,
+    let currentWalletAddress = '';
 
-domain,
+    let gramidIdentity = null;
 
-telegram_username:
-telegramUsername
 
-});
+    function setStatus(message) {
 
-setStatus(
-'Profile saved online'
-);
+      document
+        .getElementById('status')
+        .textContent = message;
 
-} catch (error) {
+    }
 
-console.error(error);
 
-setStatus(
-'Error: ' +
-error.message
-);
+    tonConnectUI.onStatusChange(wallet => {
 
-}
+      const identity =
+        document.getElementById('identity');
 
-}
+      const addressElement =
+        document.getElementById('address');
 
-async function verifyTelegram() {
 
-const telegramUsername =
-document
-.getElementById('telegramUsername')
-.value
-.trim();
+      if (wallet) {
 
-if (!currentWalletAddress) {
+        currentWalletAddress =
+          wallet.account.address;
 
-setStatus(
-'Please connect your TON wallet first'
-);
 
-return;
+        addressElement.textContent =
+          currentWalletAddress.slice(0, 6) +
+          '...' +
+          currentWalletAddress.slice(-6);
 
-}
 
-if (!telegramUsername) {
+        addressElement.dataset.fullAddress =
+          currentWalletAddress;
 
-setStatus(
-'Please enter your Telegram username'
-);
 
-return;
+        identity.style.display =
+          'block';
 
-}
 
-setStatus(
-'Creating Telegram verification link...'
-);
+        loadProfile();
 
-try {
+        loadGramIDSession();
 
-const response =
-await fetch(
+      } else {
 
-VERIFY_FUNCTION_URL,
+        currentWalletAddress = '';
 
-{
+        identity.style.display = 'none';
 
-method: 'POST',
+      }
 
-headers: {
+    });
 
-'Content-Type':
-'application/json',
 
-'apikey':
-SUPABASE_KEY
+    function copyAddress() {
 
-},
+      const address =
+        document
+          .getElementById('address')
+          .dataset
+          .fullAddress;
 
-body:
-JSON.stringify({
 
-wallet:
-currentWalletAddress,
+      navigator.clipboard.writeText(address);
 
-telegram_username:
-telegramUsername
 
-})
+      setStatus(
+        'TON address copied'
+      );
 
-}
+    }
 
-);
 
-const data =
-await response.json();
+    async function saveProfile() {
 
-if (!response.ok) {
+      const name =
+        document
+          .getElementById('profileName')
+          .value
+          .trim();
 
-throw new Error(
-data.error ||
-'Verification error'
-);
 
-}
+      const domain =
+        document
+          .getElementById('profileDomain')
+          .value
+          .trim();
 
-const telegramLink =
-document
-.getElementById('telegramLink');
 
-telegramLink.href =
-data.verification_url;
+      const telegramUsername =
+        document
+          .getElementById('telegramUsername')
+          .value
+          .trim();
 
-telegramLink.style.display =
-'block';
 
-setStatus(
-'Verification link created'
-);
+      if (!currentWalletAddress) {
 
-} catch (error) {
+        setStatus(
+          'Please connect your TON wallet first'
+        );
 
-setStatus(
-'Error: ' +
-error.message
-);
+        return;
 
-}
+      }
 
-}
 
-async function loadProfile() {
+      if (!name) {
 
-if (!currentWalletAddress) return;
+        setStatus(
+          'Please enter your name'
+        );
 
-const response =
-await fetch(
+        return;
 
-SUPABASE_URL +
-'/rest/v1/profiles' +
-'?wallet_address=eq.' +
-encodeURIComponent(
-currentWalletAddress
-) +
-'&select=*',
+      }
 
-{
 
-headers: {
+      setStatus(
+        'Saving profile...'
+      );
 
-'apikey':
-SUPABASE_KEY,
 
-'Authorization':
-'Bearer ' +
-SUPABASE_KEY
+      try {
 
-}
+        const checkResponse =
+          await fetch(
 
-}
+            SUPABASE_URL +
+            '/rest/v1/profiles?wallet_address=eq.' +
+            encodeURIComponent(
+              currentWalletAddress
+            ) +
+            '&select=id',
 
-);
+            {
 
-if (!response.ok) return;
+              method: 'GET',
 
-const profiles =
-await response.json();
+              headers: {
 
-if (profiles.length > 0) {
+                'apikey': SUPABASE_KEY,
 
-const profile =
-profiles[0];
+                'Authorization':
+                  'Bearer ' +
+                  SUPABASE_KEY
 
-document
-.getElementById('profileName')
-.value =
-profile.name || '';
+              }
 
-document
-.getElementById('profileDomain')
-.value =
-profile.domain || '';
+            }
 
-document
-.getElementById('telegramUsername')
-.value =
-profile.telegram_username || '';
+          );
 
-showProfile(profile);
 
-}
+        if (!checkResponse.ok) {
 
-}
+          throw new Error(
+            await checkResponse.text()
+          );
 
-function showProfile(profile) {
+        }
 
-document
-.getElementById('savedName')
-.textContent =
-profile.name || '';
 
-document
-.getElementById('savedDomain')
-.textContent =
-profile.domain ||
-'TON domain not added';
+        const existingProfiles =
+          await checkResponse.json();
 
-document
-.getElementById('savedTelegram')
-.textContent =
-profile.telegram_username ||
-'Telegram username not added';
 
-document
-.getElementById('profileResult')
-.style
-.display =
-'block';
+        const profileData = {
 
-}
+          wallet_address:
+            currentWalletAddress,
 
-function viewPublicProfile() {
+          name: name,
 
-if (!currentWalletAddress) {
+          domain:
+            domain || null,
 
-setStatus(
-'Please connect your TON wallet first'
-);
+          telegram_username:
+            telegramUsername || null
 
-return;
+        };
 
-}
 
-const profileUrl =
+        let response;
 
-window.location.origin +
 
-window.location.pathname.replace(
-'index.html',
-''
-) +
+        if (existingProfiles.length > 0) {
 
-'profile.html?wallet=' +
+          response =
+            await fetch(
 
-encodeURIComponent(
-currentWalletAddress
-);
+              SUPABASE_URL +
+              '/rest/v1/profiles?id=eq.' +
+              existingProfiles[0].id,
 
-window.location.href =
-profileUrl;
+              {
 
-}
+                method: 'PATCH',
 
-function clearProfile() {
+                headers: {
 
-document
-.getElementById('profileName')
-.value = '';
+                  'Content-Type':
+                    'application/json',
 
-document
-.getElementById('profileDomain')
-.value = '';
+                  'apikey': SUPABASE_KEY,
 
-document
-.getElementById('telegramUsername')
-.value = '';
+                  'Authorization':
+                    'Bearer ' +
+                    SUPABASE_KEY,
 
-document
-.getElementById('profileResult')
-.style
-.display =
-'none';
+                  'Prefer':
+                    'return=minimal'
 
-document
-.getElementById('telegramLink')
-.style
-.display =
-'none';
+                },
 
-setStatus(
-'Form cleared'
-);
+                body:
+                  JSON.stringify(
+                    profileData
+                  )
 
-}
+              }
 
-async function disconnectWallet() {
+            );
 
-const confirmed =
-confirm(
-'Вы действительно хотите отключить TON-кошелек?'
-);
+        } else {
 
-if (!confirmed) return;
+          response =
+            await fetch(
 
-await tonConnectUI.disconnect();
+              SUPABASE_URL +
+              '/rest/v1/profiles',
 
-}
+              {
 
-async function signInWithGramID() {
+                method: 'POST',
 
-setStatus(
-'Signing in with GramID...'
-);
+                headers: {
 
-try {
+                  'Content-Type':
+                    'application/json',
 
-if (!currentWalletAddress) {
+                  'apikey': SUPABASE_KEY,
 
-throw new Error(
-'Please connect your TON wallet first'
-);
+                  'Authorization':
+                    'Bearer ' +
+                    SUPABASE_KEY,
 
-}
+                  'Prefer':
+                    'return=minimal'
 
-const response =
-await fetch(
+                },
 
-GRAMID_LOGIN_URL,
+                body:
+                  JSON.stringify(
+                    profileData
+                  )
 
-{
+              }
 
-method: 'POST',
+            );
 
-headers: {
+        }
 
-'Content-Type':
-'application/json',
 
-'apikey':
-SUPABASE_KEY
+        if (!response.ok) {
 
-},
+          throw new Error(
+            await response.text()
+          );
 
-body:
-JSON.stringify({
+        }
 
-wallet:
-currentWalletAddress
 
-})
+        showProfile(profileData);
 
-}
 
-);
+        setStatus(
+          'Profile saved online'
+        );
 
-const data =
-await response.json();
 
-if (!response.ok) {
+      } catch (error) {
 
-throw new Error(
+        console.error(
+          'Profile save error:',
+          error
+        );
 
-data.error ||
-'GramID Login failed'
 
-);
+        setStatus(
+          'Error: ' +
+          error.message
+        );
 
-}
+      }
 
-if (
+    }
 
-!data.authenticated ||
-!data.session_token
 
-) {
+    async function verifyTelegram() {
 
-throw new Error(
-'Authentication failed'
-);
+      const telegramUsername =
+        document
+          .getElementById('telegramUsername')
+          .value
+          .trim();
 
-}
 
-localStorage.setItem(
+      if (!currentWalletAddress) {
 
-'gramid_session_token',
+        setStatus(
+          'Please connect your TON wallet first'
+        );
 
-data.session_token
+        return;
 
-);
+      }
 
-localStorage.setItem(
 
-'gramid_session_expires',
+      if (!telegramUsername) {
 
-data.expires_at
+        setStatus(
+          'Please enter your Telegram username'
+        );
 
-);
+        return;
 
-showLoggedInIdentity(
-data.identity
-);
+      }
 
-setStatus(
-'GramID authentication successful ✓'
-);
 
-} catch (error) {
+      setStatus(
+        'Creating Telegram verification link...'
+      );
 
-console.error(error);
 
-setStatus(
-'Error: ' +
-error.message
-);
+      try {
 
-}
+        const response =
+          await fetch(
 
-}
+            VERIFY_FUNCTION_URL,
 
-async function loadGramIDSession() {
+            {
 
-const sessionToken =
-localStorage.getItem(
-'gramid_session_token'
-);
+              method: 'POST',
 
-if (!sessionToken) return;
+              headers: {
 
-try {
+                'Content-Type':
+                  'application/json',
 
-const response =
-await fetch(
+                'apikey':
+                  SUPABASE_KEY
 
-GRAMID_USERINFO_URL,
+              },
 
-{
+              body:
 
-method: 'POST',
+                JSON.stringify({
 
-headers: {
+                  wallet:
+                    currentWalletAddress,
 
-'Content-Type':
-'application/json',
+                  telegram_username:
+                    telegramUsername
 
-'apikey':
-SUPABASE_KEY
+                })
 
-},
+            }
 
-body:
-JSON.stringify({
+          );
 
-session_token:
-sessionToken
 
-})
+        const data =
+          await response.json();
 
-}
 
-);
+        if (!response.ok) {
 
-const data =
-await response.json();
+          throw new Error(
 
-if (
+            data.error ||
+            'Verification error'
 
-!response.ok ||
-!data.authenticated
+          );
 
-) {
+        }
 
-localStorage.removeItem(
-'gramid_session_token'
-);
 
-localStorage.removeItem(
-'gramid_session_expires'
-);
+        const telegramLink =
+          document
+            .getElementById('telegramLink');
 
-return;
 
-}
+        telegramLink.href =
+          data.verification_url;
 
-showLoggedInIdentity(
-data.identity
-);
 
-setStatus(
+        telegramLink.style.display =
+          'block';
 
-'Welcome back, ' +
-(
-data.identity.name ||
-'GramID user'
-)
 
-);
+        setStatus(
+          'Verification link created'
+        );
 
-} catch (error) {
 
-console.error(error);
+      } catch (error) {
 
-}
+        console.error(
+          'Telegram verification error:',
+          error
+        );
 
-}
 
-function showLoggedInIdentity(identity) {
+        setStatus(
+          'Error: ' +
+          error.message
+        );
 
-gramidIdentity =
-identity;
+      }
 
-const loginResult =
-document
-.getElementById(
-'loginResult'
-);
+    }
 
-loginResult.innerHTML = `
 
-<div class="identity-status">
-✓ Wallet connected
-</div>
+    async function loadProfile() {
 
-<div class="identity-status">
-✓ Telegram connected
-</div>
+      if (!currentWalletAddress) {
 
-<div class="identity-status">
-✓ Identity verified
-</div>
+        return;
 
-<h2>
-${identity.name || 'GramID User'}
-</h2>
+      }
 
-<p>
-${identity.telegram_username || ''}
-</p>
 
-<button
+      const response =
+        await fetch(
 
-class="button disconnect-button"
+          SUPABASE_URL +
+          '/rest/v1/profiles' +
+          '?wallet_address=eq.' +
+          encodeURIComponent(
+            currentWalletAddress
+          ) +
+          '&select=*',
 
-onclick="signOutGramID()"
+          {
 
->
+            method: 'GET',
 
-Sign out
+            headers: {
 
-</button>
+              'apikey': SUPABASE_KEY,
 
-<div class="login-success">
+              'Authorization':
+                'Bearer ' +
+                SUPABASE_KEY
 
-GramID authentication successful ✓
+            }
 
-</div>
+          }
 
-`;
+        );
 
-loginResult.style.display =
-'block';
 
-}
+      if (!response.ok) {
 
-function signOutGramID() {
+        return;
 
-const confirmed =
-confirm(
-'Вы действительно хотите выйти из GramID?'
-);
+      }
 
-if (!confirmed) return;
 
-localStorage.removeItem(
-'gramid_session_token'
-);
+      const profiles =
+        await response.json();
 
-localStorage.removeItem(
-'gramid_session_expires'
-);
 
-gramidIdentity =
-null;
+      if (profiles.length > 0) {
 
-const loginResult =
-document
-.getElementById(
-'loginResult'
-);
+        const profile =
+          profiles[0];
 
-loginResult.innerHTML =
-'';
 
-loginResult.style.display =
-'none';
+        document
+          .getElementById('profileName')
+          .value =
+          profile.name || '';
 
-setStatus(
-'Signed out of GramID'
-);
 
-}
+        document
+          .getElementById('profileDomain')
+          .value =
+          profile.domain || '';
 
-</script>
+
+        document
+          .getElementById('telegramUsername')
+          .value =
+          profile.telegram_username || '';
+
+
+        showProfile(profile);
+
+      }
+
+    }
+
+
+    function showProfile(profile) {
+
+      document
+        .getElementById('savedName')
+        .textContent =
+        profile.name || '';
+
+
+      document
+        .getElementById('savedDomain')
+        .textContent =
+        profile.domain ||
+        'TON domain not added';
+
+
+      document
+        .getElementById('savedTelegram')
+        .textContent =
+        profile.telegram_username ||
+        'Telegram username not added';
+
+
+      document
+        .getElementById('profileResult')
+        .style
+        .display =
+        'block';
+
+    }
+
+
+    function viewPublicProfile() {
+
+      if (!currentWalletAddress) {
+
+        setStatus(
+          'Please connect your TON wallet first'
+        );
+
+        return;
+
+      }
+
+
+      const profileUrl =
+
+        window.location.origin +
+
+        window.location.pathname.replace(
+          'index.html',
+          ''
+        ) +
+
+        'profile.html?wallet=' +
+
+        encodeURIComponent(
+          currentWalletAddress
+        );
+
+
+      window.location.href =
+        profileUrl;
+
+    }
+
+
+    function clearProfile() {
+
+      document
+        .getElementById('profileName')
+        .value = '';
+
+
+      document
+        .getElementById('profileDomain')
+        .value = '';
+
+
+      document
+        .getElementById('telegramUsername')
+        .value = '';
+
+
+      document
+        .getElementById('profileResult')
+        .style
+        .display = 'none';
+
+
+      document
+        .getElementById('telegramLink')
+        .style
+        .display = 'none';
+
+
+      setStatus(
+        'Form cleared'
+      );
+
+    }
+
+
+    async function disconnectWallet() {
+
+      const confirmed =
+        confirm(
+          'Are you sure you want to disconnect your TON wallet?'
+        );
+
+
+      if (!confirmed) {
+
+        return;
+
+      }
+
+
+      await tonConnectUI.disconnect();
+
+    }
+
+
+    async function signInWithGramID() {
+
+      setStatus(
+        'Signing in with GramID...'
+      );
+
+
+      try {
+
+        if (!currentWalletAddress) {
+
+          throw new Error(
+            'Please connect your TON wallet first'
+          );
+
+        }
+
+
+        const response =
+          await fetch(
+
+            GRAMID_LOGIN_URL,
+
+            {
+
+              method: 'POST',
+
+              headers: {
+
+                'Content-Type':
+                  'application/json',
+
+                'apikey':
+                  SUPABASE_KEY
+
+              },
+
+              body:
+
+                JSON.stringify({
+
+                  wallet:
+                    currentWalletAddress
+
+                })
+
+            }
+
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          throw new Error(
+
+            data.error ||
+            'GramID Login failed'
+
+          );
+
+        }
+
+
+        if (
+
+          !data.authenticated ||
+          !data.session_token
+
+        ) {
+
+          throw new Error(
+            'Authentication failed'
+          );
+
+        }
+
+
+        localStorage.setItem(
+
+          'gramid_session_token',
+
+          data.session_token
+
+        );
+
+
+        localStorage.setItem(
+
+          'gramid_session_expires',
+
+          data.expires_at
+
+        );
+
+
+        showLoggedInIdentity(
+
+          data.identity
+
+        );
+
+
+        setStatus(
+
+          'GramID authentication successful ✓'
+
+        );
+
+
+      } catch (error) {
+
+        console.error(
+
+          'GramID Login error:',
+          error
+
+        );
+
+
+        setStatus(
+
+          'Error: ' +
+          error.message
+
+        );
+
+      }
+
+    }
+
+
+    async function loadGramIDSession() {
+
+      const sessionToken =
+        localStorage.getItem(
+          'gramid_session_token'
+        );
+
+
+      if (!sessionToken) {
+
+        return;
+
+      }
+
+
+      try {
+
+        const response =
+          await fetch(
+
+            GRAMID_USERINFO_URL,
+
+            {
+
+              method: 'POST',
+
+              headers: {
+
+                'Content-Type':
+                  'application/json',
+
+                'apikey':
+                  SUPABASE_KEY
+
+              },
+
+              body:
+
+                JSON.stringify({
+
+                  session_token:
+                    sessionToken
+
+                })
+
+            }
+
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (
+
+          !response.ok ||
+          !data.authenticated
+
+        ) {
+
+          localStorage.removeItem(
+            'gramid_session_token'
+          );
+
+          localStorage.removeItem(
+            'gramid_session_expires'
+          );
+
+          return;
+
+        }
+
+
+        showLoggedInIdentity(
+          data.identity
+        );
+
+
+        setStatus(
+
+          'Welcome back, ' +
+
+          (
+
+            data.identity.name ||
+            'GramID user'
+
+          )
+
+        );
+
+
+      } catch (error) {
+
+        console.error(
+
+          'Session restore error:',
+          error
+
+        );
+
+      }
+
+    }
+
+
+    function showLoggedInIdentity(identity) {
+
+      gramidIdentity =
+        identity;
+
+
+      const loginResult =
+        document.getElementById(
+          'loginResult'
+        );
+
+
+      if (!loginResult) {
+
+        return;
+
+      }
+
+
+      loginResult.innerHTML = `
+
+        <div class="identity-status">
+          ✓ Wallet connected
+        </div>
+
+        <div class="identity-status">
+          ✓ Telegram connected
+        </div>
+
+        <div class="identity-status">
+          ✓ Identity verified
+        </div>
+
+        <h2>
+          ${identity.name || 'GramID User'}
+        </h2>
+
+        <p>
+          ${identity.telegram_username || ''}
+        </p>
+
+        <button
+          class="button disconnect-button"
+          onclick="signOutGramID()"
+        >
+          Sign out
+        </button>
+
+        <div class="login-success">
+          GramID authentication successful ✓
+        </div>
+
+      `;
+
+
+      loginResult.style.display =
+        'block';
+
+    }
+
+
+    function signOutGramID() {
+
+      const confirmed =
+        confirm(
+          'Are you sure you want to sign out of GramID?'
+        );
+
+
+      if (!confirmed) {
+
+        return;
+
+      }
+
+
+      localStorage.removeItem(
+        'gramid_session_token'
+      );
+
+
+      localStorage.removeItem(
+        'gramid_session_expires'
+      );
+
+
+      gramidIdentity =
+        null;
+
+
+      const loginResult =
+        document
+          .getElementById(
+            'loginResult'
+          );
+
+
+      if (loginResult) {
+
+        loginResult.innerHTML =
+          '';
+
+        loginResult.style.display =
+          'none';
+
+      }
+
+
+      setStatus(
+        'Signed out of GramID'
+      );
+
+    }
+
+  </script>
 
 </body>
 </html>
