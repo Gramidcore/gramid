@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -435,136 +436,141 @@
 
     }
   </style>
+
 </head>
 
 <body>
 
   <div class="page">
 
-    <header class="header">
+```
+<header class="header">
 
-      <div class="brand">
+  <div class="brand">
+    Gram ID
+  </div>
+
+  <div class="header-label">
+    Web3 Identity
+  </div>
+
+</header>
+
+
+<main class="main">
+
+  <section class="content">
+
+    <div
+      class="avatar"
+      id="avatar"
+    >
+      G
+    </div>
+
+
+    <h1>
+
+      <span
+        class="gradient"
+        id="profile-title"
+      >
         Gram ID
-      </div>
+      </span>
 
-      <div class="header-label">
-        Web3 Identity
-      </div>
-
-    </header>
+    </h1>
 
 
-    <main class="main">
+    <div
+      class="status"
+      id="identity-status"
+    >
 
-      <section class="content">
+      <span class="status-dot"></span>
 
-        <div
-          class="avatar"
-          id="avatar"
-        >
-          G
+      Wallet Connected
+
+    </div>
+
+
+    <div class="profile-card">
+
+      <div class="info-row">
+
+        <div class="info-label">
+          TON Wallet
         </div>
 
 
-        <h1>
+        <div class="wallet-line">
 
-          <span
-            class="gradient"
-            id="profile-title"
+          <div
+            class="wallet-address"
+            id="wallet-address"
           >
-            Gram ID
-          </span>
-
-        </h1>
-
-
-        <div class="status">
-
-          <span class="status-dot"></span>
-
-          Verified Identity
-
-        </div>
-
-
-        <div class="profile-card">
-
-          <div class="info-row">
-
-            <div class="info-label">
-              TON Wallet
-            </div>
-
-
-            <div class="wallet-line">
-
-              <div
-                class="wallet-address"
-                id="wallet-address"
-              >
-                —
-              </div>
-
-
-              <button
-                class="copy-button"
-                id="copy-button"
-              >
-                Копировать
-              </button>
-
-            </div>
-
-          </div>
-
-
-          <div class="info-row">
-
-            <div class="info-label">
-              Gram ID
-            </div>
-
-
-            <div
-              class="info-value"
-              id="gram-id-card"
-            >
-              Gram ID ещё не создан
-            </div>
-
-
-            <button
-              class="create-gram-button"
-              id="create-gram-button"
-            >
-              Создать Gram ID
-            </button>
-
+            —
           </div>
 
 
           <button
-            class="disconnect-button"
-            id="disconnect-button"
+            class="copy-button"
+            id="copy-button"
           >
-            Выйти из кошелька
+            Копировать
           </button>
 
         </div>
 
-      </section>
-
-    </main>
+      </div>
 
 
-    <footer class="footer">
+      <div class="info-row">
 
-      Gram ID · Digital identity for Web3
+        <div class="info-label">
+          Gram ID
+        </div>
 
-    </footer>
+
+        <div
+          class="info-value"
+          id="gram-id-card"
+        >
+          Gram ID ещё не создан
+        </div>
+
+
+        <button
+          class="create-gram-button"
+          id="create-gram-button"
+        >
+          Создать Gram ID
+        </button>
+
+      </div>
+
+
+      <button
+        class="disconnect-button"
+        id="disconnect-button"
+      >
+        Выйти из кошелька
+      </button>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer class="footer">
+
+  Gram ID · Digital identity for Web3
+
+</footer>
+```
 
   </div>
-
 
   <script>
 
@@ -618,6 +624,12 @@
       );
 
 
+    const identityStatus =
+      document.getElementById(
+        "identity-status"
+      );
+
+
     if (
       gramId
     ) {
@@ -641,6 +653,15 @@
         username
           .charAt(0)
           .toUpperCase();
+
+
+      identityStatus.innerHTML = `
+
+        <span class="status-dot"></span>
+
+        Verified Identity
+
+      `;
 
     }
 
